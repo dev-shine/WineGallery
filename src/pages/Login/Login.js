@@ -6,16 +6,10 @@ class Login extends Component {
 
   static contextTypes = {};
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
-
-    return (
-      <div className="Login">
-        This is the Login component!
-      </div>
-    );
+    return <div className="Login">This is the Login component!</div>;
   }
 }
 

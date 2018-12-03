@@ -7,8 +7,7 @@ class Home extends Component {
 
   static contextTypes = {};
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
     return (

@@ -5,20 +5,28 @@ import './SimpleItem.scss';
 
 class SimpleItem extends Component {
   static propTypes = {
-    item: PropTypes.object,
-    name: PropTypes.string
+    item: PropTypes.shape,
+    name: PropTypes.string,
+  };
+
+  static defaultProps = {
+    item: null,
+    name: '',
   };
 
   static contextTypes = {};
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   renderItemText = (index, property, item, propertiesLength) => {
     let result = '';
 
     if (index !== propertiesLength - 1) {
-      result = <p key={property + item.id}>{property}: {item[property]}</p>;
+      result = (
+        <p key={property + item.id}>
+          {property}: {item[property]}
+        </p>
+      );
     }
 
     return result;

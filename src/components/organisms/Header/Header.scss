@@ -1,5 +1,5 @@
-@import "../../../styles/common/shared";
-@import "../../../styles/layout/shared";
+@import '../../../styles/common/shared';
+@import '../../../styles/layout/shared';
 
 .Header {
   background-color: #fff;
@@ -10,7 +10,6 @@
     left: auto;
     right: auto;
   }
-;
   position: relative;
   padding: $padding-box;
   width: $width-box;

@@ -6,16 +6,10 @@ class PasswordReset extends Component {
 
   static contextTypes = {};
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
-
-    return (
-      <div className="PasswordReset">
-        This is the PasswordReset component!
-      </div>
-    );
+    return <div className="PasswordReset">This is the PasswordReset component!</div>;
   }
 }
 

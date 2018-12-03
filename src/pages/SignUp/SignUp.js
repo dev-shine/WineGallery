@@ -7,15 +7,10 @@ class SignUp extends Component {
 
   static contextTypes = {};
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
-    return (
-      <div className="SignUp">
-        This is the SignUp component!
-      </div>
-    );
+    return <div className="SignUp">This is the SignUp component!</div>;
   }
 }
 

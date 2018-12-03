@@ -1,44 +1,54 @@
 {
-  "name": "web",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "apollo-boost": "^0.1.22",
-    "apollo-cache-inmemory": "latest",
-    "apollo-client": "latest",
-    "apollo-link-context": "^1.0.10",
-    "apollo-link-http": "latest",
-    "apollo-link-state": "^0.4.2",
-    "classnames": "^2.2.6",
-    "concurrently": "^4.1.0",
-    "global": "^4.3.2",
-    "graphql": "^14.0.2",
-    "graphql-tag": "latest",
-    "node-sass": "^4.10.0",
-    "prop-types": "^15.6.2",
-    "react": "^16.6.3",
-    "react-apollo": "^2.3.1",
-    "react-dom": "^16.6.3",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.1.1"
-  },
-  "devDependencies": {
-    "prettier": "1.15.2"
-  },
-  "scripts": {
-    "start": "concurrently -n dev,rm-env \"cp config/local/.env.local .env.local && cp config/.env .env && react-scripts start \" \"sleep 15 && rm .env.local && rm .env\"",
-    "build": "cp config/production/.env.production .env.production && cp config/.env .env && react-scripts build && rm .env.production && rm .env",
-    "staging": "cp config/development/.env.development .env.development && cp config/.env .env && react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+    "name": "web",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "apollo-boost": "^0.1.22",
+        "apollo-cache-inmemory": "^1.3.11",
+        "apollo-client": "^2.4.7",
+        "apollo-link-context": "^1.0.10",
+        "apollo-link-http": "latest",
+        "apollo-link-state": "^0.4.2",
+        "classnames": "^2.2.6",
+        "concurrently": "^4.1.0",
+        "global": "^4.3.2",
+        "graphql": "^14.0.2",
+        "graphql-tag": "2.4.2",
+        "node-sass": "^4.10.0",
+        "prop-types": "^15.6.2",
+        "react": "^16.6.3",
+        "react-apollo": "^2.3.1",
+        "react-dom": "^16.6.3",
+        "react-router-dom": "4.3.1",
+        "react-scripts": "2.1.1"
+    },
+    "devDependencies": {
+        "eslint": "^5.9.0",
+        "eslint-config-airbnb": "^17.1.0",
+        "eslint-config-prettier": "^3.3.0",
+        "eslint-plugin-import": "^2.14.0",
+        "eslint-plugin-jsx-a11y": "^6.1.2",
+        "eslint-plugin-prettier": "^3.0.0",
+        "eslint-plugin-react": "^7.11.1",
+        "prettier": "^1.15.3"
+    },
+    "scripts": {
+        "start": "concurrently -n dev,rm-env \"cp config/local/.env.local .env.local && cp config/.env .env && react-scripts start \" \"sleep 15 && rm .env.local && rm .env\"",
+        "build": "cp config/production/.env.production .env.production && cp config/.env .env && react-scripts build && rm .env.production && rm .env",
+        "staging": "cp config/development/.env.development .env.development && cp config/.env .env && react-scripts build",
+        "lint": "eslint . --config ./config/linter/.eslintrc.json --ignore-path ./config/linter/.eslintignore",
+        "lint-fix": "eslint . --fix --config ./config/linter/.eslintrc.json --ignore-path ./config/linter/.eslintignore",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "extends": [
+        "airbnb",
+        "prettier/react"
+    ],
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+    ]
 }

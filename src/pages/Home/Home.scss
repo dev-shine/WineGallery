@@ -1,11 +1,11 @@
-@import "../../styles/common/shared";
+@import '../../styles/common/shared';
 
 .Home {
   width: 100%;
 
   &--main-banner {
     background: {
-      image: url("../../assets/images/subscription-wine-at-your-door-alt.jpg");
+      image: url('../../assets/images/subscription-wine-at-your-door-alt.jpg');
       repeat: no-repeat;
       size: cover;
       position-y: -100px;
