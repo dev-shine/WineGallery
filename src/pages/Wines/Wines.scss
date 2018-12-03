@@ -1,0 +1,26 @@
+@import "../../styles/common/shared";
+@import "../../styles/layout/shared";
+
+.Wines {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;
+  margin: {
+    left: auto;
+    right: auto;
+    top: $header-height;
+  }
+
+  &_inner {
+    align-self: center;
+    display: flex;
+    margin: auto;
+    max-width: $max-width-box;
+    width: $width-box;
+  }
+
+  &--list {
+    margin: auto;
+  }
+}

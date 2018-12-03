@@ -1,0 +1,30 @@
+import React, { Component } from 'react';
+
+import './Home.scss';
+
+class Home extends Component {
+  static propTypes = {};
+
+  static contextTypes = {};
+
+  componentDidMount() {
+  }
+
+  render() {
+    return (
+      <div className="Home">
+        <section className="Home--main-banner">
+          <div className="Home--main-banner_inner">
+            <div className="Home--main-banner--content">
+              <h1 className="Home--main-banner--content--title">
+                Welcome to The Wine Gallery First Prototype
+              </h1>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+}
+
+export default Home;
