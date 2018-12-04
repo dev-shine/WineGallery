@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 
 import './ErrorBoundary.scss';
 
+
+/**
+ * Prevents the page to crash in case one of the components in the component tree to find an error.
+ * https://reactjs.org/docs/code-splitting.html#error-boundaries
+ * */
 class ErrorBoundary extends Component {
   static propTypes = {
     children: PropTypes.shape(),
@@ -18,12 +23,13 @@ class ErrorBoundary extends Component {
   };
 
   componentDidCatch(error, errorInfo) {
-    // Catch errors in any components below and re-render with error message
+
+    // 1. Catch errors in any components below and re-render with error message
+    // 2. You can also log error messages to an error reporting service here
     this.setState({
       error,
       errorInfo,
     });
-    // You can also log error messages to an error reporting service here
   }
 
   render() {
@@ -31,7 +37,6 @@ class ErrorBoundary extends Component {
     const { children } = this.props;
 
     if (errorInfo) {
-      // Error path
       return (
         <div className="ErrorBoundary">
           <h2>Something went wrong.</h2>
@@ -43,6 +48,7 @@ class ErrorBoundary extends Component {
         </div>
       );
     }
+
     // Normally, just render children
     return children;
   }

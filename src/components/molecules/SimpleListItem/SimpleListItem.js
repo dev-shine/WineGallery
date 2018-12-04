@@ -29,6 +29,7 @@ class SimpleListItem extends Component {
       <div className="SimpleListItem">
         <ul>
           {data.allWines.map(wine => (
+
             // ATOM
             <SimpleItem key={`winesItems${wine.id}`} name="wines" item={wine} />
           ))}

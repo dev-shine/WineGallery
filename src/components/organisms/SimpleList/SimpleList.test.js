@@ -1,6 +1,7 @@
-import gql from 'graphql-tag';
 import ReactDOM from 'react-dom';
 import React from 'react';
+
+import gql from 'graphql-tag';
 import { MockedProvider } from 'react-apollo/test-utils';
 
 import SimpleList from './SimpleList';

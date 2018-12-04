@@ -18,16 +18,16 @@ You will also see any lint errors in the console.
 
 Runs linting tools in the project in order to warn us and show a list of files not following our standard code styling.<br>
 
-Configuration file is at ./config/linter/.prettierrc.json, more options can be added based on the following 
-[Prettier Documentation](https://prettier.io/docs/en/configuration.html).
+Configuration file is at ./config/local/linter/.eslintrc.json, more options can be added based on the following 
+[Eslint Documentation](https://eslint.org/docs/rules/).
 
 #### `yarn lint-fix`
 **IMPORTANT NOTE**: Beware as this command will automatically change all the files in the project that are not formatted according to the style and it can cause serious side effects.
 
 Runs linting tools in the project in order to fix code styling.<br>
 
-Configuration file is at ./config/linter/.prettierrc.json, more options can be added based on the following 
-[Prettier Documentation](https://prettier.io/docs/en/configuration.html).
+Configuration file is at ./config/local/linter/.eslintrc.json, more options can be added based on the following 
+[Eslint Documentation](https://eslint.org/docs/rules/).
 
 #### `yarn test` 
 

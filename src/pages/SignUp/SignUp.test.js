@@ -1,10 +1,12 @@
-import ReactDOM from 'react-dom';
 import React from 'react';
+
+import ShallowRenderer from 'react-test-renderer/shallow';
 
 import SignUp from './SignUp';
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<SignUp />, div);
-  ReactDOM.unmountComponentAtNode(div);
+
+  // Uses ShallowRenderer to avoid executing GraphQL queries
+  const renderer = new ShallowRenderer();
+  renderer.render(<SignUp />);
 });

@@ -38,7 +38,7 @@ class SimpleItem extends Component {
     if (index !== propertiesLength - 1) {
       result = (
         <p key={property + item.id}>
-          {property}: {item[property]}
+          {`${property}: ${item[property]}`}
         </p>
       );
     }
