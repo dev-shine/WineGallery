@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 
 import './Home.scss';
 
+/**
+ * Renders home page.
+ * React.Component: https://reactjs.org/docs/react-component.html
+ * */
 class Home extends Component {
   static propTypes = {};
 

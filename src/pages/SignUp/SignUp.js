@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 
 import './SignUp.scss';
 
+/**
+ * Renders sign up page.
+ * React.Component: https://reactjs.org/docs/react-component.html
+ * */
 class SignUp extends Component {
   static propTypes = {};
 

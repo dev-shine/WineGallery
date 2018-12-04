@@ -1,28 +1,19 @@
 @import '../common/shared';
 
-.content-title--h1 {
-  font-size: 2.8em;
-}
-
-.content-title--h2 {
-  font-size: 2.6em;
-}
-
-.content-title--h3 {
-  font-size: 1.4em;
-}
-
-.content-title--h4 {
-  font-size: 1.2em;
-}
-
 .content-title {
   &--h1 {
+    font-size: 3em;
   }
+
   &--h2 {
+    font-size: 2.6em;
   }
+
   &--h3 {
+    font-size: 1.4em;
   }
+
   &--h4 {
+    font-size: 1.2em;
   }
 }

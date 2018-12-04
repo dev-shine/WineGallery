@@ -7,6 +7,10 @@ import { SimpleListItem } from '../..';
 
 import './SimpleList.scss';
 
+/**
+ * Renders list container with title.
+ * React.Component: https://reactjs.org/docs/react-component.html
+ * */
 class SimpleList extends Component {
   static propTypes = {
     query: PropTypes.shape,

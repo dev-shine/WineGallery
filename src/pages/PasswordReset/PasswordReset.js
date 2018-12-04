@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './PasswordReset.scss';
 
+/**
+ * Renders password reset page.
+ * React.Component: https://reactjs.org/docs/react-component.html
+ * */
 class PasswordReset extends Component {
   static propTypes = {};
 

@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './Login.scss';
 
+/**
+ * Renders log in page.
+ * React.Component: https://reactjs.org/docs/react-component.html
+ * */
 class Login extends Component {
   static propTypes = {};
 

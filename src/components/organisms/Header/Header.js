@@ -5,6 +5,10 @@ import logo from '../../../assets/images/logo.svg';
 
 import './Header.scss';
 
+/**
+ * Renders main header for the application.
+ * React.Component: https://reactjs.org/docs/react-component.html
+ * */
 class Header extends Component {
   static propTypes = {};
 

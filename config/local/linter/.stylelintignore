@@ -1,0 +1,8 @@
+.eslintrc.json
+**/*.js
+**/*.env
+**/*.sh
+**/*.yml
+**/*.jpg
+**/*.svg
+**/*.png

@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 import './SimpleItem.scss';
 
+/**
+ * Renders item for a list.
+ * React.Component: https://reactjs.org/docs/react-component.html
+ * */
 class SimpleItem extends Component {
   static propTypes = {
     item: PropTypes.shape,
@@ -18,6 +22,16 @@ class SimpleItem extends Component {
 
   componentDidMount() {}
 
+  /**
+   * Iterates through all the properties in the object and render inside of list item.
+   *
+   * @param index: number
+   * @param property: string
+   * @param item: object
+   * @param propertiesLength: number
+   *
+   * @return Stateless React Component
+   * */
   renderItemText = (index, property, item, propertiesLength) => {
     let result = '';
 

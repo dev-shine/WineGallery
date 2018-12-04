@@ -5,6 +5,10 @@ import { SimpleItem } from '../..';
 
 import './SimpleListItem.scss';
 
+/**
+ * Renders a list with items.
+ * React.Component: https://reactjs.org/docs/react-component.html
+ * */
 class SimpleListItem extends Component {
   static propTypes = {
     data: PropTypes.shape,

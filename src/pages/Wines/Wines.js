@@ -16,6 +16,10 @@ const GET_WINES = gql`
   }
 `;
 
+/**
+ * Renders wine list page.
+ * React.Component: https://reactjs.org/docs/react-component.html
+ * */
 class Wines extends Component {
   static propTypes = {};
 

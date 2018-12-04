@@ -4,7 +4,8 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: constant(safe-area-inset-top) constant(safe-area-inset-right) constant(safe-area-inset-bottom)
+  padding:
+    constant(safe-area-inset-top) constant(safe-area-inset-right) constant(safe-area-inset-bottom)
     constant(safe-area-inset-left);
 
   &--content {
@@ -38,6 +39,7 @@
       right: auto;
       left: auto;
     }
+
     padding: 0 1%;
   }
 }
