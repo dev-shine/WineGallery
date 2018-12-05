@@ -1,25 +1,21 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Routes from './routes';
 
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
 
+import Routes from './routes';
 import { Header } from './components';
 
 import './styles/App.scss';
 
 const client = new ApolloClient({
-  uri: 'http://localhost/graphql'
+  uri: 'http://localhost/graphql',
 });
 
 class App extends Component {
-  static propTypes = {
-    client: PropTypes.object.isRequired
-  };
+  static propTypes = {};
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
     return (
@@ -28,15 +24,12 @@ class App extends Component {
           <header className="App-header">
             <Header />
           </header>
-          <main className={'App-body'}>
-            <React.Suspense fallback={
-              <div>Loading...</div>
-            }>
-            <Routes />
-          </React.Suspense>
+          <main className="App-body">
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <Routes />
+            </React.Suspense>
           </main>
-          <footer className={'App-footer'}>
-          </footer>
+          <footer className="App-footer" />
         </div>
       </ApolloProvider>
     );
@@ -44,4 +37,3 @@ class App extends Component {
 }
 
 export default App;
-

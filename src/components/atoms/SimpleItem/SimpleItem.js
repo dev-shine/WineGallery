@@ -3,22 +3,44 @@ import PropTypes from 'prop-types';
 
 import './SimpleItem.scss';
 
+/**
+ * Renders item for a list.
+ * React.Component: https://reactjs.org/docs/react-component.html
+ * */
 class SimpleItem extends Component {
   static propTypes = {
-    item: PropTypes.object,
-    name: PropTypes.string
+    item: PropTypes.shape,
+    name: PropTypes.string,
+  };
+
+  static defaultProps = {
+    item: null,
+    name: '',
   };
 
   static contextTypes = {};
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
+  /**
+   * Iterates through all the properties in the object and render inside of list item.
+   *
+   * @param index: number
+   * @param property: string
+   * @param item: object
+   * @param propertiesLength: number
+   *
+   * @return Stateless React Component
+   * */
   renderItemText = (index, property, item, propertiesLength) => {
     let result = '';
 
     if (index !== propertiesLength - 1) {
-      result = <p key={property + item.id}>{property}: {item[property]}</p>;
+      result = (
+        <p key={property + item.id}>
+          {property}: {item[property]}
+        </p>
+      );
     }
 
     return result;

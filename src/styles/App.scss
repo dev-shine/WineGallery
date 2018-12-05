@@ -1,5 +1,5 @@
 /***** COMMONS ******/
-@import "common/shared";
+@import 'common/shared';
 
 /***** LAYOUTS ******/
 
@@ -14,16 +14,13 @@ body {
     size: 16px;
     weight: 400;
   }
-;
 }
 
 .App {
   text-align: center;
-
 }
 
 .App-logo {
-  //animation: App-logo-spin infinite 20s linear;
   max-height: 100%;
 }
 
@@ -51,6 +48,7 @@ body {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -66,9 +64,7 @@ div#root {
 
 button {
   cursor: pointer;
-}
 
-button {
   &:disabled {
     cursor: default;
   }
@@ -82,13 +78,11 @@ button {
 }
 
 @media all and (max-width: 767px) {
-
   .Select-control {
-    border-color: #B4975E !important;
+    border-color: #b4975e !important;
   }
 
   .Select-arrow {
-    border-color: #B4975E transparent transparent !important;
+    border-color: #b4975e transparent transparent !important;
   }
-
 }

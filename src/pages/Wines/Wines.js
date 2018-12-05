@@ -16,14 +16,16 @@ const GET_WINES = gql`
   }
 `;
 
-
+/**
+ * Renders wine list page.
+ * React.Component: https://reactjs.org/docs/react-component.html
+ * */
 class Wines extends Component {
   static propTypes = {};
 
   static contextTypes = {};
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
     return (
@@ -31,14 +33,10 @@ class Wines extends Component {
         <section className="Wines--container">
           <div className="Wines_inner">
             <div className="Wines--list">
-
               {/* ORGANISM */}
               <ErrorBoundary>
-                <SimpleList
-                  query={GET_WINES}
-                />
+                <SimpleList query={GET_WINES} />
               </ErrorBoundary>
-
             </div>
           </div>
         </section>

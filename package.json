@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "apollo-boost": "^0.1.22",
-    "apollo-cache-inmemory": "latest",
-    "apollo-client": "latest",
+    "apollo-cache-inmemory": "^1.3.11",
+    "apollo-client": "^2.4.7",
     "apollo-link-context": "^1.0.10",
     "apollo-link-http": "latest",
     "apollo-link-state": "^0.4.2",
@@ -13,28 +13,49 @@
     "concurrently": "^4.1.0",
     "global": "^4.3.2",
     "graphql": "^14.0.2",
-    "graphql-tag": "latest",
+    "graphql-tag": "2.4.2",
     "node-sass": "^4.10.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-apollo": "^2.3.1",
     "react-dom": "^16.6.3",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.1.1"
+    "react-router-dom": "4.3.1",
+    "react-scripts": "2.1.1"
   },
   "devDependencies": {
-    "prettier": "1.15.2"
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-config-stylelint": "^11.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "postcss-import": "^12.0.1",
+    "prettier": "^1.15.3",
+    "stylelint": "^9.9.0",
+    "stylelint-a11y": "^1.1.9",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-processor-styled-components": "^1.5.1",
+    "stylelint-scss": "^3.4.0"
   },
   "scripts": {
     "start": "concurrently -n dev,rm-env \"cp config/local/.env.local .env.local && cp config/.env .env && react-scripts start \" \"sleep 15 && rm .env.local && rm .env\"",
     "build": "cp config/production/.env.production .env.production && cp config/.env .env && react-scripts build && rm .env.production && rm .env",
     "staging": "cp config/development/.env.development .env.development && cp config/.env .env && react-scripts build",
+    "eslint": "echo '##### LINTING JAVASCRIPT FILES ######' && eslint . --config ./config/local/linter/.eslintrc.json --ignore-path ./config/local/linter/.eslintignore",
+    "eslint-fix": "echo '##### LINTING JAVASCRIPT FILES ######' && eslint . --fix --config ./config/local/linter/.eslintrc.json --ignore-path ./config/local/linter/.eslintignore",
+    "stylelint": "echo '##### LINTING SCSS FILES ######' && stylelint src --config ./config/local/linter/.stylelintrc.json --syntax scss --ignore-path ./config/local/linter/.stylelintignore",
+    "stylelint-fix": "echo '##### LINTING SCSS FILES ######' &&stylelint src --fix --config ./config/local/linter/.stylelintrc.json --syntax scss --ignore-path ./config/local/linter/.stylelintignore",
+    "lint": "yarn eslint && yarn stylelint",
+    "lint-fix": "yarn eslint-fix && yarn stylelint-fix",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
+  "extends": [
+    "airbnb",
+    "prettier/react",
+    "stylelint"
+  ],
   "browserslist": [
     ">0.2%",
     "not dead",
