@@ -5,6 +5,11 @@ import SimpleListItem from './SimpleListItem';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<SimpleListItem />, div);
+
+  const data = {
+    allWines: [{ id: 1 }, { id: 2 }],
+  };
+
+  ReactDOM.render(<SimpleListItem data={data} name="Simple List Item" />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

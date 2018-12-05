@@ -30,9 +30,13 @@ Configuration file is at ./config/linter/.prettierrc.json, more options can be a
 [Prettier Documentation](https://prettier.io/docs/en/configuration.html).
 
 #### `yarn test` 
-*(NO TESTS YET)*
 
-Launches the test runner in the interactive watch mode.<br>
+Executes all tests.<br>
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+#### `yarn test-watch` 
+
+Launches the test runner in the interactive watch mode that executes tests related to changes that were made.<br>
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 #### `yarn run build`

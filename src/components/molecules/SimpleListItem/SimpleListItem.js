@@ -11,7 +11,7 @@ import './SimpleListItem.scss';
  * */
 class SimpleListItem extends Component {
   static propTypes = {
-    data: PropTypes.shape,
+    data: PropTypes.shape({ allWines: PropTypes.array }),
   };
 
   static defaultProps = {

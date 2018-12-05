@@ -5,7 +5,7 @@ import './ErrorBoundary.scss';
 
 class ErrorBoundary extends Component {
   static propTypes = {
-    children: PropTypes.shape,
+    children: PropTypes.shape(),
   };
 
   static defaultProps = {

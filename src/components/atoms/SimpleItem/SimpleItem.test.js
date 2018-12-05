@@ -5,6 +5,7 @@ import SimpleItem from './SimpleItem';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<SimpleItem />, div);
+  const item = { id: 1 };
+  ReactDOM.render(<SimpleItem item={item} name="Simple Item" />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
