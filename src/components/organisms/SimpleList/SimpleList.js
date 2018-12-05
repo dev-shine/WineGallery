@@ -13,7 +13,7 @@ import './SimpleList.scss';
  * */
 class SimpleList extends Component {
   static propTypes = {
-    query: PropTypes.shape,
+    query: PropTypes.shape(),
   };
 
   static defaultProps = {

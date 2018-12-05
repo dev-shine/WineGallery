@@ -20,7 +20,8 @@
     "react-apollo": "^2.3.1",
     "react-dom": "^16.6.3",
     "react-router-dom": "4.3.1",
-    "react-scripts": "2.1.1"
+    "react-scripts": "2.1.1",
+    "react-test-renderer": "^16.6.3"
   },
   "devDependencies": {
     "eslint-config-airbnb": "^17.1.0",
@@ -48,7 +49,8 @@
     "stylelint-fix": "echo '##### LINTING SCSS FILES ######' &&stylelint src --fix --config ./config/local/linter/.stylelintrc.json --syntax scss --ignore-path ./config/local/linter/.stylelintignore",
     "lint": "yarn eslint && yarn stylelint",
     "lint-fix": "yarn eslint-fix && yarn stylelint-fix",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll=false",
+    "test-watch": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "extends": [
