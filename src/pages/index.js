@@ -6,6 +6,7 @@ import Wines from './Wines/Wines';
 
 export {
   Home,
+
   // Auth
   Login,
   SignUp,

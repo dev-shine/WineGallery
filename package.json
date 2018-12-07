@@ -13,6 +13,7 @@
     "concurrently": "^4.1.0",
     "global": "^4.3.2",
     "graphql": "^14.0.2",
+    "graphql-tools": "^4.0.3",
     "graphql-tag": "2.4.2",
     "node-sass": "^4.10.0",
     "prop-types": "^15.6.2",
@@ -32,7 +33,6 @@
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
     "postcss-import": "^12.0.1",
-    "prettier": "^1.15.3",
     "stylelint": "^9.9.0",
     "stylelint-a11y": "^1.1.9",
     "stylelint-config-standard": "^18.2.0",
@@ -55,7 +55,6 @@
   },
   "extends": [
     "airbnb",
-    "prettier/react",
     "stylelint"
   ],
   "browserslist": [

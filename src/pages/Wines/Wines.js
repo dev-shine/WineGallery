@@ -1,20 +1,11 @@
 import React, { Component } from 'react';
 
-import gql from 'graphql-tag';
-
 import ErrorBoundary from '../../Helpers/ErrorBoundary';
 import { SimpleList } from '../../components';
+import GET_WINES from '../../graphql/queries';
 
 import './Wines.scss';
 
-const GET_WINES = gql`
-  {
-    allWines {
-      id
-      year
-    }
-  }
-`;
 
 /**
  * Renders wine list page.
@@ -33,6 +24,7 @@ class Wines extends Component {
         <section className="Wines--container">
           <div className="Wines_inner">
             <div className="Wines--list">
+
               {/* ORGANISM */}
               <ErrorBoundary>
                 <SimpleList query={GET_WINES} />

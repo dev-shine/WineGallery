@@ -1,7 +1,6 @@
 {
   "extends": [
-    "airbnb",
-    "prettier/react"
+    "airbnb"
   ],
   "parser": "babel-eslint",
   "plugins": [
@@ -36,18 +35,27 @@
         "functions": "ignore"
       }
     ],
-    "prettier/prettier": [
-      "error",
-      {
-        "bracketSpacing": true,
-        "arrowParens": "avoid",
-        "jsxBracketSameLine": false,
-        "printWidth": 110,
-        "semi": true,
-        "singleQuote": true,
-        "tabWidth": 2,
-        "trailingComma": "es5"
-      }
-    ]
+    "arrow-parens": [
+      2,
+      "as-needed"
+    ],
+    "react/self-closing-comp": ["error", {
+      "component": true,
+      "html": false
+    }],
+    "lines-around-comment": [2, {
+      "beforeBlockComment": true,
+      "afterBlockComment": false,
+      "beforeLineComment": true,
+      "afterLineComment": false,
+      "allowBlockStart": true,
+      "allowObjectStart": true,
+      "allowArrayStart": true,
+      "allowClassStart": true
+    }],
+    "no-trailing-spaces": [2, {
+      "ignoreComments": true,
+      "skipBlankLines": false
+    }]
   }
 }
