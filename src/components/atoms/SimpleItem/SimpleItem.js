@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import './SimpleItem.scss';
 
 /**
- * Renders item for a list.
+ * Renders item for a list
  * React.Component: https://reactjs.org/docs/react-component.html
  * */
 class SimpleItem extends Component {
   static propTypes = {
-    item: PropTypes.shape({ id: PropTypes.number.isRequired }),
+    item: PropTypes.shape({ id: PropTypes.string.isRequired }),
     name: PropTypes.string,
   };
 
@@ -23,7 +23,7 @@ class SimpleItem extends Component {
   componentDidMount() {}
 
   /**
-   * Iterates through all the properties in the object and render inside of list item.
+   * Iterates through all the properties in the object and render inside of list item
    *
    * @param index: number
    * @param property: string

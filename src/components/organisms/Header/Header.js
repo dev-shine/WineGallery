@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-
 import { Link, NavLink } from 'react-router-dom';
-import logo from '../../../assets/images/logo.svg';
 
+import { isLoggedIn } from '../../../helpers/auth';
+
+import logo from '../../../assets/images/logo.svg';
 import './Header.scss';
 
 /**
@@ -37,11 +38,15 @@ class Header extends Component {
                 <NavLink to="/signup">SignUp</NavLink>
               </li>
               <li>
-                <NavLink to="/login">Login</NavLink>
+                <NavLink to="/login">{isLoggedIn() ? 'Logout' : 'Login'}</NavLink>
               </li>
-              <li>
-                <NavLink to="/password-reset">Forgot my password...</NavLink>
-              </li>
+              {
+                isLoggedIn() && (
+                  <li>
+                    <NavLink to="/my-account">My Account</NavLink>
+                  </li>
+                )
+              }
             </ul>
           </nav>
         </div>

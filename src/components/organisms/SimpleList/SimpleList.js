@@ -8,7 +8,7 @@ import { SimpleListItem } from '../..';
 import './SimpleList.scss';
 
 /**
- * Renders list container with title.
+ * Renders list container with title
  * React.Component: https://reactjs.org/docs/react-component.html
  * */
 class SimpleList extends Component {
@@ -31,7 +31,7 @@ class SimpleList extends Component {
       <div className="SimpleList">
         <h1>This is the list of fabulous wine we have!</h1>
 
-        {/* This is a simple example query */}
+        {/* Queries wine list from database */}
         <Query query={query}>
           {({ loading, error, data }) => {
             if (loading) return 'Loading...';

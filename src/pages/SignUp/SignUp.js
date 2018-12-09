@@ -5,6 +5,8 @@ import { Mutation } from 'react-apollo';
 import SIGN_UP from '../../graphql/mutations';
 
 import './SignUp.scss';
+import { checkEmail, checkName } from '../../helpers/validations';
+import InputField from '../../components/atoms/InputField/InputField';
 
 /**
  * Renders sign up page
@@ -24,12 +26,13 @@ class SignUp extends Component {
   };
 
   /**
-   * Assign new values to 'this.state.form' properties
-   * @param event
+   * Assigns new values to 'this.state.form' properties
+   * @param value
+   * @param field
    * */
-  handleChange = event => {
+  handleChange = (field, value) => {
     const { form } = this.state;
-    this.setState({ form: { ...form, [event.target.name]: event.target.value } });
+    this.setState({ form: { ...form, [field]: value } });
   };
 
   /**
@@ -41,7 +44,7 @@ class SignUp extends Component {
   handleSubmit = signUp => {
     const { state } = this;
 
-    // Creates an array (signUpInput) without unnecessary info
+    // Creates an array (signUpInput) removing unnecessary info
     const { confirmPassword, ...signUpInput } = state.form;
 
     if (confirmPassword === signUpInput.password) {
@@ -74,60 +77,65 @@ class SignUp extends Component {
               <div className="SignUp--container">
                 <h1 className="SignUp--forms_title">SignUp</h1>
                 <div className="SignUp--forms_form">
-                  <label id="labelForFirstName" htmlFor="firstName">
-                    First Name
-                    <input
-                      id="firstName"
-                      name="firstName"
-                      type="text"
-                      value={firstName}
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                  <label id="labelForLastName" htmlFor="lastName">
-                    <span>Last Name</span>
-                    <input
-                      id="lastName"
-                      name="lastName"
-                      type="text"
-                      value={lastName}
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                  <label id="labelForEmail" htmlFor="email">
-                    <span>Email</span>
-                    <input id="email" name="email" type="text" value={email} onChange={this.handleChange} />
-                  </label>
-                  <label id="labelForPassword" htmlFor="password">
-                    <span>Password</span>
-                    <input
-                      id="password"
-                      name="password"
-                      type="password"
-                      value={password}
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                  <label id="labelForConfirmPassword" htmlFor="confirmPassword">
-                    <span>Confirm the password</span>
-                    <input
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      type="password"
-                      value={confirmPassword}
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                  <label id="labelForBirthDate" htmlFor="birthDate">
-                    <span>Birth date</span>
-                    <input
-                      id="birthDate"
-                      name="birthDate"
-                      type="date"
-                      value={birthDate}
-                      onChange={this.handleChange}
-                    />
-                  </label>
+                  <InputField
+                    label="First Name"
+                    placeholder="First Name"
+                    name="firstName"
+                    id="firstName"
+                    type="text"
+                    value={firstName}
+                    onChange={this.handleChange}
+                    validations={[checkName]}
+                  />
+                  <InputField
+                    label="Last Name"
+                    placeholder="Last Name"
+                    name="lastName"
+                    id="lastName"
+                    type="text"
+                    value={lastName}
+                    onChange={this.handleChange}
+                    validations={[checkName]}
+                  />
+                  <InputField
+                    label="Email"
+                    placeholder="Email"
+                    name="email"
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={this.handleChange}
+                    validations={[checkEmail]}
+                  />
+                  <InputField
+                    label="Password"
+                    placeholder="Password"
+                    name="password"
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={this.handleChange}
+                    validations={[checkEmail]}
+                  />
+                  <InputField
+                    label="Confirm the password"
+                    placeholder="Confirm the password"
+                    name="confirmPassword"
+                    id="confirmPassword"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={this.handleChange}
+                    validations={[checkEmail]}
+                  />
+                  <InputField
+                    label="Birth date"
+                    name="birthDate"
+                    id="birthDate"
+                    type="date"
+                    value={birthDate}
+                    onChange={this.handleChange}
+                    validations={[checkEmail]}
+                  />
                   {errors && <span>{errors}</span>}
                   <button onClick={() => this.handleSubmit(signUp)} type="button">
                     submit
@@ -136,7 +144,7 @@ class SignUp extends Component {
                 <div className="SignUp--forms_social">
                   <h2>GraphQL Server Response</h2>
 
-                  {/* prints in the screen error message from server */}
+                  {/* Prints in the screen error message from server */}
                   {/* TODO: DEV-107 Add validation  */}
                   {data && data.signUp && data.signUp.errors && (
                     <div>
@@ -149,7 +157,7 @@ class SignUp extends Component {
                   )}
                   {errors && <div>{errors}</div>}
 
-                  {/* prints in the screen response from server in case it succeeds */}
+                  {/* Prints in the screen response from server in case it succeeds */}
                   {data && data.signUp.id && (
                     <div>
                       <div>
