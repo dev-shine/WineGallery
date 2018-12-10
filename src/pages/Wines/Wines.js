@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
-import ErrorBoundary from '../../Helpers/ErrorBoundary';
-import { SimpleList } from '../../components';
+import { SimpleList, ErrorBoundary } from '../../components';
 import GET_WINES from '../../graphql/queries';
 
 import './Wines.scss';

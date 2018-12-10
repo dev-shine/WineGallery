@@ -1,12 +1,37 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import { Home, PasswordReset, SignUp } from './pages';
+import { isLoggedIn } from './helpers/auth';
 
 // Declares lazily loaded components --> https://reactjs.org/docs/code-splitting.html#reactlazy
 const Wines = React.lazy(() => import('./pages/Wines/Wines'));
 const Login = React.lazy(() => import('./pages/Login/Login'));
+const MyAccount = React.lazy(() => import('./pages/MyAccount/MyAccount'));
 
+/**
+ * Protects routes (pages) that require login to be visualized, as example My Account page
+ * @param ChildComponent
+ * @param rest
+ * @return {*}
+ * */
+const PrivateRoute = ({ component: ChildComponent, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => (isLoggedIn() ? (<ChildComponent {...props} />) : (
+      <Redirect
+        to={{
+          pathname: '/',
+          state: { from: props.location },
+        }}
+      />
+    ))
+    }
+  />);
+
+/**
+ * Stores routing management, this is where we map url path and pages (component container)
+ * */
 class Routes extends Component {
   static propTypes = {};
 
@@ -25,8 +50,11 @@ class Routes extends Component {
         <Route path="/password-reset" component={PasswordReset} />
 
         {/* Renders lazily loaded components --> https://reactjs.org/docs/code-splitting.html#reactlazy */}
-        <Route path="/login" render={() => <Login />} />
+        <Route path="/login" render={props => <Login {...props} />} />
         <Route path="/wines" render={() => <Wines />} />
+
+        <PrivateRoute path="/my-account" component={MyAccount} />
+
       </Switch>
     );
   }

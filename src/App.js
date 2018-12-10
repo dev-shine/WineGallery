@@ -8,7 +8,7 @@ import { Header } from './components';
 
 import './styles/App.scss';
 
-// Instantiate Apollo Client object for GraphQL
+// Instantiates Apollo Client object for GraphQL
 const client = new ApolloClient({
   uri: 'http://localhost/graphql',
   connectToDevTools: process.env.NODE_ENV === 'development',
@@ -40,7 +40,7 @@ class App extends Component {
           {/* Renders main area of the application */}
           <main className="App-body">
 
-            {/* Helps providing a fallback when loading lazily loaded components */}
+            {/* Provides a fallback when rendering lazily loaded components */}
             <React.Suspense fallback={<div>Loading...</div>}>
 
               {/* Renders the pages components using router */}

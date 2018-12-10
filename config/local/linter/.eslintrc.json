@@ -3,9 +3,6 @@
     "airbnb"
   ],
   "parser": "babel-eslint",
-  "plugins": [
-    "prettier"
-  ],
   "env": {
     "browser": true,
     "jasmine": true
@@ -39,23 +36,62 @@
       2,
       "as-needed"
     ],
-    "react/self-closing-comp": ["error", {
-      "component": true,
-      "html": false
-    }],
-    "lines-around-comment": [2, {
-      "beforeBlockComment": true,
-      "afterBlockComment": false,
-      "beforeLineComment": true,
-      "afterLineComment": false,
-      "allowBlockStart": true,
-      "allowObjectStart": true,
-      "allowArrayStart": true,
-      "allowClassStart": true
-    }],
-    "no-trailing-spaces": [2, {
-      "ignoreComments": true,
-      "skipBlankLines": false
-    }]
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": false
+      }
+    ],
+    "no-plusplus": [
+      2,
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "react/destructuring-assignment": [
+      2,
+      "always",
+      {
+        "ignoreClassFields": true
+      }
+    ],
+    "padded-blocks": [
+      0,
+      "never"
+    ],
+    "lines-around-comment": [
+      2,
+      {
+        "beforeBlockComment": true,
+        "afterBlockComment": false,
+        "beforeLineComment": true,
+        "afterLineComment": false,
+        "allowBlockStart": true,
+        "allowBlockEnd": false,
+        "allowObjectStart": true,
+        "allowArrayStart": true,
+        "allowClassStart": true
+      }
+    ],
+    "no-trailing-spaces": [
+      2,
+      {
+        "ignoreComments": true,
+        "skipBlankLines": false
+      }
+    ],
+    "no-confusing-arrow": [
+      2,
+      {
+        "allowParens": true
+      }
+    ],
+    "no-unused-expressions": [
+      2,
+      {
+        "allowShortCircuit": true
+      }
+    ]
   }
 }
