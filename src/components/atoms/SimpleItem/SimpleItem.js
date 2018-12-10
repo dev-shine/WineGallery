@@ -9,7 +9,7 @@ import './SimpleItem.scss';
  * */
 class SimpleItem extends Component {
   static propTypes = {
-    item: PropTypes.shape({ id: PropTypes.string.isRequired }),
+    item: PropTypes.shape({ id: PropTypes.number.isRequired }),
     name: PropTypes.string,
   };
 

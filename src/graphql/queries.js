@@ -9,4 +9,41 @@ const GET_WINES = gql`
   }
 `;
 
-export default GET_WINES;
+const GET_MEMBER = gql`
+  query Me {
+      me {
+      id
+      email
+      birthDate
+      firstName
+      lastName
+      shippingAddress {
+        id
+        firstName
+        lastName
+        line1
+        line2
+        company
+        state
+        postcode
+        contactNumber
+        city
+        state
+        country {
+          id
+          name
+        }
+        addressUnavailableInstruction {
+          id
+          nameShort
+          specifyLocation
+        }
+      }
+    }
+  }
+`;
+
+export {
+  GET_WINES,
+  GET_MEMBER,
+};

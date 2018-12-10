@@ -24,7 +24,7 @@ ReactDOM.render(
 // Allows hot module replacement (HMR) for create-react-app
 if (module.hot) {
   module.hot.accept('./App', () => {
-    const NextApp = require('./App').default;
+    const NextApp = import('./App').default;
     ReactDOM.render(
       <Router history={history}>
         <NextApp />

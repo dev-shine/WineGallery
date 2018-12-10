@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { HTTP_METHODS } from '../../helpers/constants';
 import executeRestApi from '../../helpers/rest';
-import { checkEmail, checkPassword } from '../../helpers/validations';
 import { getLocalStorageToken, setLocalStorageToken } from '../../helpers/auth';
 
 import { InputField } from '../../components';
@@ -36,7 +35,7 @@ class Login extends Component {
 
       // Ensures user is logged out
       // TODO: remove this when we introduce local state from Apollo
-      window.location = 'http://localhost:3000';
+      window.location = 'http://localhost:3000/login';
     }
 
     // Decodes tokens from localStorage --> https://www.npmjs.com/package/jsonwebtoken
@@ -135,7 +134,6 @@ class Login extends Component {
               id="email"
               value={email}
               onChange={this.handleChange}
-              validations={[checkEmail]}
             />
             <InputField
               label="Password"
@@ -145,7 +143,6 @@ class Login extends Component {
               type="password"
               value={password}
               onChange={this.handleChange}
-              validations={[checkPassword]}
             />
             <button type="button" onClick={this.handleSubmit}>Login</button>
             {error && error.errorDescription && <div>{error.errorDescription}</div>}

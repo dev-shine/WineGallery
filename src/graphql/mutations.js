@@ -14,4 +14,36 @@ const SIGN_UP = gql`
   }
 `;
 
-export default SIGN_UP;
+const UPDATE_MEMBER_SHIPPING_ADDRESS = gql`
+  mutation UpdateMemberShippingAddress($input: ShippingAddressInput!) {
+    updateMemberShippingAddress(input: $input) {
+      shippingAddress {
+        id
+        firstName
+        lastName
+        company
+        line1
+        line2
+        postcode
+        contactNumber
+        city
+        state
+        country {
+          id
+        }
+        addressUnavailableInstruction {
+          id
+        }
+      }
+      errors {
+        messages
+        field
+      }
+    }
+  }
+`;
+
+export {
+  SIGN_UP,
+  UPDATE_MEMBER_SHIPPING_ADDRESS,
+};

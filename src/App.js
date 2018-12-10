@@ -1,17 +1,39 @@
 import React, { Component } from 'react';
 
 import { ApolloProvider } from 'react-apollo';
-import ApolloClient from 'apollo-boost';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { createHttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
 
 import Routes from './routes';
 import { Header } from './components';
+import { getLocalStorageToken } from './helpers/auth';
 
 import './styles/App.scss';
 
+// Gets the authentication token from local storage if it exists
+const token = getLocalStorageToken().accessToken;
+
+const httpLink = createHttpLink({
+  uri: 'http://localhost/graphql',
+});
+
+const cache = new InMemoryCache();
+
+// Returns headers to the context so httpLink can read them
+const authLink = setContext((_, { headers }) => ({
+  headers: {
+    ...headers,
+    authorization: token ? `Bearer ${token}` : '',
+  },
+}));
+
 // Instantiates Apollo Client object for GraphQL
 const client = new ApolloClient({
-  uri: 'http://localhost/graphql',
+  link: authLink.concat(httpLink),
   connectToDevTools: process.env.NODE_ENV === 'development',
+  cache,
 });
 
 /**
@@ -22,7 +44,8 @@ class App extends Component {
 
   static defaultProps = {};
 
-  componentDidMount() {}
+  componentDidMount() {
+  }
 
   render() {
     return (

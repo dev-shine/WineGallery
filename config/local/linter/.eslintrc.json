@@ -9,7 +9,7 @@
   },
   "rules": {
     "react/jsx-filename-extension": [
-      1,
+      "warn",
       {
         "extensions": [
           ".js"
@@ -23,7 +23,7 @@
       }
     ],
     "comma-dangle": [
-      2,
+      "error",
       {
         "arrays": "always-multiline",
         "objects": "always-multiline",
@@ -33,7 +33,7 @@
       }
     ],
     "arrow-parens": [
-      2,
+      "error",
       "as-needed"
     ],
     "react/self-closing-comp": [
@@ -44,24 +44,24 @@
       }
     ],
     "no-plusplus": [
-      2,
+      "error",
       {
         "allowForLoopAfterthoughts": true
       }
     ],
     "react/destructuring-assignment": [
-      2,
+      "error",
       "always",
       {
         "ignoreClassFields": true
       }
     ],
     "padded-blocks": [
-      0,
+      "off",
       "never"
     ],
     "lines-around-comment": [
-      2,
+      "error",
       {
         "beforeBlockComment": true,
         "afterBlockComment": false,
@@ -75,20 +75,20 @@
       }
     ],
     "no-trailing-spaces": [
-      2,
+      "error",
       {
         "ignoreComments": true,
         "skipBlankLines": false
       }
     ],
     "no-confusing-arrow": [
-      2,
+      "error",
       {
         "allowParens": true
       }
     ],
     "no-unused-expressions": [
-      2,
+      "error",
       {
         "allowShortCircuit": true
       }
