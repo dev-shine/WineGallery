@@ -55,9 +55,8 @@ body {
 }
 
 div#root {
-  min-height: 100vh !important;
+  height: auto;
   min-width: 100vw;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
 }

@@ -19,6 +19,7 @@ class InputField extends Component {
     onKeyPress: PropTypes.func,
     validations: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])),
     hint: PropTypes.string,
+    reference: PropTypes.func,
   };
 
   static defaultProps = {
@@ -29,6 +30,7 @@ class InputField extends Component {
     onChange: null,
     onKeyPress: null,
     hint: '',
+    reference: null,
   };
 
   state = { errorText: [], inputValue: '' };
@@ -48,9 +50,10 @@ class InputField extends Component {
     const { onChange, name } = this.props;
     const { value } = event.target;
     this.setState({ inputValue: event.target.value });
-    onChange(name, value);
+    onChange && onChange(name, value);
   };
 
+  // TODO: create more form validations in src/helpers/validations.js [DEV-109]
   /**
    * Controls error in the input based on validation rules received from component declaration
    * @param event
@@ -62,6 +65,11 @@ class InputField extends Component {
       const validation = validations[index];
       this.setState({ errorText: validation(value) });
     }
+  };
+
+  handleRef = node => {
+    const { reference } = this.props;
+    reference && reference(node);
   };
 
   render() {
@@ -89,6 +97,7 @@ class InputField extends Component {
             placeholder={placeholder}
             onChange={this.handleChange}
             onBlur={this.handleValidation}
+            ref={node => this.handleRef(node)}
           />
         </label>
         <div className="hint">{hint}</div>

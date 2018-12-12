@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 import { Mutation } from 'react-apollo';
 
-import SIGN_UP from '../../graphql/mutations';
-
-import './SignUp.scss';
+import { SIGN_UP } from '../../graphql/mutations';
 import { checkEmail, checkName } from '../../helpers/validations';
 import InputField from '../../components/atoms/InputField/InputField';
+
+import './SignUp.scss';
 
 /**
  * Renders sign up page

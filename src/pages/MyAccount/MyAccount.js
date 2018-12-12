@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
-import { getLocalStorageToken } from '../../helpers/auth';
+import { Query } from 'react-apollo';
+
+import { GET_MEMBER } from '../../graphql/queries';
+import { ShippingAddressForm } from '../../components';
 
 import './MyAccount.scss';
 
@@ -9,57 +12,30 @@ import './MyAccount.scss';
  * React.Component: https://reactjs.org/docs/react-component.html
  * */
 class MyAccount extends Component {
-  static propTypes = {};
-
   static contextTypes = {};
 
-  state = {
-    user: {
-      email: '',
-    },
-    auth: {
-      accessToken: '',
-      refreshToken: '',
-      encodedTokens: localStorage.getItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE) || '',
-    },
-  };
-
-  componentDidMount() {
-    const { state } = this;
-
-    // Decodes tokens from localStorage --> https://www.npmjs.com/package/jsonwebtoken
-    const jwToken = state.auth.encodedTokens && getLocalStorageToken();
-    if (jwToken) {
-      this.setState({
-        user: {
-          email: jwToken.email,
-        },
-        auth: {
-          ...state.auth,
-          accessToken: jwToken.accessToken,
-          refreshToken: jwToken.refreshToken,
-        },
-      });
-    }
-  }
+  state = {};
 
   render() {
-    const { state } = this;
-    const { email } = state.user;
-    const { accessToken, refreshToken, encodedTokens } = state.auth;
-
     return (
       <div className="MyAccount">
         <div className="MyAccount--container">
           <h1 className="MyAccount--forms_title">My Account</h1>
-          <div className="MyAccount--forms_form">
-            <h2>Local Storage Decoded Information</h2>
-
-            <p>{`token: ${accessToken}`}</p>
-            <p>{`refresh_token: ${refreshToken}`}</p>
-            <p>{`email: ${email}`}</p>
-            <p>{`encoded_token: ${encodedTokens}`}</p>
-          </div>
+          <Query query={GET_MEMBER} fetchPolicy="cache-and-network">
+            {({ loading, error, data }) => {
+              if (loading) return 'Loading...';
+              if (error) return `Error! ${error.message}`;
+              console.log('data from HOC:', data);
+              if (data.me) {
+                return (
+                  <div className="MyAccount--forms_form">
+                    <ShippingAddressForm query={data.me} />
+                  </div>
+                );
+              }
+              return null;
+            }}
+          </Query>
           <div className="MyAccount--forms_social">
           </div>
         </div>
