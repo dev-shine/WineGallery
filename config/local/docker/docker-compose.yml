@@ -4,10 +4,10 @@ services:
 
   twgweb:
     build:
-      context: ../..
-      dockerfile: config/local/Dockerfile
+      context: ../../..
+      dockerfile: config/local/docker/Dockerfile
     volumes:
-      - '../..:/var/code/'
+      - '../../..:/var/code/'
     ports:
       - '3000:3000'
     environment:
