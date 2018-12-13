@@ -20,6 +20,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-between;
     position: relative;
 
     @extend %--fw_container;
@@ -43,20 +44,37 @@
       }
     }
 
-    &_form {
-      min-height: 450px;
+    &_account {
+      align-items: flex-start;
       display: flex;
       flex-direction: column;
+      justify-items: flex-start;
+      min-height: 450px;
       width: 45%;
-      align-items: flex-start;
-      justify-items: center;
       word-wrap: break-word;
 
       p {
         text-align: start;
         max-width: 100%;
       }
+    }
 
+    &_shipping {
+      align-items: flex-end;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      width: 45%;
+      word-wrap: break-word;
+
+      p {
+        text-align: end;
+        max-width: 100%;
+      }
+    }
+
+    &_shipping,
+    &_account {
       button {
         background-color: #fff;
         border: 3px solid $brand-danger;
@@ -73,20 +91,6 @@
           background-color: $brand-danger;
           color: white;
         }
-      }
-    }
-
-    &_social {
-      align-items: flex-end;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      width: 45%;
-      word-wrap: break-word;
-
-      p {
-        text-align: end;
-        max-width: 100%;
       }
     }
   }

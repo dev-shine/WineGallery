@@ -10,6 +10,7 @@ import ErrorBoundary from './molecules/ErrorBoundary/ErrorBoundary';
 import Header from './organisms/Header/Header';
 import SimpleList from './organisms/SimpleList/SimpleList';
 import ShippingAddressForm from './organisms/ShippingAddressForm/ShippingAddressForm';
+import AccountDetailsForm from './organisms/AccountDetailsForm/AccountDetailsForm';
 
 export {
 
@@ -25,4 +26,5 @@ export {
   Header,
   SimpleList,
   ShippingAddressForm,
+  AccountDetailsForm,
 };

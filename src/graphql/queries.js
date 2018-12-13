@@ -15,6 +15,8 @@ const GET_MEMBER = gql`
       id
       email
       birthDate
+      mobileNumber
+      gender
       firstName
       lastName
       shippingAddress {
