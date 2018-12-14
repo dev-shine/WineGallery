@@ -5,7 +5,13 @@ import { Mutation } from 'react-apollo';
 
 import { GET_MEMBER } from '../../../graphql/queries';
 import { UPDATE_MEMBER_SHIPPING_ADDRESS } from '../../../graphql/mutations';
-import InputField from '../../atoms/InputField/InputField';
+import {
+  checkAddress,
+  checkName,
+  checkServerValidation,
+  checkState,
+} from '../../../helpers/validations';
+import { InputField } from '../..';
 
 import './ShippingAddressForm.scss';
 
@@ -18,16 +24,16 @@ const ShippingAddressForm = props => {
   const { query } = props;
 
   // Initiates variables that will hold the value to pass into the mutation
-  let firstName;
-  let lastName;
   let city;
   let line1;
   let line2;
-  let postcode;
   let country;
+  let company;
+  let postcode;
+  let lastName;
+  let firstName;
   let contactNumber;
   let stateTerritory;
-  let company;
   let addressUnavailableInstruction;
 
   // Verifies if member has shipping address
@@ -35,7 +41,7 @@ const ShippingAddressForm = props => {
 
   return (
     <Mutation mutation={UPDATE_MEMBER_SHIPPING_ADDRESS} refetchQueries={() => [{ query: GET_MEMBER }]}>
-      {(updateShippingAddress, { error }) => {
+      {(updateShippingAddress, { data, error }) => {
         if (error) {
           error.graphQLErrors.map(message => console.log('Non-friendly error message', message.message));
         }
@@ -71,6 +77,7 @@ const ShippingAddressForm = props => {
                   label="First Name"
                   name="firstName"
                   id="firstName"
+                  validations={[checkName]}
                   value={hasShippingAddress ? query.shippingAddress.firstName : ''}
                   reference={node => {
                     firstName = node;
@@ -82,6 +89,7 @@ const ShippingAddressForm = props => {
                   name="lastName"
                   id="lastName"
                   value={hasShippingAddress ? query.shippingAddress.lastName : ''}
+                  validations={[checkName]}
                   reference={node => {
                     lastName = node;
                   }}
@@ -92,6 +100,7 @@ const ShippingAddressForm = props => {
                   name="addressLine1"
                   id="addressLine1"
                   value={hasShippingAddress ? query.shippingAddress.line1 : ''}
+                  validations={[checkAddress]}
                   reference={node => {
                     line1 = node;
                   }}
@@ -101,7 +110,7 @@ const ShippingAddressForm = props => {
                   label="Address line 2"
                   name="addressLine2"
                   id="addressLine2"
-                  value={hasShippingAddress ? query.shippingAddress.line2 : ''}
+                  value={hasShippingAddress && query.shippingAddress.line2 ? query.shippingAddress.line2 : ''}
                   reference={node => {
                     line2 = node;
                   }}
@@ -111,13 +120,14 @@ const ShippingAddressForm = props => {
                   label="State"
                   name="stateTerritory"
                   id="stateTerritory"
+                  validations={[checkState]}
                   value={hasShippingAddress ? query.shippingAddress.state : ''}
                   reference={node => {
                     stateTerritory = node;
                   }}
                 />
                 <InputField
-                  type="text"
+                  type="number"
                   label="Contact number"
                   name="contactNumber"
                   id="contactNumber"
@@ -125,6 +135,9 @@ const ShippingAddressForm = props => {
                   reference={node => {
                     contactNumber = node;
                   }}
+                  serverValidation={
+                    data && checkServerValidation(data, 'updateMemberShippingAddress', 'contact_number')
+                  }
                 />
                 <InputField
                   type="number"
@@ -145,6 +158,9 @@ const ShippingAddressForm = props => {
                   reference={node => {
                     country = node;
                   }}
+                  serverValidation={
+                    data && checkServerValidation(data, 'updateMemberShippingAddress', 'countryId')
+                  }
                 />
                 <InputField
                   type="text"
@@ -155,6 +171,9 @@ const ShippingAddressForm = props => {
                   reference={node => {
                     city = node;
                   }}
+                  serverValidation={
+                    data && checkServerValidation(data, 'updateMemberShippingAddress', 'city')
+                  }
                 />
                 <InputField
                   type="text"

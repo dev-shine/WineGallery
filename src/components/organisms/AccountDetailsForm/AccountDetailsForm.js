@@ -5,6 +5,12 @@ import { Mutation } from 'react-apollo';
 
 import { GET_MEMBER } from '../../../graphql/queries';
 import { UPDATE_MEMBER_ACCOUNT_DETAILS } from '../../../graphql/mutations';
+import {
+  checkEmail,
+  checkName,
+  checkPassword,
+  checkServerValidation,
+} from '../../../helpers/validations';
 import InputField from '../../atoms/InputField/InputField';
 
 import './AccountDetailsForm.scss';
@@ -85,7 +91,7 @@ const AccountDetailsForm = props => {
 
   return (
     <Mutation mutation={UPDATE_MEMBER_ACCOUNT_DETAILS} refetchQueries={() => [{ query: GET_MEMBER }]}>
-      {(updateShippingAddress, { error }) => {
+      {(updateShippingAddress, { data, error }) => {
         if (error) {
           error.graphQLErrors.map(message => console.log('Non-friendly error message', message.message));
         }
@@ -99,6 +105,7 @@ const AccountDetailsForm = props => {
                   label="First Name"
                   name="accountDetailsFirstName"
                   id="accountDetailsFirstName"
+                  validations={[checkName]}
                   value={query.firstName}
                   reference={node => {
                     firstName = node;
@@ -110,6 +117,7 @@ const AccountDetailsForm = props => {
                   name="accountDetailsLastName"
                   id="accountDetailsLastName"
                   value={query.lastName}
+                  validations={[checkName]}
                   reference={node => {
                     lastName = node;
                   }}
@@ -120,6 +128,7 @@ const AccountDetailsForm = props => {
                   name="birthDate"
                   id="birthDate"
                   value={query.birthDate}
+                  serverValidation={data && checkServerValidation(data, 'updateMember', 'birth_date')}
                   reference={node => {
                     birthDate = node;
                   }}
@@ -135,11 +144,12 @@ const AccountDetailsForm = props => {
                   }}
                 />
                 <InputField
-                  type="text"
+                  type="number"
                   label="Mobile number"
                   name="mobileNumber"
                   id="mobileNumber"
                   value={query.mobileNumber}
+                  serverValidation={data && checkServerValidation(data, 'updateMember', 'mobile_number')}
                   reference={node => {
                     mobileNumber = node;
                   }}
@@ -150,6 +160,8 @@ const AccountDetailsForm = props => {
                   name="email"
                   id="email"
                   value={query.email}
+                  serverValidation={data && checkServerValidation(data, 'updateMember', 'email')}
+                  validations={[checkEmail]}
                   reference={node => {
                     email = node;
                   }}
@@ -160,6 +172,7 @@ const AccountDetailsForm = props => {
                   name="newPassword"
                   id="newPassword"
                   value={query.password}
+                  validations={[checkPassword]}
                   reference={node => {
                     newPassword = node;
                   }}
@@ -169,6 +182,7 @@ const AccountDetailsForm = props => {
                   label="Confirm password"
                   name="confirmPassword"
                   id="confirmPassword"
+                  validations={[checkPassword]}
                   reference={node => {
                     confirmPassword = node;
                   }}

@@ -48,7 +48,7 @@ const setLocalStorageToken = (response, email) => {
 
 /**
  * Checks if the browser has session stored in local storage
- * @return boolean
+ * @return {boolean}
  * */
 const isLoggedIn = () => {
 

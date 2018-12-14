@@ -3,7 +3,12 @@ import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 
 import { SIGN_UP } from '../../graphql/mutations';
-import { checkEmail, checkName } from '../../helpers/validations';
+import {
+  checkEmail,
+  checkName,
+  checkPassword,
+  checkServerValidation,
+} from '../../helpers/validations';
 import InputField from '../../components/atoms/InputField/InputField';
 
 import './SignUp.scss';
@@ -50,7 +55,7 @@ class SignUp extends Component {
     if (confirmPassword === signUpInput.password) {
       signUp({ variables: { input: { ...signUpInput } } });
     } else {
-      this.setState({ errors: 'Sorry, your passwords do not match.' });
+      this.setState({ errors: ['Sorry, your passwords do not match.'] });
     }
   };
 
@@ -86,6 +91,7 @@ class SignUp extends Component {
                     value={firstName}
                     onChange={this.handleChange}
                     validations={[checkName]}
+                    serverValidation={data && checkServerValidation(data, 'signUp', 'first_name')}
                   />
                   <InputField
                     label="Last Name"
@@ -96,6 +102,7 @@ class SignUp extends Component {
                     value={lastName}
                     onChange={this.handleChange}
                     validations={[checkName]}
+                    serverValidation={data && checkServerValidation(data, 'signUp', 'last_name')}
                   />
                   <InputField
                     label="Email"
@@ -106,6 +113,16 @@ class SignUp extends Component {
                     value={email}
                     onChange={this.handleChange}
                     validations={[checkEmail]}
+                    serverValidation={data && checkServerValidation(data, 'signUp', 'email')}
+                  />
+                  <InputField
+                    label="Date of birth"
+                    name="birthDate"
+                    id="birthDate"
+                    type="date"
+                    value={birthDate}
+                    onChange={this.handleChange}
+                    serverValidation={data && checkServerValidation(data, 'signUp', 'birth_date')}
                   />
                   <InputField
                     label="Password"
@@ -115,7 +132,7 @@ class SignUp extends Component {
                     type="password"
                     value={password}
                     onChange={this.handleChange}
-                    validations={[checkEmail]}
+                    validations={[checkPassword]}
                   />
                   <InputField
                     label="Confirm the password"
@@ -125,18 +142,8 @@ class SignUp extends Component {
                     type="password"
                     value={confirmPassword}
                     onChange={this.handleChange}
-                    validations={[checkEmail]}
                   />
-                  <InputField
-                    label="Birth date"
-                    name="birthDate"
-                    id="birthDate"
-                    type="date"
-                    value={birthDate}
-                    onChange={this.handleChange}
-                    validations={[checkEmail]}
-                  />
-                  {errors && <span>{errors}</span>}
+                  {errors && <span>{errors[0]}</span>}
                   <button onClick={() => this.handleSubmit(signUp)} type="button">
                     submit
                   </button>

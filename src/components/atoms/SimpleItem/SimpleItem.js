@@ -30,7 +30,7 @@ class SimpleItem extends Component {
    * @param item: object
    * @param propertiesLength: number
    *
-   * @return Stateless React Component
+   * @return {React.Component}: stateless component
    * */
   renderItemText = (index, property, item, propertiesLength) => {
     let result = '';

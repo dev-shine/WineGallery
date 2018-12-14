@@ -13,7 +13,7 @@ const MyAccount = React.lazy(() => import('./pages/MyAccount/MyAccount'));
  * Protects routes (pages) that require login to be visualized, as example My Account page
  * @param ChildComponent
  * @param rest
- * @return {*}
+ * @return {React.Component}: stateless component
  * */
 const PrivateRoute = ({ component: ChildComponent, ...rest }) => (
   <Route
