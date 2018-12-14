@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 
 import { GET_MEMBER } from '../../graphql/queries';
-import { ShippingAddressForm } from '../../components';
+import { AccountDetailsForm, ShippingAddressForm } from '../../components';
 
 import './MyAccount.scss';
 
@@ -19,26 +19,26 @@ class MyAccount extends Component {
   render() {
     return (
       <div className="MyAccount">
-        <div className="MyAccount--container">
-          <h1 className="MyAccount--forms_title">My Account</h1>
-          <Query query={GET_MEMBER} fetchPolicy="cache-and-network">
-            {({ loading, error, data }) => {
-              if (loading) return 'Loading...';
-              if (error) return `Error! ${error.message}`;
-              console.log('data from HOC:', data);
-              if (data.me) {
-                return (
-                  <div className="MyAccount--forms_form">
+        <Query query={GET_MEMBER} fetchPolicy="cache-and-network">
+          {({ loading, error, data }) => {
+            if (loading) return 'Loading...';
+            if (error) return `Error! ${error.message}`;
+            if (data.me) {
+              return (
+                <div className="MyAccount--container">
+                  <h1 className="MyAccount--forms_title">My Account</h1>
+                  <div className="MyAccount--forms_account">
+                    <AccountDetailsForm query={data.me} />
+                  </div>
+                  <div className="MyAccount--forms_shipping">
                     <ShippingAddressForm query={data.me} />
                   </div>
-                );
-              }
-              return null;
-            }}
-          </Query>
-          <div className="MyAccount--forms_social">
-          </div>
-        </div>
+                </div>
+              );
+            }
+            return <div>Ooops, this is embarrassing... Something went wrong, try to reload your page.</div>;
+          }}
+        </Query>
       </div>
     );
   }

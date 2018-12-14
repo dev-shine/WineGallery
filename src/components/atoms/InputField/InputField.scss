@@ -1,14 +1,18 @@
 .InputField {
+  width: 100%;
+
   label {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
   }
 
   input {
     border: none;
     border-bottom: 2px solid black;
-    width: 300px;
+    width: 100%;
+    min-width: 300px;
     margin: 15px 0;
   }
 }

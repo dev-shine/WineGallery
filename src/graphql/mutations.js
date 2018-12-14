@@ -43,7 +43,26 @@ const UPDATE_MEMBER_SHIPPING_ADDRESS = gql`
   }
 `;
 
+const UPDATE_MEMBER_ACCOUNT_DETAILS = gql`
+  mutation UpdateMemberAccountDetails($input: MemberMutationInput!) {
+    updateMember(input: $input) {
+       id
+      email
+      birthDate
+      mobileNumber
+      gender
+      firstName
+      lastName
+      errors {
+        messages
+        field
+      }
+    }
+  }
+`;
+
 export {
   SIGN_UP,
   UPDATE_MEMBER_SHIPPING_ADDRESS,
+  UPDATE_MEMBER_ACCOUNT_DETAILS,
 };
