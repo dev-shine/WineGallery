@@ -35,7 +35,7 @@ class Login extends Component {
 
       // Ensures user is logged out
       // TODO: remove this when we introduce local state from Apollo
-      window.location = 'http://localhost:3000/login';
+      window.location = `${process.env.REACT_APP_BASE_URL}/login`;
     }
 
     // Decodes tokens from localStorage --> https://www.npmjs.com/package/jsonwebtoken
@@ -98,7 +98,7 @@ class Login extends Component {
 
         // Redirects to my account page
         // TODO: change this to this.props.history.push() when we introduce local state from Apollo
-        window.location = 'http://localhost:3000/my-account';
+        window.location = `${process.env.REACT_APP_BASE_URL}/my-account`;
       })
 
       // Catches error from server (if login unsuccessful) and show message in the form

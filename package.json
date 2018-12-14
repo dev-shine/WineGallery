@@ -43,6 +43,7 @@
   "scripts": {
     "start": "concurrently -n dev,rm-env \"cp config/local/.env.local .env.local && cp config/.env .env && react-scripts start \" \"sleep 15 && rm .env.local && rm .env\"",
     "build": "cp config/production/.env.production .env.production && cp config/.env .env && react-scripts build && rm .env.production && rm .env",
+    "build-netlify": "react-scripts build",
     "staging": "cp config/development/.env.development .env.development && cp config/.env .env && react-scripts build",
     "eslint": "echo '##### LINTING JAVASCRIPT FILES ######' && eslint . --config ./config/local/linter/.eslintrc.json --ignore-path ./config/local/linter/.eslintignore",
     "eslint-fix": "echo '##### LINTING JAVASCRIPT FILES ######' && eslint . --fix --config ./config/local/linter/.eslintrc.json --ignore-path ./config/local/linter/.eslintignore",
