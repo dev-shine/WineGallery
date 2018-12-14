@@ -16,7 +16,7 @@ import './styles/App.scss';
 const token = getLocalStorageToken().accessToken;
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost/graphql',
+  uri: process.env.REACT_APP_API_ENDPOINT_GQL,
 });
 
 const cache = new InMemoryCache();
