@@ -9,7 +9,7 @@ import './SimpleItem.scss';
  * */
 class SimpleItem extends Component {
   static propTypes = {
-    item: PropTypes.shape({ id: PropTypes.number.isRequired }),
+    item: PropTypes.shape({ id: PropTypes.string.isRequired }),
     name: PropTypes.string,
   };
 
@@ -33,17 +33,14 @@ class SimpleItem extends Component {
    * @return {React.Component}: stateless component
    * */
   renderItemText = (index, property, item, propertiesLength) => {
-    let result = '';
-
     if (index !== propertiesLength - 1) {
-      result = (
+      return (
         <p key={property + item.id}>
           {`${property}: ${item[property]}`}
         </p>
       );
     }
-
-    return result;
+    return null;
   };
 
   render() {

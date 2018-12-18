@@ -1,0 +1,16 @@
+.WineItems {
+  margin: 10px 0;
+
+  > div {
+    display: flex;
+    flex-wrap: wrap;
+
+    > div {
+      border: 1px dashed black;
+      min-height: 70px;
+      margin: 20px 1%;
+      padding: 15px 2px;
+      width: 22%;
+    }
+  }
+}
