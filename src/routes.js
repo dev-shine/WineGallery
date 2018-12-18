@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import { Home, PasswordReset, SignUp } from './pages';
+import {
+  Home, PasswordReset, SetNewPassword, SignUp,
+} from './pages';
 import { isLoggedIn } from './helpers/auth';
 
 // Declares lazily loaded components --> https://reactjs.org/docs/code-splitting.html#reactlazy
@@ -48,6 +50,7 @@ class Routes extends Component {
         <Route path="/home" exact component={Home} />
         <Route path="/signup" component={SignUp} />
         <Route path="/password-reset" component={PasswordReset} />
+        <Route path="/set-new-password/:uid/:token" component={SetNewPassword} />
 
         {/* Renders lazily loaded components --> https://reactjs.org/docs/code-splitting.html#reactlazy */}
         <Route path="/login" render={props => <Login {...props} />} />

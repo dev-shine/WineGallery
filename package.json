@@ -52,7 +52,8 @@
     "lint": "yarn eslint && yarn stylelint",
     "lint-fix": "yarn eslint-fix && yarn stylelint-fix",
     "test": "react-scripts test --watchAll=false",
-    "test-watch": "react-scripts test"
+    "test-watch": "react-scripts test",
+    "test-with-coverage": "react-scripts test --watchAll=false --collectCoverage"
   },
   "extends": [
     "airbnb",

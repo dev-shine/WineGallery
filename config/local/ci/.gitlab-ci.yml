@@ -13,4 +13,4 @@ yarn_ci:
     - yarn install
     - yarn eslint
     - yarn stylelint
-    - yarn test
+    - yarn test-with-coverage

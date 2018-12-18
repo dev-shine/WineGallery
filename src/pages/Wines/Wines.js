@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { SimpleList, ErrorBoundary } from '../../components';
+import { ErrorBoundary, SimpleList } from '../../components';
 import { GET_WINES } from '../../graphql/queries';
 
 import './Wines.scss';
