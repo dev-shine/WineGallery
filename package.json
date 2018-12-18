@@ -52,8 +52,7 @@
     "lint": "yarn eslint && yarn stylelint",
     "lint-fix": "yarn eslint-fix && yarn stylelint-fix",
     "test": "react-scripts test --watchAll=false",
-    "test-watch": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test-watch": "react-scripts test"
   },
   "extends": [
     "airbnb",

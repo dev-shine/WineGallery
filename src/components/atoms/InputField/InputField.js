@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 import './InputField.scss';
 
@@ -17,20 +17,22 @@ class InputField extends Component {
     id: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     onKeyPress: PropTypes.func,
-    validations: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])),
     hint: PropTypes.string,
     reference: PropTypes.func,
+    validations: PropTypes.arrayOf(PropTypes.func),
+    serverValidation: PropTypes.arrayOf(PropTypes.string),
   };
 
   static defaultProps = {
+    hint: '',
     type: 'text',
     value: '',
-    validations: [],
-    placeholder: '',
     onChange: null,
-    onKeyPress: null,
-    hint: '',
     reference: null,
+    onKeyPress: null,
+    validations: [],
+    serverValidation: [],
+    placeholder: '',
   };
 
   state = { errorText: [], inputValue: '' };
@@ -41,6 +43,21 @@ class InputField extends Component {
       inputValue: value,
     });
   }
+
+  componentDidUpdate(nextProps) {
+    const { props } = this;
+
+    // Updates errorText with error that returns from server
+    if (nextProps.serverValidation !== props.serverValidation) {
+      this.handleUpdateMessageError(props.serverValidation);
+    }
+  }
+
+  handleUpdateMessageError = serverValidation => {
+    this.setState({
+      errorText: serverValidation,
+    });
+  };
 
   /**
    * Assigns value from the input field to the state and passes value and field name up to parent component
@@ -53,7 +70,6 @@ class InputField extends Component {
     onChange && onChange(name, value);
   };
 
-  // TODO: create more form validations in src/helpers/validations.js [DEV-109]
   /**
    * Controls error in the input based on validation rules received from component declaration
    * @param event
@@ -67,6 +83,10 @@ class InputField extends Component {
     }
   };
 
+  /**
+   * Assigns value to input object
+   * @param node
+   * */
   handleRef = node => {
     const { reference } = this.props;
     reference && reference(node);
@@ -92,7 +112,7 @@ class InputField extends Component {
             id={id}
             name={name}
             type={type}
-            value={type === 'email' ? inputValue.toLowerCase() : inputValue}
+            value={type === 'email' ? inputValue.toLowerCase() : inputValue || ''}
             onKeyPress={onKeyPress}
             placeholder={placeholder}
             onChange={this.handleChange}
