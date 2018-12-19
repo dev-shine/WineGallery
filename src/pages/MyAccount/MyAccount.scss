@@ -73,6 +73,15 @@
       }
     }
 
+    &_contact-preferences {
+      align-items: flex-end;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      width: 45%;
+      word-wrap: break-word;
+    }
+
     &_shipping,
     &_account {
       button {

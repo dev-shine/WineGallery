@@ -1,96 +1,96 @@
 import gql from 'graphql-tag';
 
 const GET_WINE_COUNTRIES = gql`
-    query WineCountries {
-        allWineCountries {
-            id
-            name
-        }
+  query WineCountries {
+    allWineCountries {
+      id
+      name
     }
+  }
 `;
 const GET_TASTES = gql`
-    query Tastes {
-        allTastes {
-            id
-            name
-        }
+  query Tastes {
+    allTastes {
+      id
+      name
     }
+  }
 `;
 
 const GET_FOODS = gql`
-    query Foods {
-        allFoods {
-            id
-            name
-        }
+  query Foods {
+    allFoods {
+      id
+      name
     }
+  }
 `;
 
 const GET_SEASONS = gql`
-    query Seasons {
-        allSeasons {
-            id
-            name
-        }
+  query Seasons {
+    allSeasons {
+      id
+      name
     }
+  }
 `;
 
 const GET_WINE_PRODUCTIONS = gql`
-    query WineProductions {
-        allWineProductionMethods {
-            id
-            name
-        }
+  query WineProductions {
+    allWineProductionMethods {
+      id
+      name
     }
+  }
 `;
 
 const GET_WINE_COLOURS = gql`
-    query WineColours {
-        allWineClasses {
-            id
-            name
-        }
+  query WineColours {
+    allWineClasses {
+      id
+      name
     }
+  }
 `;
 
 const GET_WINE_TYPES = gql`
-    query WineTypes {
-        allWineTypes {
-            id
-            name
-        }
+  query WineTypes {
+    allWineTypes {
+      id
+      name
     }
+  }
 `;
 
 const GET_WINE_BODIES = gql`
-    query WineBodies {
-        allWineBodies {
-            id
-            name
-        }
+  query WineBodies {
+    allWineBodies {
+      id
+      name
     }
+  }
 `;
 
 const GET_WINE_TANNINS = gql`
-    query WineTannins {
-        allWineTannins{
-            id
-            name
-        }
+  query WineTannins {
+    allWineTannins{
+      id
+      name
     }
+  }
 `;
 
 const GET_WINE_SWEETNESSES = gql`
-    query WineSweetnesses {
-        allWineSweetnesses{
-            id
-            name
-        }
+  query WineSweetnesses {
+    allWineSweetnesses{
+      id
+      name
     }
+  }
 `;
 
 const GET_WINES = gql`
-    query GetWines (
+  query GetWines (
     $year: String
     $wineClassId: Int
     $wineTypeId: Int
@@ -104,78 +104,89 @@ const GET_WINES = gql`
     $foodId: Int
     $countryId: Int
     $order: AllWinesOrderField
+  ) {
+    allWines (
+      year: $year
+      wineClassId: $wineClassId
+      wineTypeId: $wineTypeId
+      wineBodyId: $wineBodyId
+      wineSweetnessId: $wineSweetnessId
+      wineTanninId: $wineTanninId
+      wineStyleId: $wineStyleId
+      wineProductionMethodId: $wineProductionMethodId
+      seasonId: $seasonId
+      tasteId: $tasteId
+      foodId: $foodId
+      countryId: $countryId
+      order: $order
     ) {
-        allWines (
-            year: $year
-            wineClassId: $wineClassId
-            wineTypeId: $wineTypeId
-            wineBodyId: $wineBodyId
-            wineSweetnessId: $wineSweetnessId
-            wineTanninId: $wineTanninId
-            wineStyleId: $wineStyleId
-            wineProductionMethodId: $wineProductionMethodId
-            seasonId: $seasonId
-            tasteId: $tasteId
-            foodId: $foodId
-            countryId: $countryId
-            order: $order
-        ) {
-            id
-            year
-            country {
-                name
-            }
-            product{
-                name
-                sellingPrice
-                productPhotos {
-                    photoWineListing
-                }
-            }
-            wineType{
-                name
-                wineClass {
-                    name
-                }
-            }
+      id
+      year
+      country {
+        name
+      }
+      product{
+        name
+        sellingPrice
+        productPhotos {
+          photoWineListing
         }
+      }
+      wineType{
+        name
+        wineClass {
+          name
+        }
+      }
     }
+  }
 `;
 
 const GET_MEMBER = gql`
-    query Me {
-        me {
-            id
-            email
-            birthDate
-            mobileNumber
-            gender
-            firstName
-            lastName
-            shippingAddress {
-                id
-                firstName
-                lastName
-                line1
-                line2
-                company
-                state
-                postcode
-                contactNumber
-                city
-                state
-                country {
-                    id
-                    name
-                }
-                addressUnavailableInstruction {
-                    id
-                    nameShort
-                    specifyLocation
-                }
-            }
+  query Me {
+    me {
+      id
+      email
+      birthDate
+      mobileNumber
+      gender
+      firstName
+      lastName
+      shippingAddress {
+        id
+        firstName
+        lastName
+        line1
+        line2
+        company
+        state
+        postcode
+        contactNumber
+        city
+        state
+        country {
+          id
+          name
         }
+        addressUnavailableInstruction {
+          id
+          nameShort
+          specifyLocation
+        }
+      }
+      contactpreferenceSet {
+        id
+        contactType {
+          id
+          name
+        }
+        contactMethod {
+          id
+          name
+        }
+      }
     }
+  }
 `;
 
 export {
