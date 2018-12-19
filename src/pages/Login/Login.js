@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { HTTP_METHODS } from '../../helpers/constants';
 import executeRestApi from '../../helpers/rest';
@@ -144,6 +145,7 @@ class Login extends Component {
               value={password}
               onChange={this.handleChange}
             />
+            <Link to="/password-reset">Forgot your password?</Link>
             <button type="button" onClick={this.handleSubmit}>Login</button>
             {error && error.errorDescription && <div>{error.errorDescription}</div>}
           </div>

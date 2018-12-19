@@ -14,6 +14,28 @@ const SIGN_UP = gql`
   }
 `;
 
+const RESET_PASSWORD = gql`
+  mutation ResetPasswordMutation($email: String!) {
+    resetPassword(email: $email) {
+      success
+      error
+    }
+  }
+`;
+
+const SET_NEW_PASSWORD = gql`
+  mutation SetNewPassword(
+    $password: String!, $passwordConfirmation: String!, $token: String!, $uidb64: String!
+  ) {
+    setNewPassword(
+      password: $password, passwordConfirmation: $passwordConfirmation, token: $token, uidb64: $uidb64
+    ) {
+      success
+      error
+    }
+  }
+`;
+
 const UPDATE_MEMBER_SHIPPING_ADDRESS = gql`
   mutation UpdateMemberShippingAddress($input: ShippingAddressInput!) {
     updateMemberShippingAddress(input: $input) {
@@ -63,6 +85,8 @@ const UPDATE_MEMBER_ACCOUNT_DETAILS = gql`
 
 export {
   SIGN_UP,
+  RESET_PASSWORD,
+  SET_NEW_PASSWORD,
   UPDATE_MEMBER_SHIPPING_ADDRESS,
   UPDATE_MEMBER_ACCOUNT_DETAILS,
 };

@@ -2,6 +2,9 @@
   "extends": [
     "airbnb"
   ],
+  "plugins": [
+    "eslint-plugin-import"
+  ],
   "parser": "babel-eslint",
   "env": {
     "browser": true,
@@ -91,6 +94,18 @@
       "error",
       {
         "allowShortCircuit": true
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "parent", "sibling", "index"]
+      }
+    ],
+    "import/newline-after-import": [
+      "error",
+      {
+        "count": 1
       }
     ]
   }
