@@ -1,5 +1,37 @@
 import gql from 'graphql-tag';
 
+const CREATE_CONTACT_PREFERENCE = gql`
+  mutation CreateMemberContactPreference($input: CreateContactPreferenceInput!) {
+    createMemberContactPreference(input: $input) {
+      contactPreference {
+        id
+        contactType{
+          id
+        }
+        contactMethod{
+          id
+        }
+      }
+      errors {
+        messages
+        field
+      }
+    }
+  }
+`;
+
+const DELETE_CONTACT_PREFERENCE = gql`
+  mutation DeleteMemberContactPreference($input: DeleteContactPreferenceInput!) {
+    deleteMemberContactPreference(input: $input) {
+      isDeleted
+      errors {
+        messages
+        field
+      }
+    }
+  }
+`;
+
 const SIGN_UP = gql`
   mutation SignUpMutation($input: MemberMutationInput!) {
     signUp(input: $input) {
@@ -25,7 +57,7 @@ const RESET_PASSWORD = gql`
 
 const SET_NEW_PASSWORD = gql`
   mutation SetNewPassword(
-    $password: String!, $passwordConfirmation: String!, $token: String!, $uidb64: String!
+  $password: String!, $passwordConfirmation: String!, $token: String!, $uidb64: String!
   ) {
     setNewPassword(
       password: $password, passwordConfirmation: $passwordConfirmation, token: $token, uidb64: $uidb64
@@ -68,7 +100,7 @@ const UPDATE_MEMBER_SHIPPING_ADDRESS = gql`
 const UPDATE_MEMBER_ACCOUNT_DETAILS = gql`
   mutation UpdateMemberAccountDetails($input: MemberMutationInput!) {
     updateMember(input: $input) {
-       id
+      id
       email
       birthDate
       mobileNumber
@@ -83,10 +115,34 @@ const UPDATE_MEMBER_ACCOUNT_DETAILS = gql`
   }
 `;
 
+const UPDATE_SUBSCRIPTION = gql`
+  mutation UpdateSubscription ($input:  SubscriptionInput!){
+    updateSubscription(input: $input) {
+      subscription {
+        id
+        billingDay
+        subscriptionStatus {
+          id
+          name
+        }
+        holdUntilDate
+        monthFrequency
+      }
+      errors{
+        field
+        messages
+      }
+    }
+  }
+`;
+
 export {
-  SIGN_UP,
+  CREATE_CONTACT_PREFERENCE,
+  DELETE_CONTACT_PREFERENCE,
   RESET_PASSWORD,
   SET_NEW_PASSWORD,
-  UPDATE_MEMBER_SHIPPING_ADDRESS,
+  SIGN_UP,
+  UPDATE_SUBSCRIPTION,
   UPDATE_MEMBER_ACCOUNT_DETAILS,
+  UPDATE_MEMBER_SHIPPING_ADDRESS,
 };

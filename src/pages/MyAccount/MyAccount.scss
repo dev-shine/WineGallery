@@ -44,6 +44,16 @@
       }
     }
 
+    &_subscription {
+      align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+      justify-items: flex-start;
+      min-height: 450px;
+      width: 45%;
+      word-wrap: break-word;
+    }
+
     &_account {
       align-items: flex-start;
       display: flex;
@@ -71,6 +81,15 @@
         text-align: end;
         max-width: 100%;
       }
+    }
+
+    &_contact-preferences {
+      align-items: flex-end;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      width: 45%;
+      word-wrap: break-word;
     }
 
     &_shipping,

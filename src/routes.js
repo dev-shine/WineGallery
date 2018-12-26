@@ -10,6 +10,7 @@ import { isLoggedIn } from './helpers/auth';
 const Wines = React.lazy(() => import('./pages/Wines/Wines'));
 const Login = React.lazy(() => import('./pages/Login/Login'));
 const MyAccount = React.lazy(() => import('./pages/MyAccount/MyAccount'));
+const Quiz = React.lazy(() => import('./pages/Quiz/Quiz'));
 
 /**
  * Protects routes (pages) that require login to be visualized, as example My Account page
@@ -55,6 +56,7 @@ class Routes extends Component {
         {/* Renders lazily loaded components --> https://reactjs.org/docs/code-splitting.html#reactlazy */}
         <Route path="/login" render={props => <Login {...props} />} />
         <Route path="/wines" render={() => <Wines />} />
+        <Route path="/quiz" render={() => <Quiz />} />
 
         <PrivateRoute path="/my-account" component={MyAccount} />
 
