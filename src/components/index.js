@@ -1,6 +1,7 @@
 // Atoms
 import SimpleItem from './atoms/SimpleItem/SimpleItem';
 import InputField from './atoms/InputField/InputField';
+import CheckBox from './atoms/CheckBox/CheckBox';
 
 // Molecules
 import SimpleListItem from './molecules/SimpleListItem/SimpleListItem';
@@ -15,12 +16,14 @@ import AccountDetailsForm from './organisms/AccountDetailsForm/AccountDetailsFor
 import WineFilters from './organisms/WineFilters/WineFilters';
 import WineList from './organisms/WineList/WineList';
 import WineSorters from './organisms/WineSorters/WineSorters';
+import ContactPreferencesForm from './organisms/ContactPreferencesForm/ContactPreferencesForm';
 
 export {
 
   // Atoms
   SimpleItem,
   InputField,
+  CheckBox,
 
   // Molecules
   SimpleListItem,
@@ -35,4 +38,5 @@ export {
   WineFilters,
   WineSorters,
   WineList,
+  ContactPreferencesForm,
 };

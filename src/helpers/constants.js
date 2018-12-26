@@ -12,6 +12,15 @@ const HTTP_METHODS = {
   DELETE: 'delete',
 };
 
+const WINE_SORTER = {
+  COLOUR: 'Colour',
+  NEWEST: 'Newest arrivals',
+  WINE_BODY_ASC: 'Body: Low to high',
+  WINE_BODY_DESC: 'Body: High to low',
+  WINE_TYPE_ASC: 'Grape Name: A to Z',
+  WINE_TYPE_DESC: 'Grape Name: Z to A',
+};
+
 const AU_STATES = new Map([
   ['ACT', 'ACT'],
   ['NSW', 'NSW'],
@@ -23,18 +32,24 @@ const AU_STATES = new Map([
   ['WA', 'WA'],
 ]);
 
-const WINE_SORTER = {
-  COLOUR: 'Colour',
-  NEWEST: 'Newest arrivals',
-  WINE_BODY_ASC: 'Body: Low to high',
-  WINE_BODY_DESC: 'Body: High to low',
-  WINE_TYPE_ASC: 'Grape Name: A to Z',
-  WINE_TYPE_DESC: 'Grape Name: Z to A',
-};
+const CONTACT_TYPE_ID_TO_ENUM = new Map([
+  ['1', 'WINE_SELECTION'],
+  ['2', 'DELIVERY'],
+  ['3', 'BADGE'],
+  ['4', 'SOCIAL'],
+  ['5', 'NEWSLETTER'],
+]);
+
+const CONTACT_METHOD_ID_TO_ENUM = new Map([
+  ['1', 'EMAIL'],
+  ['2', 'SMS'],
+]);
 
 export {
-  HTTP_METHODS,
-  EMPTY_PARAM_DATA,
   AU_STATES,
+  HTTP_METHODS,
+  CONTACT_TYPE_ID_TO_ENUM,
+  CONTACT_METHOD_ID_TO_ENUM,
+  EMPTY_PARAM_DATA,
   WINE_SORTER,
 };
