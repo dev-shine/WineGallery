@@ -8,6 +8,7 @@ import {
   ContactPreferencesForm,
   ShippingAddressForm,
   SubscriptionStatus,
+  PaymentMethod,
 } from '../../components';
 
 
@@ -33,8 +34,11 @@ class MyAccount extends Component {
               return (
                 <div className="MyAccount--container">
                   <h1 className="MyAccount--forms_title">My Account</h1>
-                  <div className="MyAccount--forms_contact-preferences">
-                    <ContactPreferencesForm query={data.me.contactpreferenceSet} memberId={data.me.id} />
+                  <div className="MyAccount--forms_payment-method">
+                    <PaymentMethod query={data.me} />
+                  </div>
+                  <div className="MyAccount--forms_billing-day">
+                    <h3>Billing day place holder.</h3>
                   </div>
                   <div className="MyAccount--forms_subscription">
                     <SubscriptionStatus query={data.me} />
@@ -44,6 +48,9 @@ class MyAccount extends Component {
                   </div>
                   <div className="MyAccount--forms_shipping">
                     <ShippingAddressForm query={data.me} />
+                  </div>
+                  <div className="MyAccount--forms_contact-preferences">
+                    <ContactPreferencesForm query={data.me.contactpreferenceSet} memberId={data.me.id} />
                   </div>
                 </div>
               );

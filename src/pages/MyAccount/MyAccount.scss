@@ -44,6 +44,11 @@
       }
     }
 
+    &_account,
+    &_billing-day,
+    &_contact-preferences,
+    &_payment-method,
+    &_shipping,
     &_subscription {
       align-items: flex-start;
       display: flex;
@@ -54,15 +59,13 @@
       word-wrap: break-word;
     }
 
-    &_account {
-      align-items: flex-start;
-      display: flex;
-      flex-direction: column;
-      justify-items: flex-start;
-      min-height: 450px;
-      width: 45%;
-      word-wrap: break-word;
+    &_billing-day,
+    &_payment-method,
+    &_subscription {
+      width: 31%;
+    }
 
+    &_account {
       p {
         text-align: start;
         max-width: 100%;
@@ -71,11 +74,7 @@
 
     &_shipping {
       align-items: flex-end;
-      display: flex;
-      flex-direction: column;
       position: relative;
-      width: 45%;
-      word-wrap: break-word;
 
       p {
         text-align: end;
@@ -85,16 +84,13 @@
 
     &_contact-preferences {
       align-items: flex-end;
-      display: flex;
-      flex-direction: column;
       position: relative;
-      width: 45%;
-      word-wrap: break-word;
     }
 
-    &_shipping,
-    &_account {
-      button {
+    &_account,
+    &_payment-method,
+    &_shipping {
+      button:not(.icon) {
         background-color: #fff;
         border: 3px solid $brand-danger;
         border-radius: 5px;

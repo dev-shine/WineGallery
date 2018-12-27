@@ -7,6 +7,7 @@ import CheckBox from './atoms/CheckBox/CheckBox';
 import SimpleListItem from './molecules/SimpleListItem/SimpleListItem';
 import WineItems from './molecules/WineItems/WineItems';
 import ErrorBoundary from './molecules/ErrorBoundary/ErrorBoundary';
+import NewPaymentMethod from './molecules/NewPaymentMethod/NewPaymentMethod';
 
 // Organisms
 import Header from './organisms/Header/Header';
@@ -18,6 +19,7 @@ import WineList from './organisms/WineList/WineList';
 import WineSorters from './organisms/WineSorters/WineSorters';
 import ContactPreferencesForm from './organisms/ContactPreferencesForm/ContactPreferencesForm';
 import SubscriptionStatus from './organisms/SubscriptionStatus/SubscriptionStatus';
+import PaymentMethod from './organisms/PaymentMethod/PaymentMethod';
 
 export {
 
@@ -30,6 +32,7 @@ export {
   SimpleListItem,
   ErrorBoundary,
   WineItems,
+  NewPaymentMethod,
 
   // Organisms
   Header,
@@ -41,4 +44,5 @@ export {
   WineSorters,
   WineList,
   ContactPreferencesForm,
+  PaymentMethod,
 };
