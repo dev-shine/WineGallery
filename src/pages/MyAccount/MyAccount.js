@@ -3,7 +3,13 @@ import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 
 import { GET_MEMBER } from '../../graphql/queries';
-import { AccountDetailsForm, ContactPreferencesForm, ShippingAddressForm } from '../../components';
+import {
+  AccountDetailsForm,
+  ContactPreferencesForm,
+  ShippingAddressForm,
+  SubscriptionStatus,
+} from '../../components';
+
 
 import './MyAccount.scss';
 
@@ -29,6 +35,9 @@ class MyAccount extends Component {
                   <h1 className="MyAccount--forms_title">My Account</h1>
                   <div className="MyAccount--forms_contact-preferences">
                     <ContactPreferencesForm query={data.me.contactpreferenceSet} memberId={data.me.id} />
+                  </div>
+                  <div className="MyAccount--forms_subscription">
+                    <SubscriptionStatus query={data.me} />
                   </div>
                   <div className="MyAccount--forms_account">
                     <AccountDetailsForm query={data.me} />

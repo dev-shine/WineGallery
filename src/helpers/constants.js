@@ -45,11 +45,34 @@ const CONTACT_METHOD_ID_TO_ENUM = new Map([
   ['2', 'SMS'],
 ]);
 
+const SUBSCRIPTION_STATUS = {
+  ACTIVE: 'ACTIVE',
+  SKIP: 'SKIP',
+  PAUSE: 'PAUSE',
+  EXPIRED: 'EXPIRED',
+  NEVER_ACTIVATED: 'NEVER_ACTIVATED',
+  CANCELLED: 'CANCELLED',
+};
+
+const SUBSCRIPTION_STATUS_ID = {
+  1: 'NEVER_ACTIVATED',
+  2: 'ACTIVE',
+  3: 'EXPIRED',
+  4: 'CANCELLED',
+  5: 'SKIP',
+  6: 'PAUSE',
+};
+
+const MONTH_NAMES = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+
 export {
   AU_STATES,
   HTTP_METHODS,
   CONTACT_TYPE_ID_TO_ENUM,
   CONTACT_METHOD_ID_TO_ENUM,
+  SUBSCRIPTION_STATUS_ID,
   EMPTY_PARAM_DATA,
   WINE_SORTER,
+  SUBSCRIPTION_STATUS,
+  MONTH_NAMES,
 };

@@ -115,12 +115,34 @@ const UPDATE_MEMBER_ACCOUNT_DETAILS = gql`
   }
 `;
 
+const UPDATE_SUBSCRIPTION = gql`
+  mutation UpdateSubscription ($input:  SubscriptionInput!){
+    updateSubscription(input: $input) {
+      subscription {
+        id
+        billingDay
+        subscriptionStatus {
+          id
+          name
+        }
+        holdUntilDate
+        monthFrequency
+      }
+      errors{
+        field
+        messages
+      }
+    }
+  }
+`;
+
 export {
-  SIGN_UP,
-  RESET_PASSWORD,
-  SET_NEW_PASSWORD,
   CREATE_CONTACT_PREFERENCE,
   DELETE_CONTACT_PREFERENCE,
+  RESET_PASSWORD,
+  SET_NEW_PASSWORD,
+  SIGN_UP,
+  UPDATE_SUBSCRIPTION,
   UPDATE_MEMBER_ACCOUNT_DETAILS,
   UPDATE_MEMBER_SHIPPING_ADDRESS,
 };

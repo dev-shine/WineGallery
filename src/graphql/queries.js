@@ -174,6 +174,16 @@ const GET_MEMBER = gql`
           specifyLocation
         }
       }
+      subscription {
+        id
+        monthFrequency
+        holdUntilDate
+        billingDay
+        subscriptionStatus {
+          id
+          name
+        }
+      }
       contactpreferenceSet {
         id
         contactType {

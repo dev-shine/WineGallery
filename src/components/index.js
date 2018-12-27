@@ -17,6 +17,7 @@ import WineFilters from './organisms/WineFilters/WineFilters';
 import WineList from './organisms/WineList/WineList';
 import WineSorters from './organisms/WineSorters/WineSorters';
 import ContactPreferencesForm from './organisms/ContactPreferencesForm/ContactPreferencesForm';
+import SubscriptionStatus from './organisms/SubscriptionStatus/SubscriptionStatus';
 
 export {
 
@@ -35,6 +36,7 @@ export {
   SimpleList,
   ShippingAddressForm,
   AccountDetailsForm,
+  SubscriptionStatus,
   WineFilters,
   WineSorters,
   WineList,
