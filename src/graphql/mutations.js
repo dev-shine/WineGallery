@@ -1,5 +1,55 @@
 import gql from 'graphql-tag';
 
+const CREATE_PAYMENT_METHOD = gql`
+  mutation CreateMemberPaymentMethod($input: CreateMemberPaymentMethodInput!) {
+    createMemberPaymentMethod(input: $input) {
+      paymentMethod{
+        paymentApiMethodUuid
+        isDefault
+        cardBrand
+        cardLast4
+        cardExpiryMonth
+        cardExpiryYear  
+      }
+      errors {
+        messages
+        field
+      }
+    }
+  }
+`;
+
+const DELETE_PAYMENT_METHOD = gql`
+  mutation DeleteMemberPaymentMethod($input: DeletePaymentMethodInput!) {
+    deleteMemberPaymentMethod(input: $input) {
+      isDeleted
+      errors {
+        messages
+        field
+      }
+    }
+  }
+`;
+
+const UPDATE_MEMBER_PAYMENT_METHOD = gql`
+  mutation UpdateMemberPaymentMethod($input: UpdateMemberPaymentMethodInput!) {
+    updateMemberPaymentMethod(input: $input) {
+      paymentMethod {
+        paymentApiMethodUuid
+        isDefault
+        cardBrand
+        cardLast4
+        cardExpiryMonth
+        cardExpiryYear
+      }
+      errors {
+        messages
+        field
+      }
+    }
+  }
+`;
+
 const CREATE_CONTACT_PREFERENCE = gql`
   mutation CreateMemberContactPreference($input: CreateContactPreferenceInput!) {
     createMemberContactPreference(input: $input) {
@@ -138,11 +188,14 @@ const UPDATE_SUBSCRIPTION = gql`
 
 export {
   CREATE_CONTACT_PREFERENCE,
+  CREATE_PAYMENT_METHOD,
   DELETE_CONTACT_PREFERENCE,
+  DELETE_PAYMENT_METHOD,
   RESET_PASSWORD,
   SET_NEW_PASSWORD,
   SIGN_UP,
   UPDATE_SUBSCRIPTION,
   UPDATE_MEMBER_ACCOUNT_DETAILS,
+  UPDATE_MEMBER_PAYMENT_METHOD,
   UPDATE_MEMBER_SHIPPING_ADDRESS,
 };

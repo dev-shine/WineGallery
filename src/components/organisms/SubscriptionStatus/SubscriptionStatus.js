@@ -123,7 +123,7 @@ class SubscriptionStatus extends Component {
       <div className="SubscriptionStatus--modal">
         <h3>My Subscription</h3>
         <span
-          className="SubscriptionStatus--modal--close"
+          className="close-btn"
           role="button"
           tabIndex="0"
           onKeyPress={() => this.setState(defaultState)}

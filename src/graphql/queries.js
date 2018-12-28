@@ -195,6 +195,14 @@ const GET_MEMBER = gql`
           name
         }
       }
+      paymentmethodSet {
+        paymentApiMethodUuid
+        isDefault
+        cardBrand
+        cardLast4
+        cardExpiryMonth
+        cardExpiryYear
+      }
     }
   }
 `;
