@@ -108,7 +108,7 @@ class PaymentMethod extends Component {
             {
               state.showFormAddNewPaymentMethod
                 ? (
-                  <StripeProvider apiKey={process.env.REACT_APP_STRIPE_PUBLISHABL_KEY}>
+                  <StripeProvider apiKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}>
                     <Elements>
                       <NewPaymentMethod query={query} onAddCard={this.handleClosePaymentMethodForm} />
                     </Elements>

@@ -2,6 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+
+    <!--  The following lines can be uncommented in case the website gets deployed in another server
+          that does not support a header specific files.
+          More info: https://infosec.mozilla.org/guidelines/web_security  -->
+
+    <!--<meta http-equiv="Content-Security-Policy"-->
+          <!--content="-->
+          <!--default-src https:;-->
+          <!--frame-src 'self' %REACT_APP_FRAME_CSP%;-->
+          <!--script-src 'self' %REACT_APP_SCRIPT_CSP%;-->
+          <!--connect-src 'self' %REACT_APP_CONNECT_CSP%;-->
+          <!--img-src 'self' data:;-->
+          <!--style-src 'self' 'unsafe-inline';-->
+          <!--font-src 'self' data:;-->
+          <!--object-src 'none';-->
+          <!--"-->
+    <!--&gt;-->
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="noindex,nofollow">
