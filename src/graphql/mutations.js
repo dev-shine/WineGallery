@@ -147,6 +147,35 @@ const UPDATE_MEMBER_SHIPPING_ADDRESS = gql`
   }
 `;
 
+const UPDATE_CHECKOUT_SHIPPING_ADDRESS = gql`
+  mutation UpdateCheckoutShippingAddress($input: CheckoutShippingAddressInput!) {
+    updateCheckoutShippingAddress(input: $input) {
+      shippingAddress {
+        id
+        firstName
+        lastName
+        company
+        line1
+        line2
+        postcode
+        contactNumber
+        city
+        state
+        country {
+          id
+        }
+        addressUnavailableInstruction {
+          id
+        }
+      }
+      errors {
+        messages
+        field
+      }
+    }
+  }
+`;
+
 const UPDATE_MEMBER_ACCOUNT_DETAILS = gql`
   mutation UpdateMemberAccountDetails($input: MemberMutationInput!) {
     updateMember(input: $input) {
@@ -198,4 +227,5 @@ export {
   UPDATE_MEMBER_ACCOUNT_DETAILS,
   UPDATE_MEMBER_PAYMENT_METHOD,
   UPDATE_MEMBER_SHIPPING_ADDRESS,
+  UPDATE_CHECKOUT_SHIPPING_ADDRESS,
 };

@@ -85,15 +85,14 @@ const checkEmail = value => {
  * @return {Array}: array of error messages for that field
  * */
 const checkServerValidation = (data, payload, field) => {
-  const hasErrors = data && data[payload] && data[payload].errors;
-  let errorMessages = null;
+  const errorMessages = data && data[payload] && data[payload].errors;
   let messagesArray = [];
 
-  if (hasErrors) {
-    errorMessages = data[payload].errors;
+  if (errorMessages) {
     errorMessages.forEach(error => {
       if (error.field === field) {
         messagesArray = messagesArray.concat(error.messages);
+        console.log(messagesArray, field);
       }
     });
   }
