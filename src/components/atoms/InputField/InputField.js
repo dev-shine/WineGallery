@@ -44,11 +44,11 @@ class InputField extends Component {
     });
   }
 
-  componentDidUpdate(nextProps) {
+  componentDidUpdate(prevProps) {
     const { props } = this;
 
     // Updates errorText with error that returns from server
-    if (nextProps.serverValidation !== props.serverValidation) {
+    if (prevProps.serverValidation !== props.serverValidation) {
       this.handleUpdateMessageError(props.serverValidation);
     }
   }
@@ -102,6 +102,7 @@ class InputField extends Component {
       placeholder,
       name,
       id,
+      serverValidation,
     } = this.props;
 
     return (
@@ -122,6 +123,15 @@ class InputField extends Component {
         </label>
         <div className="hint">{hint}</div>
         {errorText && <div className="error">{errorText}</div>}
+
+        {/*
+          TODO [DEV-167] understand componentDidUpdate returning prevProps === props for serverValidation
+        */}
+        {
+          !!serverValidation.length && errorText && !errorText.length && (
+            <div className="error">{serverValidation[0]}</div>
+          )
+        }
       </div>
     );
   }

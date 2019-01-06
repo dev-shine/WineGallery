@@ -11,6 +11,7 @@ const Wines = React.lazy(() => import('./pages/Wines/Wines'));
 const Login = React.lazy(() => import('./pages/Login/Login'));
 const MyAccount = React.lazy(() => import('./pages/MyAccount/MyAccount'));
 const Quiz = React.lazy(() => import('./pages/Quiz/Quiz'));
+const Checkout = React.lazy(() => import('./pages/Checkout/Checkout'));
 
 /**
  * Protects routes (pages) that require login to be visualized, as example My Account page
@@ -57,6 +58,7 @@ class Routes extends Component {
         <Route path="/login" render={props => <Login {...props} />} />
         <Route path="/wines" render={() => <Wines />} />
         <Route path="/quiz" render={() => <Quiz />} />
+        <Route path="/checkout" render={() => <Checkout />} />
 
         <PrivateRoute path="/my-account" component={MyAccount} />
 

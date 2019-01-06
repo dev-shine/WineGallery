@@ -13,6 +13,7 @@ import NewPaymentMethod from './molecules/NewPaymentMethod/NewPaymentMethod';
 import Header from './organisms/Header/Header';
 import SimpleList from './organisms/SimpleList/SimpleList';
 import ShippingAddressForm from './organisms/ShippingAddressForm/ShippingAddressForm';
+import CheckoutShippingAddressForm from './organisms/CheckoutShippingAddressForm/CheckoutShippingAddressForm';
 import AccountDetailsForm from './organisms/AccountDetailsForm/AccountDetailsForm';
 import WineFilters from './organisms/WineFilters/WineFilters';
 import WineList from './organisms/WineList/WineList';
@@ -38,6 +39,7 @@ export {
   Header,
   SimpleList,
   ShippingAddressForm,
+  CheckoutShippingAddressForm,
   AccountDetailsForm,
   SubscriptionStatus,
   WineFilters,

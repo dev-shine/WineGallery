@@ -47,6 +47,13 @@ class Header extends Component {
                   </li>
                 )
               }
+              {
+                isLoggedIn() && (
+                  <li>
+                    <NavLink to="/checkout">Checkout</NavLink>
+                  </li>
+                )
+              }
             </ul>
           </nav>
         </div>
