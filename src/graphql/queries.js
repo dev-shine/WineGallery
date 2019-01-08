@@ -207,9 +207,25 @@ const GET_MEMBER = gql`
   }
 `;
 
+const GET_QUIZ_QUESTIONS = gql`
+  query QuizQuestions {
+    quizQuestions {
+      id
+      description
+      maxAnswers
+      quizanswerSet {
+        id
+        description
+        photoUrl
+      }
+    }
+  }
+`;
+
 export {
   GET_FOODS,
   GET_MEMBER,
+  GET_QUIZ_QUESTIONS,
   GET_SEASONS,
   GET_TASTES,
   GET_WINES,

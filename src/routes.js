@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import {
-  Home, PasswordReset, SetNewPassword, SignUp,
+  Home, PasswordReset, SetNewPassword, SignUp, Quiz,
 } from './pages';
 import { isLoggedIn } from './helpers/auth';
 
@@ -10,7 +10,6 @@ import { isLoggedIn } from './helpers/auth';
 const Wines = React.lazy(() => import('./pages/Wines/Wines'));
 const Login = React.lazy(() => import('./pages/Login/Login'));
 const MyAccount = React.lazy(() => import('./pages/MyAccount/MyAccount'));
-const Quiz = React.lazy(() => import('./pages/Quiz/Quiz'));
 const Checkout = React.lazy(() => import('./pages/Checkout/Checkout'));
 
 /**
@@ -53,11 +52,11 @@ class Routes extends Component {
         <Route path="/signup" component={SignUp} />
         <Route path="/password-reset" component={PasswordReset} />
         <Route path="/set-new-password/:uid/:token" component={SetNewPassword} />
+        <Route path="/quiz" component={Quiz} />
 
         {/* Renders lazily loaded components --> https://reactjs.org/docs/code-splitting.html#reactlazy */}
         <Route path="/login" render={props => <Login {...props} />} />
         <Route path="/wines" render={() => <Wines />} />
-        <Route path="/quiz" render={() => <Quiz />} />
         <Route path="/checkout" render={() => <Checkout />} />
 
         <PrivateRoute path="/my-account" component={MyAccount} />

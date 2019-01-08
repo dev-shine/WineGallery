@@ -5,6 +5,7 @@ import PasswordReset from './PasswordReset/PasswordReset';
 import SetNewPassword from './SetNewPassword/SetNewPassword';
 import Wines from './Wines/Wines';
 import MyAccount from './MyAccount/MyAccount';
+import Quiz from './Quiz/Quiz';
 
 export {
   Home,
@@ -14,8 +15,12 @@ export {
   SignUp,
   PasswordReset,
   SetNewPassword,
-  Wines,
 
   // Member area
   MyAccount,
+
+  // Product
+  Quiz,
+  Wines,
+
 };

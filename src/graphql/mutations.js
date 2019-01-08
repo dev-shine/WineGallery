@@ -96,6 +96,20 @@ const SIGN_UP = gql`
   }
 `;
 
+const SUBMIT_QUIZ = gql`
+  mutation SubmitQuiz($input: SubmitQuizInput!) {
+    submitQuiz(input: $input) {
+      isSuccessful
+      accessToken
+      refreshToken
+      errors {
+        messages
+        field
+      }
+    }
+  }
+`;
+
 const RESET_PASSWORD = gql`
   mutation ResetPasswordMutation($email: String!) {
     resetPassword(email: $email) {
@@ -223,6 +237,7 @@ export {
   RESET_PASSWORD,
   SET_NEW_PASSWORD,
   SIGN_UP,
+  SUBMIT_QUIZ,
   UPDATE_SUBSCRIPTION,
   UPDATE_MEMBER_ACCOUNT_DETAILS,
   UPDATE_MEMBER_PAYMENT_METHOD,
