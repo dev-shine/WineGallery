@@ -32,14 +32,15 @@ const getLocalStorageToken = () => {
 
 /**
  * Sets encoded auth information to browser local storage
- * @param response
+ * @param accessToken
+ * @param refreshToken
  * @param email
  * */
-const setLocalStorageToken = (response, email) => {
+const setLocalStorageToken = (accessToken, refreshToken, email) => {
   localStorage.setItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE, jwt.sign(
     {
-      accessToken: response.data.access_token,
-      refreshToken: response.data.refresh_token,
+      accessToken,
+      refreshToken,
       email,
     },
     `${process.env.REACT_APP_AUTH_DECODE}`
@@ -53,8 +54,8 @@ const setLocalStorageToken = (response, email) => {
 const isLoggedIn = () => {
 
   // TODO: add a check to expired tokens
-  const getLocalStorageInfo = getLocalStorageToken();
-  return localStorageContent && getLocalStorageInfo;
+  const localStorageTokenObject = getLocalStorageToken();
+  return Boolean(localStorageContent && localStorageTokenObject);
 };
 
 export {

@@ -95,7 +95,7 @@ class Login extends Component {
       .then(response => {
 
         // Encodes and Stores tokens in localStorage --> https://www.npmjs.com/package/jsonwebtoken
-        setLocalStorageToken(response, email);
+        setLocalStorageToken(response.data.access_token, response.data.refresh_token, email);
 
         // Redirects to my account page
         // TODO: change this to this.props.history.push() when we introduce local state from Apollo

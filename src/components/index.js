@@ -21,6 +21,7 @@ import WineSorters from './organisms/WineSorters/WineSorters';
 import ContactPreferencesForm from './organisms/ContactPreferencesForm/ContactPreferencesForm';
 import SubscriptionStatus from './organisms/SubscriptionStatus/SubscriptionStatus';
 import PaymentMethod from './organisms/PaymentMethod/PaymentMethod';
+import QuizQuestion from './organisms/QuizQuestion/QuizQuestion';
 
 export {
 
@@ -47,4 +48,5 @@ export {
   WineList,
   ContactPreferencesForm,
   PaymentMethod,
+  QuizQuestion,
 };
