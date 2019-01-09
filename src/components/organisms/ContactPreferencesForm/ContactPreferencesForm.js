@@ -11,7 +11,6 @@ import {
 
 import './ContactPreferencesForm.scss';
 
-
 const CONTACT_METHODS = new Map([
   ['1', 'email'],
   ['2', 'sms'],

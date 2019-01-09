@@ -207,6 +207,29 @@ const GET_MEMBER = gql`
   }
 `;
 
+const GET_SHOPPING_CART = gql`
+  query Me {
+    me {
+      shoppingCart {
+        shoppingcartitemSet {
+          product {
+            id
+            name
+            productPhotos {
+              photoLarge
+            }
+            wine {
+              wineRegion {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 const GET_QUIZ_QUESTIONS = gql`
   query QuizQuestions {
     quizQuestions {
@@ -227,6 +250,7 @@ export {
   GET_MEMBER,
   GET_QUIZ_QUESTIONS,
   GET_SEASONS,
+  GET_SHOPPING_CART,
   GET_TASTES,
   GET_WINES,
   GET_WINE_BODIES,

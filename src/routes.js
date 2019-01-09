@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import {
-  Home, PasswordReset, SetNewPassword, SignUp, Quiz,
+  Home, PasswordReset, SetNewPassword, SignUp, Quiz, QuizResults,
 } from './pages';
+import urlPatterns from './urls';
 import { isLoggedIn } from './helpers/auth';
 
 // Declares lazily loaded components --> https://reactjs.org/docs/code-splitting.html#reactlazy
@@ -47,19 +48,20 @@ class Routes extends Component {
       <Switch>
 
         {/* Renders components once application is loaded first time */}
-        <Route path="/" exact component={Home} />
-        <Route path="/home" exact component={Home} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/password-reset" component={PasswordReset} />
-        <Route path="/set-new-password/:uid/:token" component={SetNewPassword} />
-        <Route path="/quiz" component={Quiz} />
+        <Route path={urlPatterns.HOME} exact component={Home} />
+        <Route path={urlPatterns.HOME} exact component={Home} />
+        <Route path={urlPatterns.SIGNUP} component={SignUp} />
+        <Route path={urlPatterns.PASSWORD_RESET} component={PasswordReset} />
+        <Route path={urlPatterns.SET_NEW_PASSWORD} component={SetNewPassword} />
+        <Route path={urlPatterns.QUIZ} exact component={Quiz} />
+        <Route path={urlPatterns.QUIZ_RESULTS} exact component={QuizResults} />
 
         {/* Renders lazily loaded components --> https://reactjs.org/docs/code-splitting.html#reactlazy */}
-        <Route path="/login" render={props => <Login {...props} />} />
-        <Route path="/wines" render={() => <Wines />} />
-        <Route path="/checkout" render={() => <Checkout />} />
+        <Route path={urlPatterns.LOGIN} render={props => <Login {...props} />} />
+        <Route path={urlPatterns.WINES} render={() => <Wines />} />
+        <Route path={urlPatterns.CHECKOUT} render={() => <Checkout />} />
 
-        <PrivateRoute path="/my-account" component={MyAccount} />
+        <PrivateRoute path={urlPatterns.MY_ACCOUNT} component={MyAccount} />
 
       </Switch>
     );

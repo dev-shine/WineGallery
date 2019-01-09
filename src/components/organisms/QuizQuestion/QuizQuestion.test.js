@@ -8,7 +8,6 @@ const MOCKED_ANSWERS = [
   { id: 2, description: 'White' },
 ];
 
-
 it('renders without crashing', () => {
   const renderer = new ShallowRenderer();
   renderer.render(

@@ -11,7 +11,6 @@ import {
   PaymentMethod,
 } from '../../components';
 
-
 import './MyAccount.scss';
 
 /**

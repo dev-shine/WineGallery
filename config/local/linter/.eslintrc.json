@@ -96,6 +96,12 @@
         "allowShortCircuit": true
       }
     ],
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1
+      }
+    ],
     "import/order": [
       "error",
       {
