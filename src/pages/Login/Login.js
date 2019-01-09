@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { HTTP_METHODS } from '../../helpers/constants';
 import executeRestApi from '../../helpers/rest';
 import { getLocalStorageToken, setLocalStorageToken } from '../../helpers/auth';
+import urlPatterns from '../../urls';
 
 import { InputField } from '../../components';
 
@@ -36,7 +37,7 @@ class Login extends Component {
 
       // Ensures user is logged out
       // TODO: remove this when we introduce local state from Apollo
-      window.location = `${process.env.REACT_APP_BASE_URL}/login`;
+      window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.LOGIN}`;
     }
 
     // Decodes tokens from localStorage --> https://www.npmjs.com/package/jsonwebtoken
@@ -99,7 +100,7 @@ class Login extends Component {
 
         // Redirects to my account page
         // TODO: change this to this.props.history.push() when we introduce local state from Apollo
-        window.location = `${process.env.REACT_APP_BASE_URL}/my-account`;
+        window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.MY_ACCOUNT}`;
       })
 
       // Catches error from server (if login unsuccessful) and show message in the form

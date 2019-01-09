@@ -5,6 +5,7 @@ import { Mutation } from 'react-apollo';
 import { checkPassword } from '../../helpers/validations';
 import InputField from '../../components/atoms/InputField/InputField';
 import { SET_NEW_PASSWORD } from '../../graphql/mutations';
+import urlPatterns from '../../urls';
 
 import './SetNewPassword.scss';
 
@@ -48,7 +49,7 @@ class SetNewPassword extends Component {
     setNewPassword({ variables: { ...state.form, uidb64: uid, token } }).then(
       ({ data }) => {
         // Redirects to the login page on success
-        data && data.setNewPassword.success && props.history.push('/login');
+        data && data.setNewPassword.success && props.history.push(urlPatterns.LOGIN);
       }
     );
   };

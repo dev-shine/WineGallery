@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import { isLoggedIn } from '../../../helpers/auth';
+import urlPatterns from '../../../urls';
 
 import logo from '../../../assets/images/logo.svg';
 import './Header.scss';
@@ -46,7 +47,7 @@ class Header extends Component {
               {
                 isLoggedIn() && (
                   <li>
-                    <NavLink to="/my-account">My Account</NavLink>
+                    <NavLink to={urlPatterns.MY_ACCOUNT}>My Account</NavLink>
                   </li>
                 )
               }

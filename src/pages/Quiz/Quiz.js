@@ -6,6 +6,7 @@ import { GET_QUIZ_QUESTIONS } from '../../graphql/queries';
 import { checkEmail } from '../../helpers/validations';
 import { SUBMIT_QUIZ } from '../../graphql/mutations';
 import { isLoggedIn, setLocalStorageToken } from '../../helpers/auth';
+import urlPatterns from '../../urls';
 
 import { InputField, QuizQuestion } from '../../components';
 
@@ -49,8 +50,12 @@ class Quiz extends Component {
           );
         }
 
-        // TODO: DEV-135 navigate to the Quiz Results page
-        window.location = `${process.env.REACT_APP_BASE_URL}/home`;
+        // Navigates to the Quiz Results page for new users
+        if (email) {
+          window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.QUIZ_RESULTS}`;
+        } else {
+          window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.HOME}`;
+        }
       }
     );
   };
@@ -72,7 +77,6 @@ class Quiz extends Component {
                 Object.values(selectedAnswers).every(selected => selected.length > 0)
                 && Object.keys(selectedAnswers).length === data.quizQuestions.length
               );
-
 
               return (
                 <Mutation mutation={SUBMIT_QUIZ}>

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import './ErrorBoundary.scss';
 
-
 /**
  * Prevents the page to crash in case one of the components in the component tree to find an error.
  * https://reactjs.org/docs/code-splitting.html#error-boundaries

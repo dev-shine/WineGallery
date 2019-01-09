@@ -58,7 +58,6 @@ const checkPassword = value => {
   );
 };
 
-
 /**
  * Validates string to check if it is an email, followed website below:
  * https://emailregex.com/

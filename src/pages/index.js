@@ -6,6 +6,7 @@ import SetNewPassword from './SetNewPassword/SetNewPassword';
 import Wines from './Wines/Wines';
 import MyAccount from './MyAccount/MyAccount';
 import Quiz from './Quiz/Quiz';
+import QuizResults from './QuizResults/QuizResults';
 
 export {
   Home,
@@ -21,6 +22,7 @@ export {
 
   // Product
   Quiz,
+  QuizResults,
   Wines,
 
 };
