@@ -1,5 +1,19 @@
 import gql from 'graphql-tag';
 
+const APPLY_DISCOUNT_CODE = gql`
+  mutation AddPromoCodeInfo($input: PromoCodeInfoInput!){
+    addPromoCodeInfo(input: $input) {
+      name
+      discountValue
+      message
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
 const CREATE_PAYMENT_METHOD = gql`
   mutation CreateMemberPaymentMethod($input: CreateMemberPaymentMethodInput!) {
     createMemberPaymentMethod(input: $input) {
@@ -230,6 +244,7 @@ const UPDATE_SUBSCRIPTION = gql`
 `;
 
 export {
+  APPLY_DISCOUNT_CODE,
   CREATE_CONTACT_PREFERENCE,
   CREATE_PAYMENT_METHOD,
   DELETE_CONTACT_PREFERENCE,

@@ -51,13 +51,20 @@
       text-transform: uppercase;
       width: 300px;
 
-      &:disabled {
-        cursor: not-allowed;
-      }
-
       &:hover {
         background-color: $brand-danger;
         color: white;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        border-color: $humility;
+        color: $humility;
+
+        &:hover {
+          background-color: #fff;
+          color: $humility;
+        }
       }
     }
   }

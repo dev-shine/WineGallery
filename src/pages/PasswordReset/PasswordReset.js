@@ -51,8 +51,8 @@ class PasswordReset extends Component {
           return (
             <div className="PasswordReset">
               <div className="PasswordReset--container">
-                <h1 className="PasswordReset--forms_title">Reset Password</h1>
-                <div className="PasswordReset--forms_form">
+                <h1 className="PasswordReset--forms__title">Reset Password</h1>
+                <div className="PasswordReset--forms__form">
                   <h2>Password Reset Form</h2>
                   <InputField
                     label="Email"

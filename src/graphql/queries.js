@@ -203,6 +203,23 @@ const GET_MEMBER = gql`
         cardExpiryMonth
         cardExpiryYear
       }
+      shoppingCart {
+        discount
+        discountCode
+        total
+        shoppingcartitemSet {
+          quantity
+          product {
+            id
+            name
+            productType {
+              id
+              name
+            }
+            sellingPrice
+          }
+        }
+      }
     }
   }
 `;

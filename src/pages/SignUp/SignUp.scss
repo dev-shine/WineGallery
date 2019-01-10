@@ -34,7 +34,7 @@
     width: 100%;
     margin-top: $header-height;
 
-    &_title {
+    &__title {
       width: 100%;
       text-align: start;
       margin: {
@@ -43,7 +43,7 @@
       }
     }
 
-    &_form {
+    &__form {
       height: 450px;
       display: flex;
       flex-direction: column;
@@ -70,7 +70,7 @@
       }
     }
 
-    &_social {
+    &__social {
       display: flex;
       flex-direction: column;
       width: 45%;

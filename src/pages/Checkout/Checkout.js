@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 
-import { CheckoutShippingAddressForm } from '../../components';
+import { CheckoutShippingAddressForm, DiscountCodeForm } from '../../components';
 
 import './Checkout.scss';
 import { GET_MEMBER } from '../../graphql/queries';
@@ -21,23 +21,27 @@ class Checkout extends Component {
   render() {
     return (
       <div className="Checkout">
-        <div className="Checkout--container">
-          <h1 className="Checkout--forms_title">My Account</h1>
-          <Query query={GET_MEMBER} fetchPolicy="cache-and-network">
-            {({ loading, error, data }) => {
-              if (loading) return 'Loading...';
-              if (error) return `Error! ${error.message}`;
-              if (data.me) {
-                return (
-                  <div className="Checkout--forms_shipping">
+        <Query query={GET_MEMBER} fetchPolicy="cache-and-network">
+          {({ loading, error, data }) => {
+            if (loading) return 'Loading...';
+            if (error) return `Error! ${error.message}`;
+            if (data.me) {
+              return (
+                <div className="Checkout--container">
+                  <h1 className="Checkout--forms__title">My Account</h1>
+
+                  <div className="Checkout--forms__shipping">
                     <CheckoutShippingAddressForm query={data.me} />
                   </div>
-                );
-              }
-              return <div>Ooops, this is embarrassing... Something went wrong, try to reload your page.</div>;
-            }}
-          </Query>
-        </div>
+                  <div className="Checkout--forms__discount-code">
+                    <DiscountCodeForm query={data.me} />
+                  </div>
+                </div>
+              );
+            }
+            return <div>Ooops, this is embarrassing... Something went wrong, try to reload your page.</div>;
+          }}
+        </Query>
       </div>
     );
   }
