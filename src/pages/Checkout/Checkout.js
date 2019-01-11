@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 
-import { CheckoutShippingAddressForm, DiscountCodeForm } from '../../components';
+import { CheckoutShippingAddressForm, DiscountCodeForm, OrderSummary } from '../../components';
+import { GET_MEMBER } from '../../graphql/queries';
 
 import './Checkout.scss';
-import { GET_MEMBER } from '../../graphql/queries';
 
 /**
  * Renders Checkout component.
@@ -32,6 +32,9 @@ class Checkout extends Component {
 
                   <div className="Checkout--forms__shipping">
                     <CheckoutShippingAddressForm query={data.me} />
+                  </div>
+                  <div className="Checkout--forms__summary">
+                    <OrderSummary query={data.me} />
                   </div>
                   <div className="Checkout--forms__discount-code">
                     <DiscountCodeForm query={data.me} />
