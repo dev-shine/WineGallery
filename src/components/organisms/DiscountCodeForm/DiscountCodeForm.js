@@ -90,6 +90,7 @@ class DiscountCodeForm extends Component {
 
     return (
       <div className="DiscountCodeForm">
+        <h2>Discount code</h2>
         <Mutation
           mutation={APPLY_DISCOUNT_CODE}
           refetchQueries={() => [{ query: GET_MEMBER }]}
@@ -115,7 +116,7 @@ class DiscountCodeForm extends Component {
                           name="promoCode"
                           value={promoCode}
                           onChange={this.handleChange}
-                          label="Discount Code"
+                          label="If you have a promo or a referral code, please enter it here:"
                           placeholder="CODE1234"
                         />
                         <button

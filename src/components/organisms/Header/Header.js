@@ -24,7 +24,7 @@ class Header extends Component {
         <div className="Header--container">
           <section className="Header--brand">
             <Link to="/home">
-              <img src={logo} className="Header--brand_logo" alt="The Wine Gallery" />
+              <img src={logo} className="Header--brand__logo" alt="The Wine Gallery" />
             </Link>
           </section>
           <nav className="Header--main-navigation">
