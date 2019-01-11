@@ -35,7 +35,7 @@
     width: 100%;
     margin-top: $header-height;
 
-    &_title {
+    &__title {
       width: 100%;
       text-align: start;
       margin: {
@@ -44,12 +44,12 @@
       }
     }
 
-    &_account,
-    &_billing-day,
-    &_contact-preferences,
-    &_payment-method,
-    &_shipping,
-    &_subscription {
+    &__account,
+    &__billing-day,
+    &__contact-preferences,
+    &__payment-method,
+    &__shipping,
+    &__subscription {
       align-items: flex-start;
       display: flex;
       flex-direction: column;
@@ -59,20 +59,20 @@
       word-wrap: break-word;
     }
 
-    &_billing-day,
-    &_payment-method,
-    &_subscription {
+    &__billing-day,
+    &__payment-method,
+    &__subscription {
       width: 31%;
     }
 
-    &_account {
+    &__account {
       p {
         text-align: start;
         max-width: 100%;
       }
     }
 
-    &_shipping {
+    &__shipping {
       align-items: flex-end;
       position: relative;
 
@@ -82,14 +82,14 @@
       }
     }
 
-    &_contact-preferences {
+    &__contact-preferences {
       align-items: flex-end;
       position: relative;
     }
 
-    &_account,
-    &_payment-method,
-    &_shipping {
+    &__account,
+    &__payment-method,
+    &__shipping {
       button:not(.icon) {
         background-color: #fff;
         border: 3px solid $brand-danger;

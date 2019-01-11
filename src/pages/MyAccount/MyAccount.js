@@ -32,23 +32,23 @@ class MyAccount extends Component {
             if (data.me) {
               return (
                 <div className="MyAccount--container">
-                  <h1 className="MyAccount--forms_title">My Account</h1>
-                  <div className="MyAccount--forms_payment-method">
+                  <h1 className="MyAccount--forms__title">My Account</h1>
+                  <div className="MyAccount--forms__payment-method">
                     <PaymentMethod query={data.me} />
                   </div>
-                  <div className="MyAccount--forms_billing-day">
+                  <div className="MyAccount--forms__billing-day">
                     <h3>Billing day place holder.</h3>
                   </div>
-                  <div className="MyAccount--forms_subscription">
+                  <div className="MyAccount--forms__subscription">
                     <SubscriptionStatus query={data.me} />
                   </div>
-                  <div className="MyAccount--forms_account">
+                  <div className="MyAccount--forms__account">
                     <AccountDetailsForm query={data.me} />
                   </div>
-                  <div className="MyAccount--forms_shipping">
+                  <div className="MyAccount--forms__shipping">
                     <ShippingAddressForm query={data.me} />
                   </div>
-                  <div className="MyAccount--forms_contact-preferences">
+                  <div className="MyAccount--forms__contact-preferences">
                     <ContactPreferencesForm query={data.me.contactpreferenceSet} memberId={data.me.id} />
                   </div>
                 </div>

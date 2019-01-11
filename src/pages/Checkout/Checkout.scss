@@ -35,7 +35,7 @@
     width: 100%;
     margin-top: $header-height;
 
-    &_title {
+    &__title {
       width: 100%;
       text-align: start;
       margin: {
@@ -44,7 +44,8 @@
       }
     }
 
-    &_shipping {
+    &__discount-code,
+    &__shipping {
       align-items: flex-start;
       display: flex;
       flex-direction: column;
@@ -68,6 +69,17 @@
         &:hover {
           background-color: $brand-danger;
           color: white;
+        }
+
+        &:disabled {
+          cursor: not-allowed;
+          border-color: $humility;
+          color: $humility;
+
+          &:hover {
+            background-color: #fff;
+            color: $humility;
+          }
         }
       }
     }

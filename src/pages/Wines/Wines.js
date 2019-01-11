@@ -55,7 +55,7 @@ class Wines extends Component {
     return (
       <div className="Wines">
         <section className="Wines--container">
-          <div className="Wines_inner">
+          <div className="Wines__inner">
 
             <div className="Wines--filters">
               <ErrorBoundary>

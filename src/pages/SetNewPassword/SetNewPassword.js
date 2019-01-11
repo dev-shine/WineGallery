@@ -68,8 +68,8 @@ class SetNewPassword extends Component {
           return (
             <div className="SetNewPassword">
               <div className="SetNewPassword--container">
-                <h1 className="SetNewPassword--forms_title">Set New Password</h1>
-                <div className="SetNewPassword--forms_form">
+                <h1 className="SetNewPassword--forms__title">Set New Password</h1>
+                <div className="SetNewPassword--forms__form">
                   <h2>Set New Password Form</h2>
                   <InputField
                     label="Password"

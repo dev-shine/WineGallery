@@ -126,8 +126,8 @@ class Login extends Component {
     return (
       <div className="Login">
         <div className="Login--container">
-          <h1 className="Login--forms_title">SignUp</h1>
-          <div className="Login--forms_form">
+          <h1 className="Login--forms__title">SignUp</h1>
+          <div className="Login--forms__form">
             <h2>Login Form</h2>
             <InputField
               label="Email"
@@ -150,7 +150,7 @@ class Login extends Component {
             <button type="button" onClick={this.handleSubmit}>Login</button>
             {error && error.errorDescription && <div>{error.errorDescription}</div>}
           </div>
-          <div className="Login--forms_social">
+          <div className="Login--forms__social">
           </div>
         </div>
       </div>

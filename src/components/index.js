@@ -14,6 +14,7 @@ import Header from './organisms/Header/Header';
 import SimpleList from './organisms/SimpleList/SimpleList';
 import ShippingAddressForm from './organisms/ShippingAddressForm/ShippingAddressForm';
 import CheckoutShippingAddressForm from './organisms/CheckoutShippingAddressForm/CheckoutShippingAddressForm';
+import DiscountCodeForm from './organisms/DiscountCodeForm/DiscountCodeForm';
 import AccountDetailsForm from './organisms/AccountDetailsForm/AccountDetailsForm';
 import WineFilters from './organisms/WineFilters/WineFilters';
 import WineList from './organisms/WineList/WineList';
@@ -41,6 +42,7 @@ export {
   SimpleList,
   ShippingAddressForm,
   CheckoutShippingAddressForm,
+  DiscountCodeForm,
   AccountDetailsForm,
   SubscriptionStatus,
   WineFilters,

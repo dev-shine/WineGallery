@@ -80,8 +80,8 @@ class SignUp extends Component {
           return (
             <div className="SignUp">
               <div className="SignUp--container">
-                <h1 className="SignUp--forms_title">SignUp</h1>
-                <div className="SignUp--forms_form">
+                <h1 className="SignUp--forms__title">SignUp</h1>
+                <div className="SignUp--forms__form">
                   <InputField
                     label="First Name"
                     placeholder="First Name"
