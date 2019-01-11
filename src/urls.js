@@ -8,7 +8,7 @@ const URL_PATTERNS = {
   QUIZ: '/quiz',
   QUIZ_RESULTS: '/quiz/results',
   SET_NEW_PASSWORD: '/set-new-password/:uid/:token',
-  SIGNUP: '/signup',
+  SIGN_UP: '/signup',
   WINES: '/wines',
 };
 

@@ -37,7 +37,7 @@ class Login extends Component {
       localStorage.removeItem('memberId');
 
       // Ensures user is logged out
-      // TODO: remove this when we introduce local state from Apollo
+      // TODO DEV-203: remove this when we introduce local state from Apollo
       window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.LOGIN}`;
     }
 
