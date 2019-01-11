@@ -2,11 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+import { init } from '@sentry/browser';
 
 import * as serviceWorker from './serviceWorker';
 import App from './App';
 
 import './styles/index.scss';
+
+const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
+if (SENTRY_DSN) {
+  init({
+    dsn: SENTRY_DSN,
+  });
+}
 
 const history = createBrowserHistory();
 
