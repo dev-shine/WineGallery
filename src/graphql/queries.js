@@ -125,7 +125,8 @@ const GET_WINES = gql`
       country {
         name
       }
-      product{
+      product {
+        id
         name
         sellingPrice
         productPhotos {
@@ -227,11 +228,14 @@ const GET_MEMBER = gql`
 const GET_SHOPPING_CART = gql`
   query Me {
     me {
+      id
       shoppingCart {
         shoppingcartitemSet {
+          quantity
           product {
             id
             name
+            sellingPrice
             productPhotos {
               photoLarge
             }

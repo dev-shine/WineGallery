@@ -18,9 +18,17 @@ import './MyAccount.scss';
  * React.Component: https://reactjs.org/docs/react-component.html
  * */
 class MyAccount extends Component {
-  static contextTypes = {};
-
   state = {};
+
+  /**
+   * Updates shopping cart and memberId from local storage
+   * @param memberId
+   * */
+  handleUpdatesOnLogin = memberId => {
+
+    // TODO DEV-203 replace this once we introduce apollo-link-state
+    window.localStorage.setItem('memberId', memberId);
+  };
 
   render() {
     return (
@@ -30,6 +38,7 @@ class MyAccount extends Component {
             if (loading) return 'Loading...';
             if (error) return `Error! ${error.message}`;
             if (data.me) {
+              this.handleUpdatesOnLogin(data.me.id);
               return (
                 <div className="MyAccount--container">
                   <h1 className="MyAccount--forms__title">My Account</h1>

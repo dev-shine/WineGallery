@@ -2,12 +2,14 @@
 import SimpleItem from './atoms/SimpleItem/SimpleItem';
 import InputField from './atoms/InputField/InputField';
 import CheckBox from './atoms/CheckBox/CheckBox';
+import ButtonMutation from './atoms/ButtonMutation/ButtonMutation';
 
 // Molecules
 import SimpleListItem from './molecules/SimpleListItem/SimpleListItem';
 import WineItems from './molecules/WineItems/WineItems';
 import ErrorBoundary from './molecules/ErrorBoundary/ErrorBoundary';
 import NewPaymentMethod from './molecules/NewPaymentMethod/NewPaymentMethod';
+import ShoppingCart from './molecules/ShoppingCart/ShoppingCart';
 
 // Organisms
 import Header from './organisms/Header/Header';
@@ -31,12 +33,14 @@ export {
   SimpleItem,
   InputField,
   CheckBox,
+  ButtonMutation,
 
   // Molecules
   SimpleListItem,
   ErrorBoundary,
   WineItems,
   NewPaymentMethod,
+  ShoppingCart,
 
   // Organisms
   Header,

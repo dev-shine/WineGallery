@@ -18,4 +18,14 @@ const formatNumber = (number, decimal = 2, hasThousandSeparator = true) => {
   return parseFloat(Math.round(number * 100) / 100).toFixed(decimal);
 };
 
-export default formatNumber;
+/**
+ * Sets time out with async/await features (useful for testing mutations)
+ * @param ms: milliseconds to be waited
+ * @return {Promise<any>}
+ * */
+const wait = ms => new Promise(r => setTimeout(r, ms));
+
+export {
+  formatNumber,
+  wait,
+};

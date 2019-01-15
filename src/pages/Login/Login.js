@@ -34,6 +34,7 @@ class Login extends Component {
     // Logs user out from application once they land back in to Login page
     if (localStorage.getItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE)) {
       localStorage.removeItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE);
+      localStorage.removeItem('memberId');
 
       // Ensures user is logged out
       // TODO: remove this when we introduce local state from Apollo
