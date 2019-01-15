@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
+import { ShoppingCart } from '../..';
 import { isLoggedIn } from '../../../helpers/auth';
 import urlPatterns from '../../../urls';
 
@@ -28,7 +29,7 @@ class Header extends Component {
             </Link>
           </section>
           <nav className="Header--main-navigation">
-            <ul>
+            <ul className="Header--main-navigation--list">
               <li>
                 <NavLink to="/home">Home</NavLink>
               </li>
@@ -58,6 +59,9 @@ class Header extends Component {
                   </li>
                 )
               }
+              <li>
+                <ShoppingCart />
+              </li>
             </ul>
           </nav>
         </div>

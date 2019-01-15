@@ -6,7 +6,6 @@ import {
   WineList,
   WineSorters,
 } from '../../components';
-import { GET_WINES } from '../../graphql/queries';
 
 import './Wines.scss';
 
@@ -71,7 +70,7 @@ class Wines extends Component {
 
             <div className="Wines--list">
               <ErrorBoundary>
-                <WineList query={GET_WINES} variables={filters} />
+                <WineList variables={filters} />
               </ErrorBoundary>
             </div>
 

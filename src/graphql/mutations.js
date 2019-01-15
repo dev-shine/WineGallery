@@ -23,7 +23,7 @@ const CREATE_PAYMENT_METHOD = gql`
         cardBrand
         cardLast4
         cardExpiryMonth
-        cardExpiryYear  
+        cardExpiryYear
       }
       errors {
         messages
@@ -243,19 +243,77 @@ const UPDATE_SUBSCRIPTION = gql`
   }
 `;
 
+const ADD_SHOPPING_CART_ITEM = gql`
+  mutation AddShoppingCartItem($input: AddShoppingCartItemInput!){
+    addShoppingCartItem(input: $input) {
+      errors {
+        field
+      }
+      shoppingCart {
+        shoppingcartitemSet {
+          quantity
+          product {
+            name
+            sellingPrice
+          }
+        }
+      }
+    }
+  }
+`;
+
+const DELETE_SHOPPING_CART_ITEM = gql`
+  mutation ($input: DeleteShoppingCartItemInput!){
+    deleteShoppingCartItem (input: $input) {
+      isDeleted
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
+const UPDATE_SHOPPING_CART_ITEM = gql`
+  mutation ($input: UpdateShoppingCartItemInput!){
+    updateShoppingCartItem (input: $input) {
+      shoppingCart {
+        member {
+          id
+        }
+        discount
+        shoppingcartitemSet {
+          quantity
+          product {
+            id
+            sellingPrice
+          }
+        }
+      }
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
 export {
+  ADD_SHOPPING_CART_ITEM,
   APPLY_DISCOUNT_CODE,
   CREATE_CONTACT_PREFERENCE,
   CREATE_PAYMENT_METHOD,
   DELETE_CONTACT_PREFERENCE,
   DELETE_PAYMENT_METHOD,
+  DELETE_SHOPPING_CART_ITEM,
   RESET_PASSWORD,
   SET_NEW_PASSWORD,
   SIGN_UP,
   SUBMIT_QUIZ,
-  UPDATE_SUBSCRIPTION,
+  UPDATE_CHECKOUT_SHIPPING_ADDRESS,
   UPDATE_MEMBER_ACCOUNT_DETAILS,
   UPDATE_MEMBER_PAYMENT_METHOD,
   UPDATE_MEMBER_SHIPPING_ADDRESS,
-  UPDATE_CHECKOUT_SHIPPING_ADDRESS,
+  UPDATE_SHOPPING_CART_ITEM,
+  UPDATE_SUBSCRIPTION,
 };

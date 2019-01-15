@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import gql from 'graphql-tag';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { BrowserRouter } from 'react-router-dom';
 
-import Header from './Header';
+import gql from 'graphql-tag';
+
+import { UPDATE_SHOPPING_CART_ITEM } from '../../../graphql/mutations';
+import ButtonMutation from './ButtonMutation';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
+
   const MEMBER_DUMMY_QUERY = gql`
     {
       me {
@@ -30,15 +32,10 @@ it('renders without crashing', () => {
     },
   ];
 
-  // Wraps Header with BrowserRouter as it uses react-router-dom
   ReactDOM.render(
     <MockedProvider mocks={mocks} addTypename={false}>
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
+      <ButtonMutation label="Label" input={{ id: 1234 }} mutationProp={UPDATE_SHOPPING_CART_ITEM} />
     </MockedProvider>,
     div
   );
-
-  ReactDOM.unmountComponentAtNode(div);
 });

@@ -17,8 +17,8 @@ const getLocalStorageToken = () => {
       } catch (e) {
 
         // Logs error
-        error && console.log('error', error);
-        e && console.log('e', e);
+        error && console.error('error', error);
+        e && console.error('e', e);
         return tokenObjectNull;
       }
     }

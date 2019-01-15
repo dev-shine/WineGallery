@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Query } from 'react-apollo';
 
+import { GET_WINES } from '../../../graphql/queries';
 import { WineItems } from '../..';
 
 import './WineList.scss';
@@ -13,31 +14,27 @@ import './WineList.scss';
  * */
 class WineList extends Component {
   static propTypes = {
-    query: PropTypes.shape(),
     variables: PropTypes.shape(),
   };
 
   static defaultProps = {
-    query: null,
     variables: null,
   };
 
   render() {
-    const { query, variables } = this.props;
+    const { variables } = this.props;
 
     return (
       <div className="SimpleList">
         <h1>Wines</h1>
-
-        {/* Queries wine list from database */}
-        <Query query={query} variables={variables}>
-          {({ loading, error, data }) => {
-            if (loading) return 'Loading...';
-            if (error) return `Error! ${error.message}`;
+        <Query query={GET_WINES} variables={variables}>
+          {({ loading: loadingWines, error: errorWines, data: { allWines } }) => {
+            if (loadingWines) return 'Loading...';
+            if (errorWines) return `Error! ${errorWines.message}`;
             return (
 
               // MOLECULE
-              <WineItems data={data} />
+              <WineItems data={allWines} />
             );
           }}
         </Query>
