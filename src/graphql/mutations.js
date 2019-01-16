@@ -263,7 +263,7 @@ const ADD_SHOPPING_CART_ITEM = gql`
 `;
 
 const DELETE_SHOPPING_CART_ITEM = gql`
-  mutation ($input: DeleteShoppingCartItemInput!){
+  mutation DeleteShoppingCartItem($input: DeleteShoppingCartItemInput!){
     deleteShoppingCartItem (input: $input) {
       isDeleted
       errors {
@@ -275,7 +275,7 @@ const DELETE_SHOPPING_CART_ITEM = gql`
 `;
 
 const UPDATE_SHOPPING_CART_ITEM = gql`
-  mutation ($input: UpdateShoppingCartItemInput!){
+  mutation UpdateShoppingCartItem($input: UpdateShoppingCartItemInput!){
     updateShoppingCartItem (input: $input) {
       shoppingCart {
         member {

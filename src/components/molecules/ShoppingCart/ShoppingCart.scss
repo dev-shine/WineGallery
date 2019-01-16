@@ -32,6 +32,7 @@
     display: flex;
 
     &--container {
+      flex-direction: column;
       display: flex;
       width: 100%;
     }
@@ -45,6 +46,36 @@
         font-size: 1rem;
         justify-content: space-between;
         width: 100%;
+      }
+    }
+
+    &--actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      margin: 20px 10px;
+
+      .cta-modal {
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-decoration: none;
+
+        &:first-child {
+          background: #fff;
+          color: $brand-danger;
+          padding: 10px;
+          text-transform: uppercase;
+          border: 2px solid $light-grey;
+        }
+
+        &:nth-child(2) {
+          background: $brand-danger;
+          color: #fff;
+          padding: 10px;
+          text-transform: uppercase;
+          border: 2px solid $brand-danger;
+        }
       }
     }
   }

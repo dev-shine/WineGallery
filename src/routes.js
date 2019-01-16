@@ -50,7 +50,7 @@ class Routes extends Component {
         {/* Renders components once application is loaded first time */}
         <Route path={urlPatterns.HOME} exact component={Home} />
         <Route path={urlPatterns.HOME} exact component={Home} />
-        <Route path={urlPatterns.SIGNUP} component={SignUp} />
+        <Route path={urlPatterns.SIGN_UP} component={SignUp} />
         <Route path={urlPatterns.PASSWORD_RESET} component={PasswordReset} />
         <Route path={urlPatterns.SET_NEW_PASSWORD} component={SetNewPassword} />
         <Route path={urlPatterns.QUIZ} exact component={Quiz} />
