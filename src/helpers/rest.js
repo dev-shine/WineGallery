@@ -2,7 +2,7 @@ import axios from 'axios';
 import { EMPTY_PARAM_DATA } from './constants';
 
 const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_TWG_REST_DOMAIN}`,
+  baseURL: `${process.env.REACT_APP_REST_DOMAIN}`,
   timeout: 3600,
 });
 

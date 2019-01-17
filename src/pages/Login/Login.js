@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { HTTP_METHODS } from '../../helpers/constants';
-import executeRestApi from '../../helpers/rest';
-import { getLocalStorageToken, setLocalStorageToken } from '../../helpers/auth';
+import { executeLogInRequest, getLocalStorageToken } from '../../helpers/auth';
 import urlPatterns from '../../urls';
 
 import { InputField } from '../../components';
@@ -80,27 +78,12 @@ class Login extends Component {
       localStorage.removeItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE);
     }
 
-    // Creates arguments to pass into API request
-    const urlPath = `${process.env.REACT_APP_TWG_REST_AUTH_PATH}`;
-    const data = {
-      password,
-      username: email,
-      grant_type: 'password',
-      client_id: `${process.env.REACT_APP_CLIENT_ID}`,
-      client_secret: `${process.env.REACT_APP_CLIENT_SECRET}`,
-    };
-
-    // Sends request to axiosJs instance
-    executeRestApi(HTTP_METHODS.POST, urlPath, { data })
-
-    // Stores response from previous statement in local storage and redirects to my account page
-      .then(response => {
-
-        // Encodes and Stores tokens in localStorage --> https://www.npmjs.com/package/jsonwebtoken
-        setLocalStorageToken(response.data.access_token, response.data.refresh_token, email);
+    // Executes Login and redirects user to MyAccount page
+    executeLogInRequest(email, password)
+      .then(() => {
 
         // Redirects to my account page
-        // TODO: change this to this.props.history.push() when we introduce local state from Apollo
+        // TODO DEV-203 change this to this.props.history.push() when added local state from Apollo
         window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.MY_ACCOUNT}`;
       })
 

@@ -7,7 +7,7 @@ import { GET_SHOPPING_CART } from '../../graphql/queries';
 import './QuizResults.scss';
 
 const DEFAULT_BOTTLE_URL = (
-  `${process.env.REACT_APP_TWG_REST_DOMAIN}/static/src/site/img/default-bottle-photo.png`
+  `${process.env.REACT_APP_REST_DOMAIN}/static/src/site/img/default-bottle-photo.png`
 );
 
 /**
