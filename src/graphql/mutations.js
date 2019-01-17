@@ -298,6 +298,23 @@ const UPDATE_SHOPPING_CART_ITEM = gql`
   }
 `;
 
+const UPDATE_WINE_PREFERENCE = gql`
+  mutation UpdateMemberWinePreference($input: UpdateMemberWinePreferenceInput!) {
+    updateMemberWinePreference (input: $input){
+      winePreference{
+        redBottles
+        whiteBottles
+        roseBottles
+        sparklingBottles
+      }
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
 export {
   ADD_SHOPPING_CART_ITEM,
   APPLY_DISCOUNT_CODE,
@@ -316,4 +333,5 @@ export {
   UPDATE_MEMBER_SHIPPING_ADDRESS,
   UPDATE_SHOPPING_CART_ITEM,
   UPDATE_SUBSCRIPTION,
+  UPDATE_WINE_PREFERENCE,
 };

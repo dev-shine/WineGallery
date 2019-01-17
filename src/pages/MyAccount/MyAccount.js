@@ -10,6 +10,7 @@ import {
   ShippingAddressForm,
   SubscriptionStatus,
   PaymentMethod,
+  WinePreference,
 } from '../../components';
 import { shoppingCartLocalStorage } from '../../helpers/tools';
 
@@ -117,24 +118,30 @@ class MyAccount extends Component {
                           return (
                             <div className="MyAccount--container">
                               <h1 className="MyAccount--forms__title">My Account</h1>
+                              <div className="MyAccount--forms__wine-preferences">
+                                <WinePreference
+                                  winePreference={data.me}
+                                  memberId={data.me.id}
+                                />
+                              </div>
                               <div className="MyAccount--forms__payment-method">
-                                <PaymentMethod query={data.me} />
+                                <PaymentMethod me={data.me} />
                               </div>
                               <div className="MyAccount--forms__billing-day">
                                 <h3>Billing day place holder.</h3>
                               </div>
                               <div className="MyAccount--forms__subscription">
-                                <SubscriptionStatus query={data.me} />
+                                <SubscriptionStatus me={data.me} />
                               </div>
                               <div className="MyAccount--forms__account">
-                                <AccountDetailsForm query={data.me} />
+                                <AccountDetailsForm me={data.me} />
                               </div>
                               <div className="MyAccount--forms__shipping">
-                                <ShippingAddressForm query={data.me} />
+                                <ShippingAddressForm me={data.me} />
                               </div>
                               <div className="MyAccount--forms__contact-preferences">
                                 <ContactPreferencesForm
-                                  query={data.me.contactpreferenceSet}
+                                  contactPreference={data.me.contactpreferenceSet}
                                   memberId={data.me.id}
                                 />
                               </div>

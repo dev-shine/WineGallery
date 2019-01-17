@@ -41,11 +41,11 @@ const defaultState = {
  * */
 class PaymentMethod extends Component {
   static propTypes = {
-    query: PropTypes.shape({ subscription: PropTypes.shape({}) }),
+    me: PropTypes.shape({ subscription: PropTypes.shape({}) }),
   };
 
   static defaultProps = {
-    query: null,
+    me: null,
   };
 
   state = defaultState;
@@ -59,12 +59,12 @@ class PaymentMethod extends Component {
    * @param paymentApiMethodUuid
    * */
   handleDeletePaymentMethod = (deletePaymentMethod, paymentApiMethodUuid) => {
-    const { query } = this.props;
+    const { me } = this.props;
     deletePaymentMethod({
       variables: {
         input: {
           apiUuid: paymentApiMethodUuid,
-          memberId: query.id,
+          memberId: me.id,
         },
       },
     });
@@ -76,12 +76,12 @@ class PaymentMethod extends Component {
    * @param paymentApiMethodUuid
    * */
   handleMakePaymentMethodDefault = (updatePaymentMethod, paymentApiMethodUuid) => {
-    const { query } = this.props;
+    const { me } = this.props;
     updatePaymentMethod({
       variables: {
         input: {
           apiUuid: paymentApiMethodUuid,
-          memberId: query.id,
+          memberId: me.id,
           isDefault: true,
         },
       },
@@ -97,8 +97,8 @@ class PaymentMethod extends Component {
 
   render() {
     const { props, state } = this;
-    const { query } = props;
-    const paymentList = query && query.paymentmethodSet && query.paymentmethodSet;
+    const { me } = props;
+    const paymentList = me && me.paymentmethodSet && me.paymentmethodSet;
     return (
       <div className="PaymentMethod">
         <h2>Update Subscription Status</h2>
@@ -110,7 +110,7 @@ class PaymentMethod extends Component {
                 ? (
                   <StripeProvider apiKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}>
                     <Elements>
-                      <NewPaymentMethod query={query} onAddCard={this.handleClosePaymentMethodForm} />
+                      <NewPaymentMethod me={me} onAddCard={this.handleClosePaymentMethodForm} />
                     </Elements>
                   </StripeProvider>
                 )

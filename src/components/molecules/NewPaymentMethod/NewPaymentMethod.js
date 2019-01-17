@@ -16,7 +16,7 @@ import './NewPaymentMethod.scss';
 class NewPaymentMethod extends Component {
   static propTypes = {
     stripe: PropTypes.shape({ createToken: PropTypes.func }),
-    query: PropTypes.shape({ subscription: PropTypes.shape({}) }).isRequired,
+    me: PropTypes.shape({ subscription: PropTypes.shape({}) }).isRequired,
     onAddCard: PropTypes.func,
   };
 
@@ -39,7 +39,7 @@ class NewPaymentMethod extends Component {
     // User clicked submit
     const { props } = this;
     const userInfo = {
-      name: `${props.query.firstName} ${props.query.lastName}`,
+      name: `${props.me.firstName} ${props.me.lastName}`,
     };
 
     // Returns error or token from token request to Stripe
@@ -57,7 +57,7 @@ class NewPaymentMethod extends Component {
         variables: {
           input: {
             token: token.id,
-            memberId: props.query.id,
+            memberId: props.me.id,
           },
         },
       });

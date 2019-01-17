@@ -55,7 +55,7 @@ it('renders without crashing', () => {
   ReactDOM.render(
     <MockedProvider mocks={mocks} addTypename={false}>
       <BrowserRouter>
-        <SubscriptionStatus query={MEMBER_DUMMY_QUERY} name="Member Information" />
+        <SubscriptionStatus me={MEMBER_DUMMY_QUERY} name="Member Information" />
       </BrowserRouter>
     </MockedProvider>,
     div

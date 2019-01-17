@@ -23,7 +23,7 @@ import './AccountDetailsForm.scss';
  * @return {React.Component}
  * */
 const AccountDetailsForm = props => {
-  const { query } = props;
+  const { me } = props;
 
   // Initiates variables that will hold the value to pass into the mutation
   let email;
@@ -49,7 +49,7 @@ const AccountDetailsForm = props => {
 
     // Creates an "input" object with all the properties
     const input = {
-      id: query.id,
+      id: me.id,
       firstName: firstName.value,
       lastName: lastName.value,
       birthDate: birthDate.value,
@@ -106,7 +106,7 @@ const AccountDetailsForm = props => {
                   name="accountDetailsFirstName"
                   id="accountDetailsFirstName"
                   validations={[checkName]}
-                  value={query.firstName}
+                  value={me.firstName}
                   reference={node => {
                     firstName = node;
                   }}
@@ -116,7 +116,7 @@ const AccountDetailsForm = props => {
                   label="Last Name"
                   name="accountDetailsLastName"
                   id="accountDetailsLastName"
-                  value={query.lastName}
+                  value={me.lastName}
                   validations={[checkName]}
                   reference={node => {
                     lastName = node;
@@ -127,7 +127,7 @@ const AccountDetailsForm = props => {
                   label="Birth date"
                   name="birthDate"
                   id="birthDate"
-                  value={query.birthDate}
+                  value={me.birthDate}
                   serverValidation={data && checkServerValidation(data, 'updateMember', 'birth_date')}
                   reference={node => {
                     birthDate = node;
@@ -138,7 +138,7 @@ const AccountDetailsForm = props => {
                   label="Gender"
                   name="gender"
                   id="gender"
-                  value={query.gender}
+                  value={me.gender}
                   reference={node => {
                     gender = node;
                   }}
@@ -148,7 +148,7 @@ const AccountDetailsForm = props => {
                   label="Mobile number"
                   name="mobileNumber"
                   id="mobileNumber"
-                  value={query.mobileNumber}
+                  value={me.mobileNumber}
                   serverValidation={data && checkServerValidation(data, 'updateMember', 'mobile_number')}
                   reference={node => {
                     mobileNumber = node;
@@ -159,7 +159,7 @@ const AccountDetailsForm = props => {
                   label="Email"
                   name="email"
                   id="email"
-                  value={query.email}
+                  value={me.email}
                   serverValidation={data && checkServerValidation(data, 'updateMember', 'email')}
                   validations={[checkEmail]}
                   reference={node => {
@@ -171,7 +171,7 @@ const AccountDetailsForm = props => {
                   label="New password"
                   name="newPassword"
                   id="newPassword"
-                  value={query.password}
+                  value={me.password}
                   validations={[checkPassword]}
                   reference={node => {
                     newPassword = node;
@@ -198,7 +198,7 @@ const AccountDetailsForm = props => {
 
 // Declares type for props coming from parent component
 AccountDetailsForm.propTypes = {
-  query: PropTypes.shape({
+  me: PropTypes.shape({
     id: PropTypes.string,
     firstName: PropTypes.string,
     lastName: PropTypes.string,
@@ -210,7 +210,7 @@ AccountDetailsForm.propTypes = {
 };
 
 AccountDetailsForm.defaultProps = {
-  query: [{}],
+  me: [{}],
 };
 
 export default AccountDetailsForm;

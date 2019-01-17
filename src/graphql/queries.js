@@ -221,6 +221,12 @@ const GET_MEMBER = gql`
           }
         }
       }
+      winepreference {
+        redBottles
+        whiteBottles
+        roseBottles
+        sparklingBottles
+      }
     }
   }
 `;
