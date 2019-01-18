@@ -26,6 +26,7 @@ import ContactPreferencesForm from './organisms/ContactPreferencesForm/ContactPr
 import SubscriptionStatus from './organisms/SubscriptionStatus/SubscriptionStatus';
 import PaymentMethod from './organisms/PaymentMethod/PaymentMethod';
 import QuizQuestion from './organisms/QuizQuestion/QuizQuestion';
+import WinePreference from './organisms/WinePreference/WinePreference';
 
 export {
 
@@ -51,6 +52,7 @@ export {
   OrderSummary,
   AccountDetailsForm,
   SubscriptionStatus,
+  WinePreference,
   WineFilters,
   WineSorters,
   WineList,

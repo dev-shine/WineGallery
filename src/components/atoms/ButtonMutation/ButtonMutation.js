@@ -16,23 +16,52 @@ class ButtonMutation extends Component {
     label: PropTypes.string.isRequired,
     mutationProp: PropTypes.shape({}).isRequired,
     reFetchQueriesProp: PropTypes.arrayOf(PropTypes.shape({})),
+    disabled: PropTypes.bool,
+    mutationPayloadName: PropTypes.string,
+    handleShowErrors: PropTypes.func,
+    onClick: PropTypes.func,
   };
 
   static defaultProps = {
     reFetchQueriesProp: [],
+    disabled: false,
+    mutationPayloadName: null,
+    handleShowErrors: null,
+    onClick: null,
   };
 
   /**
    * Triggers mutation passing "input" from props.
-   * @param mutationMethod: mutation client
+   * @param {Function} mutationMethod: mutation client
+   * @param {Object} event: click button event
    * */
-  handleButtonClicked = mutationMethod => {
-    const { input } = this.props;
-    mutationMethod({ variables: { input } });
+  handleButtonClicked = (event, mutationMethod) => {
+    const {
+      input,
+      mutationPayloadName,
+      handleShowErrors,
+      onClick,
+    } = this.props;
+    mutationMethod({ variables: { input } }).then(data => {
+
+      // Shows friendly errors from GraphQL's response
+      if (handleShowErrors && mutationPayloadName && data.data[mutationPayloadName]
+        && data.data[mutationPayloadName].errors && data.data[mutationPayloadName].errors.length) {
+        handleShowErrors(data.data[mutationPayloadName].errors[0].messages[0]);
+      }
+    });
+
+    // Triggers event when for when user clicks the button good to simulates button clicked
+    !!onClick && onClick(event);
   };
 
   render() {
-    const { reFetchQueriesProp, mutationProp, label } = this.props;
+    const {
+      reFetchQueriesProp,
+      mutationProp,
+      label,
+      disabled,
+    } = this.props;
 
     return (
       <div className="ButtonMutation">
@@ -47,8 +76,9 @@ class ButtonMutation extends Component {
               <button
                 type="button"
                 onClick={
-                  () => this.handleButtonClicked(mutationMethod)
+                  event => this.handleButtonClicked(event, mutationMethod)
                 }
+                disabled={disabled}
               >
                 {label}
               </button>

@@ -31,7 +31,7 @@ it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(
     <MockedProvider mocks={mocks} addTypename={false}>
-      <AccountDetailsForm query={MEMBER_DUMMY_QUERY} name="Member Information" />
+      <AccountDetailsForm me={MEMBER_DUMMY_QUERY} name="Member Information" />
     </MockedProvider>,
     div
   );

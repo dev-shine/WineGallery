@@ -57,7 +57,7 @@ const defaultState = {
  * */
 class SubscriptionStatus extends Component {
   static propTypes = {
-    query: PropTypes.shape({ subscription: PropTypes.shape({ }) }).isRequired,
+    me: PropTypes.shape({ subscription: PropTypes.shape({ }) }).isRequired,
   };
 
   state = defaultState;
@@ -69,11 +69,11 @@ class SubscriptionStatus extends Component {
    * */
   handleChangeStatus = (updateSubscription, inputObj) => {
     const { showModal } = this.state;
-    const { query } = this.props;
+    const { me } = this.props;
     updateSubscription({
       variables: {
         input: {
-          id: query.subscription.id,
+          id: me.subscription.id,
           ...inputObj,
         },
       },
@@ -189,8 +189,8 @@ class SubscriptionStatus extends Component {
    * @return {Component}
    * */
   renderCallToActions = (statusUpperCase, updateSubscription) => {
-    const { query } = this.props;
-    const monthFrequency = query.subscription && query.subscription.monthFrequency;
+    const { me } = this.props;
+    const monthFrequency = me.subscription && me.subscription.monthFrequency;
     if (statusUpperCase) {
       return (
         <div className="SubscriptionStatus--cta">
@@ -310,7 +310,7 @@ class SubscriptionStatus extends Component {
 
   render() {
     const { props, state } = this;
-    const { subscription } = props.query;
+    const { subscription } = props.me;
     const hasSubscription = !!subscription;
     const statusId = hasSubscription && subscription.subscriptionStatus.id;
     const statusUpperCase = statusId && SUBSCRIPTION_STATUS_ID[statusId];

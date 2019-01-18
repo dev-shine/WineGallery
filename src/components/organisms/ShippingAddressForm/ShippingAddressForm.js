@@ -21,7 +21,7 @@ import './ShippingAddressForm.scss';
  * https://reactjs.org/docs/components-and-props.html#function-and-class-components
  * */
 const ShippingAddressForm = props => {
-  const { query } = props;
+  const { me } = props;
 
   // Initiates variables that will hold the value to pass into the mutation
   let city;
@@ -37,7 +37,7 @@ const ShippingAddressForm = props => {
   let addressUnavailableInstruction;
 
   // Verifies if member has shipping address
-  const hasShippingAddress = !!query.shippingAddress;
+  const hasShippingAddress = !!me.shippingAddress;
 
   return (
     <Mutation mutation={UPDATE_MEMBER_SHIPPING_ADDRESS} refetchQueries={() => [{ query: GET_MEMBER }]}>
@@ -66,7 +66,7 @@ const ShippingAddressForm = props => {
                         state: stateTerritory.value,
                         company: company.value,
                         addressUnavailableInstructionId: addressUnavailableInstruction.value,
-                        memberId: query.id,
+                        memberId: me.id,
                       },
                     },
                 });
@@ -78,7 +78,7 @@ const ShippingAddressForm = props => {
                   name="firstName"
                   id="firstName"
                   validations={[checkName]}
-                  value={hasShippingAddress ? query.shippingAddress.firstName : ''}
+                  value={hasShippingAddress ? me.shippingAddress.firstName : ''}
                   reference={node => {
                     firstName = node;
                   }}
@@ -88,7 +88,7 @@ const ShippingAddressForm = props => {
                   label="Last Name"
                   name="lastName"
                   id="lastName"
-                  value={hasShippingAddress ? query.shippingAddress.lastName : ''}
+                  value={hasShippingAddress ? me.shippingAddress.lastName : ''}
                   validations={[checkName]}
                   reference={node => {
                     lastName = node;
@@ -99,7 +99,7 @@ const ShippingAddressForm = props => {
                   label="Address line 1"
                   name="addressLine1"
                   id="addressLine1"
-                  value={hasShippingAddress ? query.shippingAddress.line1 : ''}
+                  value={hasShippingAddress ? me.shippingAddress.line1 : ''}
                   validations={[checkAddress]}
                   reference={node => {
                     line1 = node;
@@ -110,7 +110,7 @@ const ShippingAddressForm = props => {
                   label="Address line 2"
                   name="addressLine2"
                   id="addressLine2"
-                  value={hasShippingAddress && query.shippingAddress.line2 ? query.shippingAddress.line2 : ''}
+                  value={hasShippingAddress && me.shippingAddress.line2 ? me.shippingAddress.line2 : ''}
                   reference={node => {
                     line2 = node;
                   }}
@@ -121,7 +121,7 @@ const ShippingAddressForm = props => {
                   name="stateTerritory"
                   id="stateTerritory"
                   validations={[checkState]}
-                  value={hasShippingAddress ? query.shippingAddress.state : ''}
+                  value={hasShippingAddress ? me.shippingAddress.state : ''}
                   reference={node => {
                     stateTerritory = node;
                   }}
@@ -131,7 +131,7 @@ const ShippingAddressForm = props => {
                   label="Contact number"
                   name="contactNumber"
                   id="contactNumber"
-                  value={hasShippingAddress ? query.shippingAddress.contactNumber : ''}
+                  value={hasShippingAddress ? me.shippingAddress.contactNumber : ''}
                   reference={node => {
                     contactNumber = node;
                   }}
@@ -144,7 +144,7 @@ const ShippingAddressForm = props => {
                   label="Post code"
                   name="postCode"
                   id="postCode"
-                  value={hasShippingAddress ? query.shippingAddress.postcode : ''}
+                  value={hasShippingAddress ? me.shippingAddress.postcode : ''}
                   reference={node => {
                     postcode = node;
                   }}
@@ -154,7 +154,7 @@ const ShippingAddressForm = props => {
                   label="Country"
                   name="country"
                   id="country"
-                  value={hasShippingAddress ? query.shippingAddress.country.id : ''}
+                  value={hasShippingAddress ? me.shippingAddress.country.id : ''}
                   reference={node => {
                     country = node;
                   }}
@@ -167,7 +167,7 @@ const ShippingAddressForm = props => {
                   label="City"
                   name="city"
                   id="city"
-                  value={hasShippingAddress ? query.shippingAddress.city : ''}
+                  value={hasShippingAddress ? me.shippingAddress.city : ''}
                   reference={node => {
                     city = node;
                   }}
@@ -180,7 +180,7 @@ const ShippingAddressForm = props => {
                   label="Company"
                   name="company"
                   id="company"
-                  value={hasShippingAddress ? query.shippingAddress.company : ''}
+                  value={hasShippingAddress ? me.shippingAddress.company : ''}
                   reference={node => {
                     company = node;
                   }}
@@ -191,7 +191,7 @@ const ShippingAddressForm = props => {
                   name="deliveryInstructions"
                   id="deliveryInstructions"
                   value={
-                    hasShippingAddress ? query.shippingAddress.addressUnavailableInstruction.id : ''
+                    hasShippingAddress ? me.shippingAddress.addressUnavailableInstruction.id : ''
                   }
                   reference={node => {
                     addressUnavailableInstruction = node;
@@ -208,7 +208,7 @@ const ShippingAddressForm = props => {
 
 // Declares type for props coming from parent component
 ShippingAddressForm.propTypes = {
-  query: PropTypes.shape({
+  me: PropTypes.shape({
     shippingAddress: PropTypes.shape({
       firstName: PropTypes.string,
       lastName: PropTypes.string,
@@ -236,7 +236,7 @@ ShippingAddressForm.propTypes = {
 };
 
 ShippingAddressForm.defaultProps = {
-  query: [{}],
+  me: [{}],
 };
 
 export default ShippingAddressForm;

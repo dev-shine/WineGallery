@@ -30,7 +30,7 @@ const CONTACT_TYPES = new Map([
  * */
 class ContactPreferencesForm extends Component {
   static propTypes = {
-    query: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+    contactPreference: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     memberId: PropTypes.string.isRequired,
   };
 
@@ -61,7 +61,7 @@ class ContactPreferencesForm extends Component {
 
   componentDidMount() {
     const { props } = this;
-    const preferencesArray = props.query && this.getContactPreferences();
+    const preferencesArray = props.contactPreference && this.getContactPreferences();
 
     // Ensures that he UI has the latest information on component mounted
     this.setContactPreferences(preferencesArray);
@@ -72,7 +72,7 @@ class ContactPreferencesForm extends Component {
 
     // Ensures that the UI is updated when user changes the state
     if (prevProps !== props) {
-      const preferencesArray = props.query && this.getContactPreferences();
+      const preferencesArray = props.contactPreference && this.getContactPreferences();
       this.setContactPreferences(preferencesArray);
     }
   }
@@ -119,7 +119,7 @@ class ContactPreferencesForm extends Component {
    * */
   getContactPreferences = () => {
     const { props } = this;
-    return props.query.map(
+    return props.contactPreference.map(
       preference => ({
         method: preference.contactMethod.id,
         type: preference.contactType.id,
