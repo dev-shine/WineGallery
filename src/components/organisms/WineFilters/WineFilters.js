@@ -83,6 +83,7 @@ class WineFilters extends Component {
         ...filterRaw,
       },
     });
+    if (!filterConst[responseValueJson.group]) filterConst[responseValueJson.group] = null;
     onFilterChanges(filterConst);
   };
 
@@ -109,13 +110,20 @@ class WineFilters extends Component {
               {({ loading, error, data }) => {
                 if (loading) return 'Loading...';
                 if (error) return `Error! ${error.message}`;
-                const options = data.allWineBodies.map(item => ({
+                const clearOption = [{
+                  value: JSON.stringify({
+                    group: 'wineBodyId',
+                    valueId: null,
+                  }),
+                  label: 'All bodies',
+                }];
+                const options = clearOption.concat(data.allWineBodies.map(item => ({
                   value: JSON.stringify({
                     group: 'wineBodyId',
                     valueId: item.id,
                   }),
                   label: item.name,
-                }));
+                })));
                 return (
                   <Dropdown
                     options={options}
@@ -132,13 +140,20 @@ class WineFilters extends Component {
               {({ loading, error, data }) => {
                 if (loading) return 'Loading...';
                 if (error) return `Error! ${error.message}`;
-                const options = data.allWineTannins.map(item => ({
+                const clearOption = [{
+                  value: JSON.stringify({
+                    group: 'wineTanninId',
+                    valueId: null,
+                  }),
+                  label: 'All tannins',
+                }];
+                const options = clearOption.concat(data.allWineTannins.map(item => ({
                   value: JSON.stringify({
                     group: 'wineTanninId',
                     valueId: item.id,
                   }),
                   label: item.name,
-                }));
+                })));
                 return (
                   <Dropdown
                     options={options}
@@ -154,13 +169,20 @@ class WineFilters extends Component {
               {({ loading, error, data }) => {
                 if (loading) return 'Loading...';
                 if (error) return `Error! ${error.message}`;
-                const options = data.allWineSweetnesses.map(item => ({
+                const clearOption = [{
+                  value: JSON.stringify({
+                    group: 'wineSweetnessId',
+                    valueId: null,
+                  }),
+                  label: 'All sweetnesses',
+                }];
+                const options = clearOption.concat(data.allWineSweetnesses.map(item => ({
                   value: JSON.stringify({
                     group: 'wineSweetnessId',
                     valueId: item.id,
                   }),
                   label: item.name,
-                }));
+                })));
                 return (
                   <Dropdown
                     options={options}
@@ -176,13 +198,20 @@ class WineFilters extends Component {
               {({ loading, error, data }) => {
                 if (loading) return 'Loading...';
                 if (error) return `Error! ${error.message}`;
-                const options = data.allWineTypes.map(item => ({
+                const clearOption = [{
+                  value: JSON.stringify({
+                    group: 'wineTypeId',
+                    valueId: null,
+                  }),
+                  label: 'All grape types',
+                }];
+                const options = clearOption.concat(data.allWineTypes.map(item => ({
                   value: JSON.stringify({
                     group: 'wineTypeId',
                     valueId: item.id,
                   }),
                   label: item.name,
-                }));
+                })));
                 return (
                   <Dropdown
                     options={options}
@@ -198,13 +227,20 @@ class WineFilters extends Component {
               {({ loading, error, data }) => {
                 if (loading) return 'Loading...';
                 if (error) return `Error! ${error.message}`;
-                const options = data.allWineClasses.map(item => ({
+                const clearOption = [{
+                  value: JSON.stringify({
+                    group: 'wineClassId',
+                    valueId: null,
+                  }),
+                  label: 'All wine colours',
+                }];
+                const options = clearOption.concat(data.allWineClasses.map(item => ({
                   value: JSON.stringify({
                     group: 'wineClassId',
                     valueId: item.id,
                   }),
                   label: item.name,
-                }));
+                })));
                 return (
                   <Dropdown
                     options={options}
@@ -221,13 +257,20 @@ class WineFilters extends Component {
               {({ loading, error, data }) => {
                 if (loading) return 'Loading...';
                 if (error) return `Error! ${error.message}`;
-                const options = data.allWineProductionMethods.map(item => ({
+                const clearOption = [{
+                  value: JSON.stringify({
+                    group: 'wineProductionMethodId',
+                    valueId: null,
+                  }),
+                  label: 'All production methods',
+                }];
+                const options = clearOption.concat(data.allWineProductionMethods.map(item => ({
                   value: JSON.stringify({
                     group: 'wineProductionMethodId',
                     valueId: item.id,
                   }),
                   label: item.name,
-                }));
+                })));
                 return (
                   <Dropdown
                     options={options}
@@ -244,13 +287,20 @@ class WineFilters extends Component {
               {({ loading, error, data }) => {
                 if (loading) return 'Loading...';
                 if (error) return `Error! ${error.message}`;
-                const options = data.allSeasons.map(item => ({
+                const clearOption = [{
+                  value: JSON.stringify({
+                    group: 'seasonId',
+                    valueId: null,
+                  }),
+                  label: 'All seasons',
+                }];
+                const options = clearOption.concat(data.allSeasons.map(item => ({
                   value: JSON.stringify({
                     group: 'seasonId',
                     valueId: item.id,
                   }),
                   label: item.name,
-                }));
+                })));
                 return (
                   <Dropdown
                     options={options}
@@ -267,13 +317,20 @@ class WineFilters extends Component {
               {({ loading, error, data }) => {
                 if (loading) return 'Loading...';
                 if (error) return `Error! ${error.message}`;
-                const options = data.allFoods.map(item => ({
+                const clearOption = [{
+                  value: JSON.stringify({
+                    group: 'foodId',
+                    valueId: null,
+                  }),
+                  label: 'All foods',
+                }];
+                const options = clearOption.concat(data.allFoods.map(item => ({
                   value: JSON.stringify({
                     group: 'foodId',
                     valueId: item.id,
                   }),
                   label: item.name,
-                }));
+                })));
                 return (
                   <Dropdown
                     options={options}
@@ -289,13 +346,20 @@ class WineFilters extends Component {
               {({ loading, error, data }) => {
                 if (loading) return 'Loading...';
                 if (error) return `Error! ${error.message}`;
-                const options = data.allTastes.map(item => ({
+                const clearOption = [{
+                  value: JSON.stringify({
+                    group: 'tasteId',
+                    valueId: null,
+                  }),
+                  label: 'All tastes',
+                }];
+                const options = clearOption.concat(data.allTastes.map(item => ({
                   value: JSON.stringify({
                     group: 'tasteId',
                     valueId: item.id,
                   }),
                   label: item.name,
-                }));
+                })));
                 return (
                   <Dropdown
                     options={options}
@@ -311,13 +375,20 @@ class WineFilters extends Component {
               {({ loading, error, data }) => {
                 if (loading) return 'Loading...';
                 if (error) return `Error! ${error.message}`;
-                const options = data.allWineCountries.map(item => ({
+                const clearOption = [{
+                  value: JSON.stringify({
+                    group: 'countryId',
+                    valueId: null,
+                  }),
+                  label: 'All countries',
+                }];
+                const options = clearOption.concat(data.allWineCountries.map(item => ({
                   value: JSON.stringify({
                     group: 'countryId',
                     valueId: item.id,
                   }),
                   label: item.name,
-                }));
+                })));
                 return (
                   <Dropdown
                     options={options}
