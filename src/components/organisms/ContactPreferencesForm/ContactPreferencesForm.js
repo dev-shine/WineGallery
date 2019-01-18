@@ -12,16 +12,16 @@ import {
 import './ContactPreferencesForm.scss';
 
 const CONTACT_METHODS = new Map([
-  ['1', 'email'],
-  ['2', 'sms'],
+  [1, 'email'],
+  [2, 'sms'],
 ]);
 
 const CONTACT_TYPES = new Map([
-  ['1', 'monthlyWineSelection'],
-  ['2', 'deliveryNotifications'],
-  ['3', 'badgesPointsRewards'],
-  ['4', 'socialConnectionsComments'],
-  ['5', 'newslettersArticlesSpecialOffers'],
+  [1, 'monthlyWineSelection'],
+  [2, 'deliveryNotifications'],
+  [3, 'badgesPointsRewards'],
+  [4, 'socialConnectionsComments'],
+  [5, 'newslettersArticlesSpecialOffers'],
 ]);
 
 /**
@@ -31,7 +31,7 @@ const CONTACT_TYPES = new Map([
 class ContactPreferencesForm extends Component {
   static propTypes = {
     contactPreference: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-    memberId: PropTypes.string.isRequired,
+    memberId: PropTypes.number.isRequired,
   };
 
   state = {
@@ -99,14 +99,14 @@ class ContactPreferencesForm extends Component {
     if (inputObject.id) {
       return ({
         input: {
-          memberId: parseInt(memberId, 10),
-          id: parseInt(inputObject.id, 10),
+          memberId,
+          id: inputObject.id,
         },
       });
     }
     return ({
       input: {
-        memberId: parseInt(memberId, 10),
+        memberId,
         contactTypeId: inputObject.contactTypeId,
         contactMethodId: inputObject.contactMethodId,
       },

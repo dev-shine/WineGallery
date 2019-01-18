@@ -16,7 +16,7 @@ class CheckBox extends Component {
     label: PropTypes.string,
     onChange: PropTypes.func,
     id: PropTypes.string.isRequired,
-    checked: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
+    checked: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]).isRequired,
     query: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.func]),
     mutation: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.func]),
     mutationVariables: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.func]),

@@ -33,18 +33,18 @@ class CheckoutShippingAddressForm extends Component {
         company: PropTypes.string,
         contactNumber: PropTypes.string,
         country: PropTypes.shape({
-          id: PropTypes.string,
+          id: PropTypes.number,
           name: PropTypes.string,
           code: PropTypes.bool,
         }),
         addressUnavailableInstruction: PropTypes.shape({
-          id: PropTypes.string,
+          id: PropTypes.number,
           nameShort: PropTypes.string,
           authorityToLeave: PropTypes.bool,
         }),
       }),
       email: PropTypes.string,
-      id: PropTypes.string,
+      id: PropTypes.number,
     }),
   };
 

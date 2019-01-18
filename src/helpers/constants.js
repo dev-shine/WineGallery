@@ -33,16 +33,16 @@ const AU_STATES = new Map([
 ]);
 
 const CONTACT_TYPE_ID_TO_ENUM = new Map([
-  ['1', 'WINE_SELECTION'],
-  ['2', 'DELIVERY'],
-  ['3', 'BADGE'],
-  ['4', 'SOCIAL'],
-  ['5', 'NEWSLETTER'],
+  [1, 'WINE_SELECTION'],
+  [2, 'DELIVERY'],
+  [3, 'BADGE'],
+  [4, 'SOCIAL'],
+  [5, 'NEWSLETTER'],
 ]);
 
 const CONTACT_METHOD_ID_TO_ENUM = new Map([
-  ['1', 'EMAIL'],
-  ['2', 'SMS'],
+  [1, 'EMAIL'],
+  [2, 'SMS'],
 ]);
 
 const SUBSCRIPTION_STATUS = {

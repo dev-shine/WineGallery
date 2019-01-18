@@ -18,7 +18,7 @@ import './DiscountCodeForm.scss';
 class DiscountCodeForm extends Component {
   static propTypes = {
     query: PropTypes.shape({
-      id: PropTypes.string,
+      id: PropTypes.number,
       shoppingCart: PropTypes.shape({
         discount: PropTypes.number,
         discountCode: PropTypes.string,

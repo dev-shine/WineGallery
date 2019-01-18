@@ -53,7 +53,7 @@ class WinePreference extends Component {
     const { winePreference } = this.props;
     const { __typename, ...cleanWinePreference } = winePreference.winepreference || { __typename: null };
     const winePreferenceDefault = winePreference ? cleanWinePreference : INITIAL_BOTTLES;
-    const memberId = parseInt(winePreference.id, 10);
+    const memberId = winePreference.id;
 
     const totalBottles = (
       winePreferenceDefault.redBottles + winePreferenceDefault.roseBottles
