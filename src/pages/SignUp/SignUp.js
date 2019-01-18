@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 
 import { ADD_SHOPPING_CART_ITEM, SIGN_UP } from '../../graphql/mutations';
+import urlPatterns from '../../urls';
+import { executeLogInRequest } from '../../helpers/auth';
 import {
   checkEmail,
   checkName,
@@ -82,6 +84,31 @@ class SignUp extends Component {
               window.localStorage.removeItem('shoppingCart')
             ));
           }
+
+          // Only executes login in case SignUp mutation returns no error
+          if (!member.data.signUp.errors) {
+
+            // Executes Login and redirects user to MyAccount page
+            executeLogInRequest(state.form.email, state.form.password)
+              .then(() => {
+
+                // Redirects to my account page
+                // TODO DEV-203 change this to this.props.history.push() when added local state from Apollo
+                window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.MY_ACCOUNT}`;
+              })
+
+              // Catches error from server (if login unsuccessful) and show message in the form
+              .catch(error => {
+
+                // Stores error from server's response in state variables
+                this.setState({
+                  form: {
+                    ...state.form,
+                    error: [error.response.data.error_description],
+                  },
+                });
+              });
+          }
         });
     } else {
       this.setState({ errors: ['Sorry, your passwords do not match.'] });
@@ -111,7 +138,7 @@ class SignUp extends Component {
               {(signUp, { data, error, loading }) => {
                 if (loading) return 'Loading...';
                 if (error) console.log('Non-friendly error message', error.message);
-
+                if (data && data.signUp && !data.signUp.errors) return 'Logging you in :)';
                 return (
                   <div className="SignUp">
                     <div className="SignUp--container">

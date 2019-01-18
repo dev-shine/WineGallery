@@ -1,9 +1,12 @@
 import jwt from 'jsonwebtoken';
+import { HTTP_METHODS } from './constants';
+import executeRestApi from './rest';
 
 const localStorageContent = localStorage.getItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE);
 
 /**
  * Gets auth information to browser local storage and decodes information
+ * @return {Object}
  * */
 const getLocalStorageToken = () => {
 
@@ -32,9 +35,9 @@ const getLocalStorageToken = () => {
 
 /**
  * Sets encoded auth information to browser local storage
- * @param accessToken
- * @param refreshToken
- * @param email
+ * @param {string} accessToken
+ * @param {string} refreshToken
+ * @param {string} email
  * */
 const setLocalStorageToken = (accessToken, refreshToken, email) => {
   localStorage.setItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE, jwt.sign(
@@ -58,7 +61,41 @@ const isLoggedIn = () => {
   return Boolean(localStorageContent && localStorageTokenObject);
 };
 
+/**
+ * Executes Login api request and save token details
+ * @param {string} email
+ * @param {string} password
+ * @return {Promise<void>}
+ * */
+const executeLogInRequest = async (email, password) => {
+
+  // Creates arguments to pass into Login API request
+  const urlPath = `${process.env.REACT_APP_REST_AUTH_PATH}`;
+  const data = {
+    password,
+    username: email,
+    grant_type: 'password',
+    client_id: `${process.env.REACT_APP_CLIENT_ID}`,
+    client_secret: `${process.env.REACT_APP_CLIENT_SECRET}`,
+  };
+
+  // Logs user in, if sign up is successful
+  await executeRestApi(HTTP_METHODS.POST, urlPath, { data })
+
+  // Stores response from request in local storage and redirects to my account page
+    .then(response => {
+
+      // Encodes and Stores tokens in localStorage --> https://www.npmjs.com/package/jsonwebtoken
+      setLocalStorageToken(
+        response.data.access_token,
+        response.data.refresh_token,
+        email
+      );
+    });
+};
+
 export {
+  executeLogInRequest,
   getLocalStorageToken,
   setLocalStorageToken,
   isLoggedIn,
