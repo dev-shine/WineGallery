@@ -18,41 +18,68 @@ class NewPaymentMethod extends Component {
     stripe: PropTypes.shape({ createToken: PropTypes.func }),
     me: PropTypes.shape({ subscription: PropTypes.shape({}) }).isRequired,
     onAddCard: PropTypes.func,
+    isCheckoutPage: PropTypes.bool,
   };
 
   static defaultProps = {
     stripe: null,
     onAddCard: null,
+    isCheckoutPage: false,
   };
 
   state = {
     stripeError: null,
   };
 
+  componentDidMount() {
+
+    // TODO DEV-203 change this to a link state property
+    window.store.handleStripeAddNewCard = () => this.getStripeToken();
+  }
+
+  componentWillUnmount() {
+    window.store.handleStripeAddNewCard && delete window.store.handleStripeAddNewCard;
+  }
+
   /**
-   * Gets token from stripe and sends request to GraphQL backend.
-   * Shows and logs error in case error from stripe.
-   * @param createPaymentMethod
-   * @return {Promise<void>}
+   * Sends request to stripe to save token to browser 'store'.
+   * https://stripe.com/docs/stripe-js/reference#stripe-create-token
+   * @async
    * */
-  handleAddPaymentMethod = async createPaymentMethod => {
-    // User clicked submit
+  getStripeToken = async () => {
     const { props } = this;
     const userInfo = {
       name: `${props.me.firstName} ${props.me.lastName}`,
     };
 
-    // Returns error or token from token request to Stripe
-    const { token, error } = await props.stripe.createToken(userInfo)
+    // TODO [DEV-203] move this to apollo-link-state
+    // Sets `stripeNewCreditCardToken` error or token from token request to Stripe
+    // https://stripe.com/docs/stripe-js/reference#stripe-create-token
+    window.store.stripeNewCreditCardToken = await props.stripe.createToken(userInfo)
       .then(response => {
         if (response.error) {
           this.setState({ stripeError: response });
         }
         return response;
       });
+  };
+
+  /**
+   * Gets token from stripe and sends request to GraphQL backend.
+   * Shows and logs error in case error from stripe.
+   * @async
+   * @param {Function} createPaymentMethod
+   * @return {Promise<void>}
+   * */
+  handleAddPaymentMethod = async createPaymentMethod => {
+    const { props } = this;
+
+    // Returns error or token from token request to Stripe
+    await this.getStripeToken();
+    const { token, error } = window.store.stripeNewCreditCardToken;
 
     // Checks if token is valid and sends request to GraphQL backend
-    if (token) {
+    if (token && createPaymentMethod) {
       await createPaymentMethod({
         variables: {
           input: {
@@ -67,11 +94,11 @@ class NewPaymentMethod extends Component {
     }
 
     // Logs error
-    if (error) console.log(error);
+    if (error) console.error(error);
   };
 
   render() {
-    const { onAddCard } = this.props;
+    const { onAddCard, isCheckoutPage } = this.props;
     const { stripeError } = this.state;
 
     return (
@@ -100,12 +127,19 @@ class NewPaymentMethod extends Component {
             return (
               <div className="NewPaymentMethod--form">
                 <CardElement />
-                <button
-                  type="button"
-                  onClick={() => this.handleAddPaymentMethod(createPaymentMethod)}
-                >
-                  Add
-                </button>
+
+                {
+
+                  // Form is submitted from Checkout component if checkout page
+                  !isCheckoutPage && (
+                    <button
+                      type="button"
+                      onClick={() => this.handleAddPaymentMethod(createPaymentMethod)}
+                    >
+                      Add
+                    </button>
+                  )
+                }
                 {stripeError && <span>{stripeError.error.message}</span>}
               </div>
             );

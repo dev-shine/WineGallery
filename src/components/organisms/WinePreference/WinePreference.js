@@ -52,7 +52,7 @@ class WinePreference extends Component {
     const { errorMessage } = this.state;
     const { winePreference } = this.props;
     const { __typename, ...cleanWinePreference } = winePreference.winepreference || { __typename: null };
-    const winePreferenceDefault = winePreference ? cleanWinePreference : INITIAL_BOTTLES;
+    const winePreferenceDefault = cleanWinePreference.redBottles ? cleanWinePreference : INITIAL_BOTTLES;
     const memberId = winePreference.id;
 
     const totalBottles = (
@@ -89,7 +89,7 @@ class WinePreference extends Component {
                 input={{
                   ...winePreferenceDefault,
                   memberId,
-                  redBottles: (parseInt(cleanWinePreference.redBottles, 10) + 1),
+                  redBottles: (parseInt(winePreferenceDefault.redBottles, 10) + 1),
                 }}
                 reFetchQueriesProp={[{ query: GET_MEMBER }]}
                 onClick={() => this.setState({ errorMessage: null })}

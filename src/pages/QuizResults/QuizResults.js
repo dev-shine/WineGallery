@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Query } from 'react-apollo';
 
 import { GET_SHOPPING_CART } from '../../graphql/queries';
+import urlPatterns from '../../urls';
 
 import './QuizResults.scss';
 
@@ -13,7 +15,7 @@ const DEFAULT_BOTTLE_URL = (
 /**
  * Renders QuizResults component.
  * */
-const QuizResults = () => (
+const QuizResults = props => (
   <div className="QuizResults">
     <div className="QuizResults--container">
       <h1 className="QuizResults--title">Recommended wines</h1>
@@ -48,7 +50,7 @@ const QuizResults = () => (
               <div>
                 <button
                   type="button"
-                  onClick={() => console.log('Navigate to the checkout')} // TODO: navigate to the checkout
+                  onClick={() => props.history.push(urlPatterns.CHECKOUT)}
                 >
                   get my first box
                 </button>
@@ -68,6 +70,12 @@ const QuizResults = () => (
   </div>
 );
 
-QuizResults.propTypes = {};
+QuizResults.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.shape({}) }),
+};
+
+QuizResults.defaultProps = {
+  history: null,
+};
 
 export default QuizResults;

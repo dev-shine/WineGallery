@@ -41,22 +41,21 @@ const defaultState = {
  * */
 class PaymentMethod extends Component {
   static propTypes = {
+    isCheckoutPage: PropTypes.bool,
     me: PropTypes.shape({ subscription: PropTypes.shape({}) }),
   };
 
   static defaultProps = {
+    isCheckoutPage: false,
     me: null,
   };
 
   state = defaultState;
 
-  componentDidMount() {
-  }
-
   /**
    * Deletes card from member
-   * @param deletePaymentMethod
-   * @param paymentApiMethodUuid
+   * @param {Function} deletePaymentMethod
+   * @param {string} paymentApiMethodUuid
    * */
   handleDeletePaymentMethod = (deletePaymentMethod, paymentApiMethodUuid) => {
     const { me } = this.props;
@@ -72,8 +71,8 @@ class PaymentMethod extends Component {
 
   /**
    * Sets card as the default payment method
-   * @param updatePaymentMethod
-   * @param paymentApiMethodUuid
+   * @param {Function} updatePaymentMethod
+   * @param {string} paymentApiMethodUuid
    * */
   handleMakePaymentMethodDefault = (updatePaymentMethod, paymentApiMethodUuid) => {
     const { me } = this.props;
@@ -93,12 +92,16 @@ class PaymentMethod extends Component {
    * */
   handleClosePaymentMethodForm = () => {
     this.setState(defaultState);
+
+    // Removes window variable which means that the user hasn't updated credit card
+    if (window.store.handleStripeAddNewCard) delete window.store.handleStripeAddNewCard;
   };
 
   render() {
-    const { props, state } = this;
-    const { me } = props;
+    const { state } = this;
+    const { me, isCheckoutPage } = this.props;
     const paymentList = me && me.paymentmethodSet && me.paymentmethodSet;
+
     return (
       <div className="PaymentMethod">
         <h2>Update Subscription Status</h2>
@@ -110,7 +113,11 @@ class PaymentMethod extends Component {
                 ? (
                   <StripeProvider apiKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}>
                     <Elements>
-                      <NewPaymentMethod me={me} onAddCard={this.handleClosePaymentMethodForm} />
+                      <NewPaymentMethod
+                        me={me}
+                        onAddCard={this.handleClosePaymentMethodForm}
+                        isCheckoutPage={isCheckoutPage}
+                      />
                     </Elements>
                   </StripeProvider>
                 )
@@ -158,7 +165,9 @@ class PaymentMethod extends Component {
                                             updatePaymentMethod, card.paymentApiMethodUuid
                                           )}
                                         >
-                                          Default
+                                          {
+                                            isCheckoutPage ? 'Use this card' : 'Default'
+                                          }
                                         </button>);
                                     }}
                                   </Mutation>
@@ -211,7 +220,9 @@ class PaymentMethod extends Component {
                       type="submit"
                       onClick={() => this.setState({ showFormAddNewPaymentMethod: true })}
                     >
-                      Add new card
+                      {
+                        isCheckoutPage && paymentList.length ? 'Use a different card' : 'Add new card'
+                      }
                     </button>
                   </div>
                 )

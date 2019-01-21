@@ -11,7 +11,7 @@ class InputField extends Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
     type: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func,
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,

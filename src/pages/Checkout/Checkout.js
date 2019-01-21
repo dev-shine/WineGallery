@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
-import { Query } from 'react-apollo';
 
-import { CheckoutShippingAddressForm, DiscountCodeForm, OrderSummary } from '../../components';
+import { Query, withApollo } from 'react-apollo';
+
+import {
+  CheckoutShippingAddressForm,
+  DiscountCodeForm,
+  OrderSummary,
+} from '../../components';
+import PaymentMethod from '../../components/organisms/PaymentMethod/PaymentMethod';
+import urlPatterns from '../../urls';
 import { GET_MEMBER } from '../../graphql/queries';
+import { CHECKOUT } from '../../graphql/mutations';
 
 import './Checkout.scss';
 
@@ -11,16 +19,105 @@ import './Checkout.scss';
  * React.Component: https://reactjs.org/docs/react-component.html
  * */
 class Checkout extends Component {
-  static propTypes = {};
+  state = {
+    shippingAddress: null,
+    isProcessingCheckout: false,
+    processingError: null,
+  };
 
-  static contextTypes = {};
+  /**
+   * Updates information contained on shipping address form
+   * @param {Object} shippingAddress
+   * */
+  handleShippingAddressUpdate = shippingAddress => {
 
-  componentDidMount() {
-  }
+    // TODO: [DEV-203] Improve this when link state introduced
+    this.setState({
+      shippingAddress,
+    });
+  };
+
+  /**
+   * Sends request for checkout mutation
+   * @param {number} memberId
+   * @return {Promise<void>}
+   * */
+  handleSubmitPayment = async memberId => {
+    const { client, history } = this.props;
+    const { shippingAddress } = this.state;
+
+    // Provides visual feedback that the checkout is being processed
+    this.setState({ isProcessingCheckout: true });
+
+    // TODO DEV-203 To get token/error from apollo-link-state
+    // Saves token from Stripe in browser's 'store'
+    window.store.handleStripeAddNewCard && await window.store.handleStripeAddNewCard();
+    const stripeResponse = window.store.stripeNewCreditCardToken;
+
+    // Sets properties to send in GraphQL request, only changed properties will be sent to GraphQL
+    const inputCheckout = { memberId };
+    const inputShipping = { ...shippingAddress };
+    const inputPaymentMethod = stripeResponse && stripeResponse.token
+      ? { token: stripeResponse.token.id }
+      : null;
+
+    // Logs error in case stripe returns an error when creating token for credit card
+    if (stripeResponse && stripeResponse.error) console.error('From checkout stripe: ', stripeResponse.error);
+
+    // Requests checkout mutation with only updated information
+    client.mutate({
+      mutation: CHECKOUT,
+      refetchQueries: () => [{ query: GET_MEMBER }],
+      variables: {
+        input: {
+          ...inputCheckout,
+          ...inputShipping,
+          ...inputPaymentMethod,
+        },
+      },
+    }).then(response => {
+
+      // Hides processing visual feedback
+      this.setState({ isProcessingCheckout: false });
+
+      if (response.data.checkout.isSuccessful) {
+
+        // Removes token from window variable
+        if (window.store.stripeNewCreditCardToken) delete window.store.stripeNewCreditCardToken;
+
+        // TODO [DEV-132] Redirect user to thank you page.
+        history.push(urlPatterns.MY_ACCOUNT);
+      }
+
+      // Renders errors from GraphQL in case any
+      if (response.data.checkout.errors) {
+        this.setState({
+          processingError: response.data.checkout.errors[0] && response.data.checkout.errors[0].field,
+        });
+      }
+    });
+  };
 
   render() {
+    const { shippingAddress, isProcessingCheckout, processingError } = this.state;
+
+    // Disables and enables button to submit based on required fields
+    const isShippingAddressFormCompleted = Boolean(
+      shippingAddress && shippingAddress.line1 && shippingAddress.city && shippingAddress.state
+      && shippingAddress.postcode && shippingAddress.countryId
+      && shippingAddress.addressUnavailableInstructionId
+    );
+
     return (
       <div className="Checkout">
+
+        {/* Provides a visual feedback while order is being processed */}
+        {
+          isProcessingCheckout && (
+            <div className="loading">
+              Our wine elf is processing your order...
+            </div>)
+        }
         <Query query={GET_MEMBER} fetchPolicy="cache-and-network">
           {({ loading, error, data }) => {
             if (loading) return 'Loading...';
@@ -28,21 +125,42 @@ class Checkout extends Component {
             if (data.me) {
               return (
                 <div className="Checkout--container">
-                  <h1 className="Checkout--forms__title">My Account</h1>
+                  <h1 className="Checkout--forms__title">Checkout</h1>
 
+                  {/* Renders error from GraphQL if any */}
+                  <h4>{processingError && processingError}</h4>
                   <div className="Checkout--forms__shipping">
-                    <CheckoutShippingAddressForm query={data.me} />
+                    <CheckoutShippingAddressForm
+                      me={data.me}
+                      handleShippingAddressChange={this.handleShippingAddressUpdate}
+                      isCheckoutPage
+                    />
                   </div>
                   <div className="Checkout--forms__summary">
-                    <OrderSummary query={data.me} />
+                    <OrderSummary me={data.me} />
+                  </div>
+                  <div className="Checkout--forms__payment">
+                    <PaymentMethod me={data.me} isCheckoutPage />
                   </div>
                   <div className="Checkout--forms__discount-code">
                     <DiscountCodeForm query={data.me} />
                   </div>
+                  <div className="Checkout--forms__confirmation">
+                    <button
+                      type="button"
+                      className="payment-confirmation"
+                      onClick={() => this.handleSubmitPayment(data.me.id)}
+                      disabled={!isShippingAddressFormCompleted}
+                    >
+                      Confirm Payment
+                    </button>
+                  </div>
                 </div>
               );
             }
-            return <div>Ooops, this is embarrassing... Something went wrong, try to reload your page.</div>;
+            return (
+              <div>Ooops, this is embarrassing... Something went wrong, try to reload yourpage.</div>
+            );
           }}
         </Query>
       </div>
@@ -50,4 +168,4 @@ class Checkout extends Component {
   }
 }
 
-export default Checkout;
+export default withApollo(Checkout);
