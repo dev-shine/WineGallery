@@ -43,8 +43,8 @@ class WineItems extends Component {
         addShoppingCartItem({
           variables: {
             input: {
-              memberId: parseInt(memberId, 10),
-              productId: parseInt(wine.product.id, 10),
+              memberId,
+              productId: wine.product.id,
               quantity: 1,
             },
           },
@@ -58,7 +58,7 @@ class WineItems extends Component {
       const shoppingCartItem = {
         quantity: 1,
         product: {
-          id: parseInt(wine.product.id, 10),
+          id: wine.product.id,
           name: wine.product.name,
           sellingPrice: wine.product.sellingPrice,
         },

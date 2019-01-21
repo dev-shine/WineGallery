@@ -39,7 +39,7 @@ class MyAccount extends Component {
     if (shoppingCart) {
 
       const shoppingCartItemsId = shoppingCartSet.length && shoppingCartSet
-        .map(item => parseInt(item.product.id, 10));
+        .map(item => item.product.id);
 
       // Creates shopping cart in database with local storage item
       shoppingCart.items.length

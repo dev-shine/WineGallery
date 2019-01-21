@@ -61,7 +61,7 @@ const OrderSummary = props => {
 
 OrderSummary.propTypes = {
   query: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     shoppingCart: PropTypes.shape({
       discount: PropTypes.number,
       discountCode: PropTypes.string,

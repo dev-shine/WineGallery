@@ -199,7 +199,7 @@ const AccountDetailsForm = props => {
 // Declares type for props coming from parent component
 AccountDetailsForm.propTypes = {
   me: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     firstName: PropTypes.string,
     lastName: PropTypes.string,
     email: PropTypes.string,
