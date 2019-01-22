@@ -24,23 +24,23 @@ const QuizResults = () => (
           if (error) return `Error! ${error.message}`;
 
           return (
-            <div className="QuizResults--recommendations">
-              {data.me.shoppingCart.shoppingcartitemSet.map(recommendedWine => {
+            <div className="QuizResults--recommendation-list">
+              {data.me.subscription.subscriptionwineSet.map(subscriptionWine => {
 
                 // Gets wine's photo URL or sets the default one it doesn't exist
-                const photoUrl = recommendedWine.product.productPhotos.length
-                  ? recommendedWine.product.productPhotos[0].photoLarge
+                const photoUrl = subscriptionWine.wine.product.productPhotos.length
+                  ? subscriptionWine.product.productPhotos[0].photoLarge
                   : DEFAULT_BOTTLE_URL;
 
                 return (
-                  <div className="QuizResults--recommendation" key={recommendedWine.product.id}>
-                    <p className="QuizResults--recommendation--name">
-                      {recommendedWine.product.name}
+                  <div className="QuizResults--recommendation-item" key={subscriptionWine.wine.product.id}>
+                    <p className="QuizResults--recommendation-item--name">
+                      {subscriptionWine.wine.product.name}
                     </p>
-                    <p className="QuizResults--recommendation--region">
-                      {recommendedWine.product.wine.wineRegion.name}
+                    <p className="QuizResults--recommendation-item--region">
+                      {subscriptionWine.wine.wineRegion.name}
                     </p>
-                    <img src={photoUrl} alt={recommendedWine.product.name} />
+                    <img src={photoUrl} alt={subscriptionWine.wine.product.name} />
                   </div>
                 );
               })}

@@ -116,6 +116,7 @@ const SUBMIT_QUIZ = gql`
       isSuccessful
       accessToken
       refreshToken
+      memberId
       errors {
         messages
         field
