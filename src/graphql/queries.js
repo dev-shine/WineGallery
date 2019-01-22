@@ -184,6 +184,19 @@ const GET_MEMBER = gql`
           id
           name
         }
+        subscriptionwineSet {
+          wine {
+            wineRegion {
+              name
+            }
+            product {
+              name
+              productPhotos {
+                photoLarge
+              }
+            }
+          }
+        }
       }
       contactpreferenceSet {
         id
@@ -235,6 +248,23 @@ const GET_SHOPPING_CART = gql`
   query Me {
     me {
       id
+      subscription {
+        sellingPrice
+        subscriptionwineSet {
+          wine {
+            wineRegion {
+              name
+            }
+            product {
+              id
+              name
+              productPhotos {
+                photoLarge
+              }
+            }
+          }
+        }
+      }
       shoppingCart {
         shoppingcartitemSet {
           quantity

@@ -45,6 +45,10 @@ class Quiz extends Component {
     ).then(
       ({ data }) => {
         if (data && data.submitQuiz.isSuccessful && data.submitQuiz.accessToken) {
+
+          // TODO DEV-203 replace this once we introduce apollo-link-state
+          window.localStorage.setItem('memberId', data.submitQuiz.memberId);
+
           setLocalStorageToken(
             data.submitQuiz.accessToken, data.submitQuiz.refreshToken, email,
           );
