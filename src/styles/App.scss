@@ -86,3 +86,14 @@ button {
     border-color: #b4975e transparent transparent !important;
   }
 }
+
+.loading {
+  height: 100%;
+  position: absolute;
+  width: 100vw;
+  padding-top: 35%;
+  margin: auto;
+  vertical-align: center;
+  background: rgb(245, 245, 245);
+  z-index: 100000;
+}

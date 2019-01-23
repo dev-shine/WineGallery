@@ -58,11 +58,12 @@ class Routes extends Component {
 
         {/* Renders lazily loaded components --> https://reactjs.org/docs/code-splitting.html#reactlazy */}
         <Route path={urlPatterns.LOGIN} render={props => <Login {...props} />} />
-        <Route path={urlPatterns.WINES} render={() => <Wines />} />
-        <Route path={urlPatterns.CHECKOUT} render={() => <Checkout />} />
+        <Route path={urlPatterns.WINES} render={props => <Wines {...props} />} />
+        <Route path={urlPatterns.CHECKOUT} render={props => <Checkout {...props} />} />
 
         <PrivateRoute path={urlPatterns.MY_ACCOUNT} component={MyAccount} />
 
+        <Route path="" exact component={Home} />
       </Switch>
     );
   }

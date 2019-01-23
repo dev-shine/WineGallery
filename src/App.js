@@ -36,6 +36,9 @@ const client = new ApolloClient({
   cache,
 });
 
+// TODO DEV-203 replace this with apollo-link-state
+window.store = {};
+
 /**
  * Renders our app entry point
  * */

@@ -176,35 +176,6 @@ const UPDATE_MEMBER_SHIPPING_ADDRESS = gql`
   }
 `;
 
-const UPDATE_CHECKOUT_SHIPPING_ADDRESS = gql`
-  mutation UpdateCheckoutShippingAddress($input: CheckoutShippingAddressInput!) {
-    updateCheckoutShippingAddress(input: $input) {
-      shippingAddress {
-        id
-        firstName
-        lastName
-        company
-        line1
-        line2
-        postcode
-        contactNumber
-        city
-        state
-        country {
-          id
-        }
-        addressUnavailableInstruction {
-          id
-        }
-      }
-      errors {
-        messages
-        field
-      }
-    }
-  }
-`;
-
 const UPDATE_MEMBER_ACCOUNT_DETAILS = gql`
   mutation UpdateMemberAccountDetails($input: MemberMutationInput!) {
     updateMember(input: $input) {
@@ -316,9 +287,21 @@ const UPDATE_WINE_PREFERENCE = gql`
   }
 `;
 
+const CHECKOUT = gql`
+  mutation Checkout ($input: CheckoutInput!) {
+    checkout (input: $input){
+      isSuccessful
+      errors {
+        field
+      }
+    }
+  }
+`;
+
 export {
   ADD_SHOPPING_CART_ITEM,
   APPLY_DISCOUNT_CODE,
+  CHECKOUT,
   CREATE_CONTACT_PREFERENCE,
   CREATE_PAYMENT_METHOD,
   DELETE_CONTACT_PREFERENCE,
@@ -328,7 +311,6 @@ export {
   SET_NEW_PASSWORD,
   SIGN_UP,
   SUBMIT_QUIZ,
-  UPDATE_CHECKOUT_SHIPPING_ADDRESS,
   UPDATE_MEMBER_ACCOUNT_DETAILS,
   UPDATE_MEMBER_PAYMENT_METHOD,
   UPDATE_MEMBER_SHIPPING_ADDRESS,

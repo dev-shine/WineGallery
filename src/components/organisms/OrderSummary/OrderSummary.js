@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { formatNumber } from '../../../helpers/tools';
 
@@ -11,13 +12,30 @@ import './OrderSummary.scss';
  * */
 const OrderSummary = props => {
 
-  const { query } = props;
+  const { me } = props;
+
+  // Renders message in case user does not have any item on their shopping cart
+  if (
+    !me.shoppingCart || !me.shoppingCart.shoppingcartitemSet || !me.shoppingCart.shoppingcartitemSet.length
+  ) {
+    return (
+      <div className="OrderSummary">
+        <div className="OrderSummary--container">
+          <div className="OrderSummary--container__inner">
+            Sorry you have no items in your shopping cart. Check our wines in our
+            <Link to="/wines"> wine list.</Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const {
     shoppingcartitemSet,
     total,
     discountCode,
     discount,
-  } = query.shoppingCart;
+  } = me.shoppingCart;
 
   return (
     <div className="OrderSummary">
@@ -60,7 +78,7 @@ const OrderSummary = props => {
 };
 
 OrderSummary.propTypes = {
-  query: PropTypes.shape({
+  me: PropTypes.shape({
     id: PropTypes.number,
     shoppingCart: PropTypes.shape({
       discount: PropTypes.number,
@@ -70,7 +88,7 @@ OrderSummary.propTypes = {
 };
 
 OrderSummary.defaultProps = {
-  query: {},
+  me: {},
 };
 
 export default OrderSummary;
