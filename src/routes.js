@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import {
   Home, PasswordReset, SetNewPassword, SignUp, Quiz, QuizResults,
 } from './pages';
+import ThankYou from './pages/ThankYou/ThankYou';
 import urlPatterns from './urls';
 import { isLoggedIn } from './helpers/auth';
 
@@ -60,6 +61,7 @@ class Routes extends Component {
         <Route path={urlPatterns.LOGIN} render={props => <Login {...props} />} />
         <Route path={urlPatterns.WINES} render={props => <Wines {...props} />} />
         <Route path={urlPatterns.CHECKOUT} render={props => <Checkout {...props} />} />
+        <Route path={urlPatterns.THANK_YOU} render={props => <ThankYou {...props} />} />
 
         <PrivateRoute path={urlPatterns.MY_ACCOUNT} component={MyAccount} />
 

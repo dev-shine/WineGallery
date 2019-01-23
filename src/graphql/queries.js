@@ -186,12 +186,16 @@ const GET_MEMBER = gql`
         }
         subscriptionwineSet {
           wine {
+            id
             wineRegion {
+              id
               name
             }
             product {
+              id
               name
               productPhotos {
+                id
                 photoLarge
               }
             }
@@ -199,7 +203,6 @@ const GET_MEMBER = gql`
         }
       }
       contactpreferenceSet {
-        id
         contactType {
           id
           name
@@ -218,6 +221,7 @@ const GET_MEMBER = gql`
         cardExpiryYear
       }
       shoppingCart {
+        id
         discount
         discountCode
         total
@@ -235,6 +239,7 @@ const GET_MEMBER = gql`
         }
       }
       winepreference {
+        id
         redBottles
         whiteBottles
         roseBottles
@@ -249,10 +254,14 @@ const GET_SHOPPING_CART = gql`
     me {
       id
       subscription {
+        id
         sellingPrice
         subscriptionwineSet {
+          id
           wine {
+            id
             wineRegion {
+              id
               name
             }
             product {
@@ -266,6 +275,7 @@ const GET_SHOPPING_CART = gql`
         }
       }
       shoppingCart {
+        id
         shoppingcartitemSet {
           quantity
           product {
@@ -273,10 +283,13 @@ const GET_SHOPPING_CART = gql`
             name
             sellingPrice
             productPhotos {
+              id
               photoLarge
             }
             wine {
+              id
               wineRegion {
+                id
                 name
               }
             }

@@ -93,10 +93,12 @@ class ShoppingCart extends Component {
 
     return (
       <Query query={GET_SHOPPING_CART}>
-        {({ loading, error, data: { me } }) => {
+        {({ loading, error, data }) => {
           if (loading) return '';
-          if (error) return `Error! ${error.message}`;
-          const hasShoppingCartSet = Boolean(me && me.shoppingCart && me.shoppingCart.shoppingcartitemSet);
+          if (error) console.error(`Shopping cart error! ${error.message}`);
+          const hasShoppingCartSet = Boolean(
+            data && data.me && data.me.shoppingCart && data.me.shoppingCart.shoppingcartitemSet
+          );
           const hasShoppingLocalStorage = Boolean(
             shoppingCartLocal && shoppingCartLocal.items.length
           );
@@ -105,7 +107,7 @@ class ShoppingCart extends Component {
           // Result without sorting: https://www.useloom.com/share/781edb12b9b84d899b656e6d5bc0c30a
           let productsCartArray = null;
           if (hasShoppingCartSet) {
-            productsCartArray = me.shoppingCart.shoppingcartitemSet
+            productsCartArray = data.me.shoppingCart.shoppingcartitemSet
               .sort((a, b) => a.product.id - b.product.id);
           } else if (hasShoppingLocalStorage) {
             productsCartArray = shoppingCartLocal.items.sort((a, b) => a.product.id - b.product.id);
@@ -146,7 +148,7 @@ class ShoppingCart extends Component {
                           hasShoppingCartSet
                             ? (
                               <ButtonMutation
-                                input={{ memberId: me.id, productId: item.product.id }}
+                                input={{ memberId: data.me.id, productId: item.product.id }}
                                 mutationProp={DELETE_SHOPPING_CART_ITEM}
                                 reFetchQueriesProp={[{ query: GET_MEMBER }]}
                                 label="x"
@@ -176,7 +178,7 @@ class ShoppingCart extends Component {
                               ? (
                                 <ButtonMutation
                                   input={{
-                                    memberId: me.id,
+                                    memberId: data.me.id,
                                     productId: item.product.id,
                                     quantity: (item.quantity - 1),
                                   }}
@@ -204,7 +206,7 @@ class ShoppingCart extends Component {
                               ? (
                                 <ButtonMutation
                                   input={{
-                                    memberId: me.id,
+                                    memberId: data.me.id,
                                     productId: item.product.id,
                                     quantity: (item.quantity + 1),
                                   }}
