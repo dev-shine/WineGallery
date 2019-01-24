@@ -12,6 +12,7 @@ import {
   PaymentMethod,
   WinePreference,
 } from '../../components';
+import { identifyUser } from '../../helpers/Analytics';
 import { shoppingCartLocalStorage } from '../../helpers/tools';
 
 import './MyAccount.scss';
@@ -30,10 +31,23 @@ class MyAccount extends Component {
    * @param {string} memberId - id from member
    * @param {Array} shoppingCartSet - shopping cart items
    * */
-  handleUpdatesOnLogin = (addShoppingCart, updateShoppingCart, memberId, shoppingCartSet) => {
+  handleUpdatesOnLogin = (
+    addShoppingCart, updateShoppingCart, memberId, shoppingCartSet, firstName, lastName, email,
+  ) => {
+
     // TODO DEV-203 replace this once we introduce apollo-link-state
     window.localStorage.setItem('memberId', memberId);
     const shoppingCart = shoppingCartLocalStorage();
+
+    const analyticsIdentityData = {
+      email,
+      id: memberId,
+      firstName,
+      lastName,
+      name: `${firstName} ${lastName}`,
+      created: new Date().getDate(),
+    };
+    identifyUser(memberId, analyticsIdentityData);
 
     // Checks if user has added items to local storage shopping cart
     if (shoppingCart) {
@@ -114,6 +128,9 @@ class MyAccount extends Component {
                             updateShoppingCart,
                             data.me.id,
                             data.me.shoppingCart && data.me.shoppingCart.shoppingcartitemSet,
+                            data.me.firstName,
+                            data.me.lastName,
+                            data.me.email,
                           );
                           return (
                             <div className="MyAccount--container">

@@ -18,6 +18,7 @@ const CREATE_PAYMENT_METHOD = gql`
   mutation CreateMemberPaymentMethod($input: CreateMemberPaymentMethodInput!) {
     createMemberPaymentMethod(input: $input) {
       paymentMethod{
+        id
         paymentApiMethodUuid
         isDefault
         cardBrand
@@ -117,6 +118,7 @@ const SUBMIT_QUIZ = gql`
       accessToken
       refreshToken
       memberId
+      subscriptionId
       errors {
         messages
         field
@@ -222,9 +224,11 @@ const ADD_SHOPPING_CART_ITEM = gql`
         field
       }
       shoppingCart {
+        id
         shoppingcartitemSet {
           quantity
           product {
+            id
             name
             sellingPrice
           }
@@ -255,6 +259,7 @@ const UPDATE_SHOPPING_CART_ITEM = gql`
         }
         discount
         shoppingcartitemSet {
+          id
           quantity
           product {
             id

@@ -8,6 +8,7 @@ import {
   OrderSummary,
 } from '../../components';
 import PaymentMethod from '../../components/organisms/PaymentMethod/PaymentMethod';
+import { formatNumber } from '../../helpers/tools';
 import urlPatterns from '../../urls';
 import { GET_MEMBER } from '../../graphql/queries';
 import { CHECKOUT } from '../../graphql/mutations';
@@ -40,9 +41,10 @@ class Checkout extends Component {
   /**
    * Sends request for checkout mutation
    * @param {number} memberId
+   * @param {Object} shoppingCart
    * @return {Promise<void>}
    * */
-  handleSubmitPayment = async memberId => {
+  handleSubmitPayment = async (memberId, shoppingCart) => {
     const { client, history } = this.props;
     const { shippingAddress } = this.state;
 
@@ -85,8 +87,15 @@ class Checkout extends Component {
         // Removes token from window variable
         if (window.store.stripeNewCreditCardToken) delete window.store.stripeNewCreditCardToken;
 
-        // TODO [DEV-132] Redirect user to thank you page.
-        history.push(urlPatterns.MY_ACCOUNT);
+        const checkoutDetails = {
+          // Used by other services (e.g. Facebook pixel)
+          currency: 'AUD',
+          value: formatNumber(shoppingCart.total),
+          revenue: formatNumber(shoppingCart.total),
+          content_category: 'checkout',
+          order_category_id: shoppingCart.id,
+        };
+        history.push(urlPatterns.THANK_YOU, { checkout: checkoutDetails });
       }
 
       // Renders errors from GraphQL in case any
@@ -149,7 +158,7 @@ class Checkout extends Component {
                     <button
                       type="button"
                       className="payment-confirmation"
-                      onClick={() => this.handleSubmitPayment(data.me.id)}
+                      onClick={() => this.handleSubmitPayment(data.me.id, data.me.shoppingCart)}
                       disabled={!isShippingAddressFormCompleted}
                     >
                       Confirm Payment

@@ -10,6 +10,7 @@ const URL_PATTERNS = {
   SET_NEW_PASSWORD: '/set-new-password/:uid/:token',
   SIGN_UP: '/signup',
   WINES: '/wines',
+  THANK_YOU: '/checkout-thank-you',
 };
 
 export default URL_PATTERNS;
