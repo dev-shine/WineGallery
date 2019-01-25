@@ -118,7 +118,6 @@ const SUBMIT_QUIZ = gql`
       accessToken
       refreshToken
       memberId
-      subscriptionId
       errors {
         messages
         field

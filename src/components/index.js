@@ -3,6 +3,7 @@ import SimpleItem from './atoms/SimpleItem/SimpleItem';
 import InputField from './atoms/InputField/InputField';
 import CheckBox from './atoms/CheckBox/CheckBox';
 import ButtonMutation from './atoms/ButtonMutation/ButtonMutation';
+import AddWineToShoppingCartButton from './atoms/AddWineToShoppingCartButton/AddWineToShoppingCartButton';
 
 // Molecules
 import SimpleListItem from './molecules/SimpleListItem/SimpleListItem';
@@ -35,6 +36,7 @@ export {
   InputField,
   CheckBox,
   ButtonMutation,
+  AddWineToShoppingCartButton,
 
   // Molecules
   SimpleListItem,

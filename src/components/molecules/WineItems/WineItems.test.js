@@ -1,12 +1,14 @@
 import gql from 'graphql-tag';
 import React from 'react';
 import { MockedProvider } from 'react-apollo/test-utils';
-import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import ShallowRenderer from 'react-test-renderer/shallow';
 
 import WineItems from './WineItems';
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
+  const renderer = new ShallowRenderer();
+
   const memberId = '1234';
   const item = [{
     id: '1',
@@ -44,11 +46,11 @@ it('renders without crashing', () => {
     },
   ];
 
-  ReactDOM.render(
+  renderer.render(
     <MockedProvider mocks={mocks} addTypename={false}>
-      <WineItems data={item} memberId={memberId} name="Simple Item" />
-    </MockedProvider>,
-    div
+      <BrowserRouter>
+        <WineItems data={item} memberId={memberId} name="Simple Item" />
+      </BrowserRouter>
+    </MockedProvider>
   );
-  ReactDOM.unmountComponentAtNode(div);
 });

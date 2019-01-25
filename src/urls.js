@@ -9,6 +9,7 @@ const URL_PATTERNS = {
   QUIZ_RESULTS: '/quiz/results',
   SET_NEW_PASSWORD: '/set-new-password/:uid/:token',
   SIGN_UP: '/signup',
+  WINE_DETAILS: (slug = ':slug') => `/wines/details/${slug}`,
   WINES: '/wines',
   THANK_YOU: '/checkout-thank-you',
 };

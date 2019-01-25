@@ -5,5 +5,5 @@ import QuizResults from './QuizResults';
 
 it('renders without crashing', () => {
   const renderer = new ShallowRenderer();
-  renderer.render(<QuizResults />);
+  renderer.render(<QuizResults history={{}} />);
 });
