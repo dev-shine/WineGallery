@@ -28,7 +28,7 @@ class MyAccount extends Component {
    * Updates shopping cart and memberId from local storage.
    * @param {Function} addShoppingCart - GraphQL mutation to add to item to shopping cart
    * @param {Function} updateShoppingCart - GraphQL mutation to update item in shopping cart
-   * @param {string} memberId - id from member
+   * @param {number} memberId - id from member
    * @param {Array} shoppingCartSet - shopping cart items
    * */
   handleUpdatesOnLogin = (

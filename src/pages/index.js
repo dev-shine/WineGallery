@@ -9,6 +9,7 @@ import Quiz from './Quiz/Quiz';
 import QuizResults from './QuizResults/QuizResults';
 import Checkout from './Checkout/Checkout';
 import ThankYou from './ThankYou/ThankYou';
+import WineDetails from './WineDetails/WineDetails';
 
 export {
   Home,
@@ -26,6 +27,7 @@ export {
   Quiz,
   QuizResults,
   Wines,
+  WineDetails,
 
   // Checkout
   Checkout,

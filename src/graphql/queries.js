@@ -89,6 +89,103 @@ const GET_WINE_SWEETNESSES = gql`
   }
 `;
 
+const GET_WINE = gql`
+  query GetWine (
+    $slug: String!
+    $memberId: Int
+  ) {
+    wine (
+      slug: $slug
+      memberId: $memberId
+    ) {
+      id
+      memberLikelihood
+      fullDescription
+      sommelierNotes
+      pairingsDescription
+      alcoholPercentage
+      videoUrl
+      year
+      oakAged
+      product {
+        id
+        name
+        sellingPrice
+        skuCode
+        coverPhotoLarge
+        productPhotos {
+          photoLarge
+        }
+      }
+      country {
+        id
+        name
+      }
+      wineRegion {
+        id
+        name
+      }
+      wineType {
+        id
+        name
+      }
+      wineMaker {
+        id
+        name
+      }
+      wineSweetness {
+        id
+        level
+        name
+      }
+      wineBody {
+        id
+        level
+        name
+      }
+      wineTannin {
+        id
+        level
+        name
+      }
+      wineAcidity {
+        id
+        level
+        name
+      }
+      wineCellarPeriod {
+        id
+        name
+        shortDescription
+      }
+      wineProductionMethods {
+        id
+        name
+      }
+      wineBarrelType {
+        name
+        id
+      }
+      tastes {
+        id
+        name
+      }
+      food {
+        id
+        name
+      }
+      seasons {
+        id
+        name
+      }
+      moods {
+        id
+        name
+      }
+    }
+  }
+`;
+
 const GET_WINES = gql`
   query GetWines (
     $year: String
@@ -128,6 +225,7 @@ const GET_WINES = gql`
       product {
         id
         name
+        slug
         sellingPrice
         productPhotos {
           photoWineListing
@@ -322,6 +420,7 @@ export {
   GET_SEASONS,
   GET_SHOPPING_CART,
   GET_TASTES,
+  GET_WINE,
   GET_WINES,
   GET_WINE_BODIES,
   GET_WINE_COLOURS,
