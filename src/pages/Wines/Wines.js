@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import { Query } from 'react-apollo';
 
 import {
   ErrorBoundary,
   WineFilters,
   WineList,
   WineSorters,
+  WineBox,
 } from '../../components';
+import { GET_SHOPPING_CART } from '../../graphql/queries';
 
 import './Wines.scss';
 
@@ -14,9 +19,13 @@ import './Wines.scss';
  * React.Component: https://reactjs.org/docs/react-component.html
  * */
 class Wines extends Component {
-  static propTypes = {};
+  static propTypes = {
+    isWineSubscriptionBox: PropTypes.bool,
+  };
 
-  static contextTypes = {};
+  static defaultProps = {
+    isWineSubscriptionBox: false,
+  };
 
   state = {
     filters: {
@@ -50,12 +59,27 @@ class Wines extends Component {
   };
 
   render() {
+    const { isWineSubscriptionBox } = this.props;
     const { filters } = this.state;
+
     return (
       <div className="Wines">
         <section className="Wines--container">
           <div className="Wines__inner">
-
+            {
+              isWineSubscriptionBox && (
+                <div>
+                  <Query query={GET_SHOPPING_CART}>
+                    {({ loading, error, data }) => {
+                      if (loading) return 'Loading...';
+                      if (error) console.error(`Error! ${error.message}`);
+                      return (
+                        <WineBox data={data} isEditing />
+                      );
+                    }}
+                  </Query>
+                </div>)
+            }
             <div className="Wines--filters">
               <ErrorBoundary>
                 <WineFilters onFilterChanges={this.handleFilters} />
@@ -70,7 +94,7 @@ class Wines extends Component {
 
             <div className="Wines--list">
               <ErrorBoundary>
-                <WineList variables={filters} />
+                <WineList variables={filters} isWineSubscriptionBox={isWineSubscriptionBox} />
               </ErrorBoundary>
             </div>
 

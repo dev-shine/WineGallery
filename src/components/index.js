@@ -28,6 +28,7 @@ import SubscriptionStatus from './organisms/SubscriptionStatus/SubscriptionStatu
 import PaymentMethod from './organisms/PaymentMethod/PaymentMethod';
 import QuizQuestion from './organisms/QuizQuestion/QuizQuestion';
 import WinePreference from './organisms/WinePreference/WinePreference';
+import WineBox from './organisms/WineBox/WineBox';
 
 export {
 
@@ -61,4 +62,5 @@ export {
   ContactPreferencesForm,
   PaymentMethod,
   QuizQuestion,
+  WineBox,
 };

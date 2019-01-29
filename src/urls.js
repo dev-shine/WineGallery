@@ -11,6 +11,7 @@ const URL_PATTERNS = {
   SIGN_UP: '/signup',
   WINE_DETAILS: (slug = ':slug') => `/wines/details/${slug}`,
   WINES: '/wines',
+  WINES_BOX: '/my-wine-box',
   THANK_YOU: '/checkout-thank-you',
 };
 

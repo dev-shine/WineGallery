@@ -30,6 +30,9 @@ class MyAccount extends Component {
    * @param {Function} updateShoppingCart - GraphQL mutation to update item in shopping cart
    * @param {number} memberId - id from member
    * @param {Array} shoppingCartSet - shopping cart items
+   * @param {string} firstName
+   * @param {string} lastName
+   * @param {string} email
    * */
   handleUpdatesOnLogin = (
     addShoppingCart, updateShoppingCart, memberId, shoppingCartSet, firstName, lastName, email,

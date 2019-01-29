@@ -15,14 +15,16 @@ import './WineList.scss';
 class WineList extends Component {
   static propTypes = {
     variables: PropTypes.shape(),
+    isWineSubscriptionBox: PropTypes.bool,
   };
 
   static defaultProps = {
     variables: null,
+    isWineSubscriptionBox: false,
   };
 
   render() {
-    const { variables } = this.props;
+    const { variables, isWineSubscriptionBox } = this.props;
 
     return (
       <div className="SimpleList">
@@ -34,7 +36,7 @@ class WineList extends Component {
             return (
 
               // MOLECULE
-              <WineItems data={allWines} />
+              <WineItems data={allWines} isWineSubscriptionBox={isWineSubscriptionBox} />
             );
           }}
         </Query>

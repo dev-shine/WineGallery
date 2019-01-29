@@ -31,26 +31,6 @@
     @extend %--fw_container;
   }
 
-  &--recommendation-item {
-    width: 100%;
-    margin-top: 20px;
-
-    img {
-      transform: rotate(90deg);
-      margin: -70px auto -70px auto;
-    }
-
-    &--name {
-      font-weight: bold;
-      font-size: 1.2em;
-      margin: 5px;
-    }
-
-    &--region {
-      margin: 5px;
-    }
-  }
-
   button {
     background-color: #fff;
     border: 3px solid;

@@ -301,6 +301,7 @@ const GET_MEMBER = gql`
         }
       }
       contactpreferenceSet {
+        id
         contactType {
           id
           name
@@ -355,7 +356,7 @@ const GET_SHOPPING_CART = gql`
         id
         sellingPrice
         subscriptionwineSet {
-          id
+          quantity
           wine {
             id
             wineRegion {

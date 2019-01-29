@@ -52,6 +52,13 @@ class Header extends Component {
                   </li>
                 )
               }
+              {
+                isLoggedIn() && (
+                  <li>
+                    <NavLink to={urlPatterns.WINES_BOX}>My Wine Box</NavLink>
+                  </li>
+                )
+              }
               <li>
                 <ShoppingCart />
               </li>
