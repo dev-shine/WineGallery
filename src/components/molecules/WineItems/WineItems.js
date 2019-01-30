@@ -20,7 +20,7 @@ class WineItems extends Component {
   };
 
   static propTypes = {
-    data: PropTypes.shape({}),
+    data: PropTypes.arrayOf(PropTypes.shape({})),
     isWineSubscriptionBox: PropTypes.bool,
   };
 
