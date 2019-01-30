@@ -10,6 +10,8 @@ const URL_PATTERNS = {
   SET_NEW_PASSWORD: '/set-new-password/:uid/:token',
   SIGN_UP: '/signup',
   WINE_DETAILS: (slug = ':slug') => `/wines/details/${slug}`,
+  SPECIAL_PACKS: '/special-packs',
+  SPECIAL_PACK_DETAILS: (slug = ':slug') => `/special-packs/details/${slug}`,
   WINES: '/wines',
   WINES_BOX: '/my-wine-box',
   THANK_YOU: '/checkout-thank-you',

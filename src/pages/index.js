@@ -10,6 +10,8 @@ import QuizResults from './QuizResults/QuizResults';
 import Checkout from './Checkout/Checkout';
 import ThankYou from './ThankYou/ThankYou';
 import WineDetails from './WineDetails/WineDetails';
+import SpecialPackDetails from './SpecialPackDetails/SpecialPackDetails';
+import SpecialPacks from './SpecialPacks/SpecialPacks';
 
 export {
   Home,
@@ -28,6 +30,8 @@ export {
   QuizResults,
   Wines,
   WineDetails,
+  SpecialPacks,
+  SpecialPackDetails,
 
   // Checkout
   Checkout,

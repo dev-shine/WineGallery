@@ -30,14 +30,15 @@ class WineList extends Component {
       <div className="SimpleList">
         <h1>Wines</h1>
         <Query query={GET_WINES} variables={variables}>
-          {({ loading: loadingWines, error: errorWines, data: { allWines } }) => {
-            if (loadingWines) return 'Loading...';
-            if (errorWines) return `Error! ${errorWines.message}`;
-            return (
-
-              // MOLECULE
-              <WineItems data={allWines} isWineSubscriptionBox={isWineSubscriptionBox} />
-            );
+          {({ loading, error, data }) => {
+            if (loading) return 'Loading...';
+            if (error) console.error(`Error! ${error.message}`);
+            if (data && data.allWines) {
+              return (
+                <WineItems data={data} isWineSubscriptionBox={isWineSubscriptionBox} />
+              );
+            }
+            return (<div>Sorry something went wrong, try to come back later</div>);
           }}
         </Query>
       </div>

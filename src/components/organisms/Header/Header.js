@@ -40,6 +40,9 @@ class Header extends Component {
                 <NavLink to="/wines">Wines</NavLink>
               </li>
               <li>
+                <NavLink to={urlPatterns.SPECIAL_PACKS}>Special Boxes</NavLink>
+              </li>
+              <li>
                 <NavLink to="/signup">SignUp</NavLink>
               </li>
               <li>
