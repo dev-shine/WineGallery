@@ -58,7 +58,7 @@ class Quiz extends Component {
         if (email) {
           window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.QUIZ_RESULTS}`;
         } else {
-          window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.HOME}`;
+          window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.WINES_BOX}`;
         }
       }
     );
