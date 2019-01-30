@@ -21,9 +21,14 @@ class AddWineToShoppingCartButton extends Component {
         id: PropTypes.number.isRequired,
       }),
     }).isRequired,
+    quantity: PropTypes.number,
+    label: PropTypes.string,
   };
 
-  static defaultProps = {};
+  static defaultProps = {
+    quantity: 1,
+    label: 'Add',
+  };
 
   /**
    * Adds items to shopping cart
@@ -34,6 +39,8 @@ class AddWineToShoppingCartButton extends Component {
    * @return {Promise<void>}
    * */
   handleAddItemToShoppingCart = async (wine, addShoppingCartItem) => {
+    const { quantity } = this.props;
+
     if (isLoggedIn()) {
       // TODO: [DEV-203] get Member ID from apollo-link-state
       const memberId = window.localStorage.getItem('memberId');
@@ -48,7 +55,7 @@ class AddWineToShoppingCartButton extends Component {
             input: {
               memberId,
               productId: wine.product.id,
-              quantity: 1,
+              quantity,
             },
           },
         }).then(() => {
@@ -59,7 +66,7 @@ class AddWineToShoppingCartButton extends Component {
 
       //  Saves wine item to shopping cart in browser session in case user is not logged in
       const shoppingCartItem = {
-        quantity: 1,
+        quantity,
         product: {
           id: wine.product.id,
           name: wine.product.name,
@@ -72,12 +79,11 @@ class AddWineToShoppingCartButton extends Component {
         window.shoppingCartRefresh();
         window.showShoppingCart();
       });
-
     }
   };
 
   render() {
-    const { wine } = this.props;
+    const { wine, label } = this.props;
 
     return (
       <div className="AddWineToShoppingCartButton">
@@ -90,7 +96,7 @@ class AddWineToShoppingCartButton extends Component {
               type="button"
               onClick={() => this.handleAddItemToShoppingCart(wine, addShoppingCartItem)}
             >
-              add
+              {label}
             </button>
           )}
         </Mutation>

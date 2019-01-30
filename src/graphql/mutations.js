@@ -302,15 +302,53 @@ const CHECKOUT = gql`
   }
 `;
 
+const DELETE_WINE_FROM_SUBSCRIPTION = gql`
+  mutation DeleteRecommendedWine($input: SwitchRecommendedWineInput!) {
+    deleteRecommendedWine(input: $input) {
+      isSuccessful
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
+const ADD_WINE_TO_SUBSCRIPTION = gql`
+  mutation AddRecommendedWine($input: SwitchRecommendedWineInput!) {
+    addRecommendedWine(input: $input) {
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
+const ADD_SPECIAL_PACK_INTEREST = gql`
+  mutation RegisterSpecialPackInterest($input: RegisterSpecialPackInterestInput!) {
+    registerSpecialPackInterest(input: $input) {
+      isSuccessful
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
 export {
   ADD_SHOPPING_CART_ITEM,
   APPLY_DISCOUNT_CODE,
+  ADD_WINE_TO_SUBSCRIPTION,
+  ADD_SPECIAL_PACK_INTEREST,
   CHECKOUT,
   CREATE_CONTACT_PREFERENCE,
   CREATE_PAYMENT_METHOD,
   DELETE_CONTACT_PREFERENCE,
   DELETE_PAYMENT_METHOD,
   DELETE_SHOPPING_CART_ITEM,
+  DELETE_WINE_FROM_SUBSCRIPTION,
   RESET_PASSWORD,
   SET_NEW_PASSWORD,
   SIGN_UP,

@@ -179,8 +179,8 @@ class ContactPreferencesForm extends Component {
             query={GET_MEMBER}
             mutationVariables={this.getMutationVariables({
               id: contactPreferencesForm.monthlyWineSelection.email,
-              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get('1'),
-              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get('1'),
+              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get(1),
+              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get(1),
             })}
             mutation={
               contactPreferencesForm.monthlyWineSelection.email
@@ -196,8 +196,8 @@ class ContactPreferencesForm extends Component {
             query={GET_MEMBER}
             mutationVariables={this.getMutationVariables({
               id: contactPreferencesForm.monthlyWineSelection.sms,
-              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get('1'),
-              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get('2'),
+              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get(1),
+              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get(2),
             })}
             mutation={
               contactPreferencesForm.monthlyWineSelection.sms
@@ -213,8 +213,8 @@ class ContactPreferencesForm extends Component {
             query={GET_MEMBER}
             mutationVariables={this.getMutationVariables({
               id: contactPreferencesForm.socialConnectionsComments.email,
-              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get('4'),
-              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get('1'),
+              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get(4),
+              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get(1),
             })}
             mutation={
               contactPreferencesForm.socialConnectionsComments.email
@@ -230,8 +230,8 @@ class ContactPreferencesForm extends Component {
             query={GET_MEMBER}
             mutationVariables={this.getMutationVariables({
               id: contactPreferencesForm.socialConnectionsComments.sms,
-              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get('4'),
-              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get('2'),
+              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get(4),
+              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get(2),
             })}
             mutation={
               contactPreferencesForm.socialConnectionsComments.sms
@@ -247,8 +247,8 @@ class ContactPreferencesForm extends Component {
             query={GET_MEMBER}
             mutationVariables={this.getMutationVariables({
               id: contactPreferencesForm.badgesPointsRewards.email,
-              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get('3'),
-              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get('1'),
+              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get(3),
+              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get(1),
             })}
             mutation={
               contactPreferencesForm.badgesPointsRewards.email
@@ -264,8 +264,8 @@ class ContactPreferencesForm extends Component {
             query={GET_MEMBER}
             mutationVariables={this.getMutationVariables({
               id: contactPreferencesForm.badgesPointsRewards.sms,
-              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get('3'),
-              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get('2'),
+              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get(3),
+              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get(2),
             })}
             mutation={
               contactPreferencesForm.badgesPointsRewards.sms
@@ -281,8 +281,8 @@ class ContactPreferencesForm extends Component {
             query={GET_MEMBER}
             mutationVariables={this.getMutationVariables({
               id: contactPreferencesForm.deliveryNotifications.email,
-              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get('2'),
-              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get('1'),
+              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get(2),
+              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get(1),
             })}
             mutation={
               contactPreferencesForm.deliveryNotifications.email
@@ -298,8 +298,8 @@ class ContactPreferencesForm extends Component {
             query={GET_MEMBER}
             mutationVariables={this.getMutationVariables({
               id: contactPreferencesForm.deliveryNotifications.sms,
-              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get('2'),
-              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get('2'),
+              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get(2),
+              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get(2),
             })}
             mutation={
               contactPreferencesForm.deliveryNotifications.sms
@@ -315,8 +315,8 @@ class ContactPreferencesForm extends Component {
             query={GET_MEMBER}
             mutationVariables={this.getMutationVariables({
               id: contactPreferencesForm.newslettersArticlesSpecialOffers.email,
-              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get('5'),
-              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get('1'),
+              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get(5),
+              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get(1),
             })}
             mutation={
               contactPreferencesForm.newslettersArticlesSpecialOffers.email
@@ -332,8 +332,8 @@ class ContactPreferencesForm extends Component {
             query={GET_MEMBER}
             mutationVariables={this.getMutationVariables({
               id: contactPreferencesForm.newslettersArticlesSpecialOffers.sms,
-              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get('5'),
-              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get('2'),
+              contactTypeId: CONTACT_TYPE_ID_TO_ENUM.get(5),
+              contactMethodId: CONTACT_METHOD_ID_TO_ENUM.get(2),
             })}
             mutation={
               contactPreferencesForm.newslettersArticlesSpecialOffers.sms
