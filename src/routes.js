@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import {
-  Home, PasswordReset, SetNewPassword, SignUp, Quiz, QuizResults,
+  Home, PasswordReset, SetNewPassword, SignUp, Quiz, QuizResults, SpecialPacks, SpecialPackDetails,
 } from './pages';
 import ThankYou from './pages/ThankYou/ThankYou';
 import urlPatterns from './urls';
@@ -69,6 +69,12 @@ class Routes extends Component {
         <Route path={urlPatterns.WINE_DETAILS()} render={props => <WineDetails {...props} />} />
         <Route path={urlPatterns.CHECKOUT} render={props => <Checkout {...props} />} />
         <Route path={urlPatterns.THANK_YOU} render={props => <ThankYou {...props} />} />
+        <Route path={urlPatterns.SPECIAL_PACKS} exact render={props => <SpecialPacks {...props} />} />
+        <Route
+          path={urlPatterns.SPECIAL_PACK_DETAILS()}
+          render={props => <SpecialPackDetails {...props} />}
+          exact
+        />
 
         <PrivateRoute path={urlPatterns.MY_ACCOUNT} component={MyAccount} />
 

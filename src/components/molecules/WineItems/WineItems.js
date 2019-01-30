@@ -20,7 +20,7 @@ class WineItems extends Component {
   };
 
   static propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({})),
+    data: PropTypes.shape({}),
     isWineSubscriptionBox: PropTypes.bool,
   };
 
@@ -91,7 +91,7 @@ class WineItems extends Component {
         className="WineItems"
       >
         <div>
-          {data.map(wine => (
+          {data.allWines && data.allWines.map(wine => (
             this.renderWineItem(wine)
           ))}
         </div>
