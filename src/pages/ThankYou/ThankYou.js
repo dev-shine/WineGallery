@@ -5,7 +5,7 @@ import { trackEvent, trackingEvents } from '../../helpers/Analytics';
 import './ThankYou.scss';
 
 const THANK_YOU_PAGE_IMAGE = (
-  `${process.env.REACT_APP_REST_DOMAIN}/static/src/site/img/wine-adventure-started.png`
+  `${process.env.REACT_APP_STATIC_URL}/site/img/wine-adventure-started.png`
 );
 
 /**
