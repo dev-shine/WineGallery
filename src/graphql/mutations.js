@@ -325,10 +325,23 @@ const ADD_WINE_TO_SUBSCRIPTION = gql`
   }
 `;
 
+const ADD_SPECIAL_PACK_INTEREST = gql`
+  mutation RegisterSpecialPackInterest($input: RegisterSpecialPackInterestInput!) {
+    registerSpecialPackInterest(input: $input) {
+      isSuccessful
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
 export {
   ADD_SHOPPING_CART_ITEM,
   APPLY_DISCOUNT_CODE,
   ADD_WINE_TO_SUBSCRIPTION,
+  ADD_SPECIAL_PACK_INTEREST,
   CHECKOUT,
   CREATE_CONTACT_PREFERENCE,
   CREATE_PAYMENT_METHOD,
