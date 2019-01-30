@@ -61,6 +61,11 @@ class Routes extends Component {
         {/* Renders lazily loaded components --> https://reactjs.org/docs/code-splitting.html#reactlazy */}
         <Route path={urlPatterns.LOGIN} render={props => <Login {...props} />} />
         <Route path={urlPatterns.WINES} exact render={props => <Wines {...props} />} />
+        <Route
+          path={urlPatterns.WINES_BOX}
+          exact
+          render={props => <Wines {...props} isWineSubscriptionBox />}
+        />
         <Route path={urlPatterns.WINE_DETAILS()} render={props => <WineDetails {...props} />} />
         <Route path={urlPatterns.CHECKOUT} render={props => <Checkout {...props} />} />
         <Route path={urlPatterns.THANK_YOU} render={props => <ThankYou {...props} />} />

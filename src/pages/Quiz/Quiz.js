@@ -29,7 +29,7 @@ class Quiz extends Component {
     this.setState({ selectedAnswers: { ...selectedAnswers, [questionID]: selectedAnswersIDs } });
   };
 
-  handleSubmitQuiz = submitQuiz => {
+  handleSubmitQuiz = async submitQuiz => {
     const { state } = this;
     const { selectedAnswers, email } = state;
     const selectedAnswersAsArray = Object.values(selectedAnswers).flat();
@@ -40,7 +40,7 @@ class Quiz extends Component {
       clientSecret: `${process.env.REACT_APP_CLIENT_SECRET}`,
     };
 
-    submitQuiz(
+    await submitQuiz(
       { variables: { input: { answersIds: selectedAnswersAsArray, email, ...authData } } }
     ).then(
       ({ data }) => {

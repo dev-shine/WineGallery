@@ -72,7 +72,6 @@ class AddWineToShoppingCartButton extends Component {
         window.shoppingCartRefresh();
         window.showShoppingCart();
       });
-
     }
   };
 
