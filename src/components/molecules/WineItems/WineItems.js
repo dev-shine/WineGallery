@@ -41,7 +41,7 @@ class WineItems extends Component {
 
     // Gets wine's photo URL or sets the default one if it doesn't exist
     const photoUrl = wine.product.productPhotos.length
-      ? wine.product.productPhotos[0].photoLarge
+      ? wine.product.productPhotos[0].photoWineListing
       : DEFAULT_BOTTLE_URL;
 
     return (

@@ -66,7 +66,7 @@ const SUBSCRIPTION_STATUS_ID = {
 const MONTH_NAMES = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
 const DEFAULT_BOTTLE_URL = (
-  `${process.env.REACT_APP_REST_DOMAIN}/static/src/site/img/default-bottle-photo.png`
+  `${process.env.REACT_APP_STATIC_URL}/site/img/default-bottle-photo.png`
 );
 
 export {

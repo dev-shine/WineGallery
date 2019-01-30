@@ -35,7 +35,7 @@ class WineDetails extends Component {
             if (loading) return 'Loading...';
             if (error) return `Error! ${error.message}`;
 
-            const coverPhotoUrl = `url(${process.env.REACT_APP_REST_DOMAIN}${wine.product.coverPhotoLarge})`;
+            const coverPhotoUrl = `url(${wine.product.coverPhotoLarge})`;
             const memberLikelihood = wine.memberLikelihood
               ? `${((wine.memberLikelihood) * 100)}%`
               : 'Unknown';
