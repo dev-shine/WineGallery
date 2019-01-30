@@ -59,8 +59,9 @@ class Wines extends Component {
   };
 
   render() {
-    const { isWineSubscriptionBox } = this.props;
-    const { filters } = this.state;
+    const { props, state } = this;
+    const { isWineSubscriptionBox } = props;
+    const { filters } = state;
 
     return (
       <div className="Wines">
@@ -74,7 +75,7 @@ class Wines extends Component {
                       if (loading) return 'Loading...';
                       if (error) console.error(`Error! ${error.message}`);
                       return (
-                        <WineBox data={data} isEditing />
+                        <WineBox data={data} {...props} isEditing />
                       );
                     }}
                   </Query>

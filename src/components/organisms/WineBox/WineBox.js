@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { withApollo } from 'react-apollo';
-import { DELETE_WINE_FROM_SUBSCRIPTION } from '../../../graphql/mutations';
-import { GET_SHOPPING_CART } from '../../../graphql/queries';
 
+import { DELETE_WINE_FROM_SUBSCRIPTION } from '../../../graphql/mutations';
+import { GET_MEMBER, GET_SHOPPING_CART } from '../../../graphql/queries';
 import { DEFAULT_BOTTLE_URL } from '../../../helpers/constants';
+import urlPatterns from '../../../urls';
 
 import './WineBox.scss';
 
@@ -18,11 +19,27 @@ class WineBox extends Component {
     data: PropTypes.shape({}).isRequired,
     isEditing: PropTypes.bool,
     client: PropTypes.shape({}).isRequired,
+    history: PropTypes.shape({}).isRequired,
   };
 
   static defaultProps = {
     isEditing: false,
   };
+
+  componentDidMount() {
+    const { client, history } = this.props;
+
+    // Prevents the user to land on wine box page without having answered the quiz
+    client.query({
+      query: GET_MEMBER,
+    }).then(response => {
+
+      // Redirects user to quiz in case no subscription
+      if (!response.data.me.subscription) {
+        history.push(urlPatterns.QUIZ);
+      }
+    });
+  }
 
   /**
    * Remove wine item from wine recommended list
