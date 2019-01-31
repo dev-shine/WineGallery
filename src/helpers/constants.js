@@ -69,6 +69,19 @@ const DEFAULT_BOTTLE_URL = (
   `${process.env.REACT_APP_STATIC_URL}/site/img/default-bottle-photo.png`
 );
 
+const ADDRESS_UNAVAILABLE_IDS = new Map([
+  [1, 'If not home, deliver to local Post Office'],
+  [2, 'Authority to leave - under shelter in the shade'],
+  [3, 'Authority to leave - near the front door'],
+  [4, 'Authority to leave unattended'],
+  [5, 'Other (Specify)'],
+  [6, 'Signature required'],
+  [7, 'Leave at reception during work hours'],
+  [8, 'Authority to Leave - On porch/verandah/patio'],
+]);
+
+const AUSTRALIA_CODE = 117;
+
 export {
   AU_STATES,
   DEFAULT_BOTTLE_URL,
@@ -80,4 +93,6 @@ export {
   WINE_SORTER,
   SUBSCRIPTION_STATUS,
   MONTH_NAMES,
+  ADDRESS_UNAVAILABLE_IDS,
+  AUSTRALIA_CODE,
 };

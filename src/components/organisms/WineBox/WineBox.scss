@@ -37,4 +37,25 @@
       margin: 5px;
     }
   }
+
+  &--action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    width: 70%;
+
+    .cta-link {
+      background: $brand-danger;
+      border-radius: 5px;
+      border: 2px solid $brand-danger;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: bold;
+      margin: 20px;
+      padding: 10px;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+  }
 }

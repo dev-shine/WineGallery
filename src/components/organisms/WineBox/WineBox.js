@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { withApollo } from 'react-apollo';
 
@@ -103,7 +104,17 @@ class WineBox extends Component {
           })
           : (<div>Sorry it seems you do not have your subscription yet.</div>)
         }
-
+        {
+          subscriptionWinesSorted && (
+            <div className="WineBox--action">
+              We will cover your shipping, when you add 4 bottles or more per box.
+              The amount of bottles in your box will set the total to be sent each month.
+              You can always change this later.
+              <br />
+              <Link className="cta-link" to={urlPatterns.CHECKOUT}>Get My Wine Box</Link>
+            </div>
+          )
+        }
       </div>
     );
   }

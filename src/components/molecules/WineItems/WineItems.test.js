@@ -10,7 +10,7 @@ it('renders without crashing', () => {
   const renderer = new ShallowRenderer();
 
   const memberId = '1234';
-  const item = [{
+  const item = {
     id: '1',
     product: {
       name: 'test product',
@@ -24,7 +24,7 @@ it('renders without crashing', () => {
         name: 'test class',
       },
     },
-  }];
+  };
   const MEMBER_DUMMY_QUERY = gql`
     {
       me {
