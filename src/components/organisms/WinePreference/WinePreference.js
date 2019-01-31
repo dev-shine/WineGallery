@@ -51,7 +51,7 @@ class WinePreference extends Component {
   render() {
     const { errorMessage } = this.state;
     const { winePreference } = this.props;
-    const { __typename, ...cleanWinePreference } = winePreference.winepreference || { __typename: null };
+    const { __typename, id, ...cleanWinePreference } = winePreference.winepreference || { __typename: null };
     const winePreferenceDefault = cleanWinePreference.redBottles ? cleanWinePreference : INITIAL_BOTTLES;
     const memberId = winePreference.id;
 
