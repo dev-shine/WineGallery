@@ -11,7 +11,6 @@ import './OrderSummary.scss';
  * React.Component: https://reactjs.org/docs/react-component.html
  * */
 const OrderSummary = props => {
-
   const { me } = props;
 
   // Renders message in case user does not have any item on their shopping cart

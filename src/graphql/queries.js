@@ -283,6 +283,7 @@ const GET_MEMBER = gql`
           name
         }
         subscriptionwineSet {
+          quantity
           wine {
             id
             wineRegion {

@@ -126,7 +126,7 @@ class NewPaymentMethod extends Component {
 
             return (
               <div className="NewPaymentMethod--form">
-                <CardElement />
+                <CardElement hidePostalCode />
 
                 {
 

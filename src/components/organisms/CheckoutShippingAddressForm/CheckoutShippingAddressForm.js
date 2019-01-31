@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import {
   checkAddress,
   checkName,
-  checkState,
 } from '../../../helpers/validations';
+import { AUSTRALIA_CODE, AU_STATES, ADDRESS_UNAVAILABLE_IDS } from '../../../helpers/constants';
 import { InputField } from '../..';
 
 import './CheckoutShippingAddressForm.scss';
@@ -60,12 +60,12 @@ class CheckoutShippingAddressForm extends Component {
       line1: null,
       line2: null,
       city: null,
-      state: null,
+      state: '',
       postcode: null,
       company: null,
       contactNumber: null,
-      countryId: null,
-      addressUnavailableInstructionId: null,
+      countryId: AUSTRALIA_CODE,
+      addressUnavailableInstructionId: '',
     },
   };
 
@@ -102,6 +102,17 @@ class CheckoutShippingAddressForm extends Component {
   };
 
   /**
+   * Handle changes on the select input fields
+   * @param {Object} event
+   * */
+  handleChangeSelects = event => {
+    const { shippingAddress } = this.state;
+    this.setState({
+      shippingAddress: { ...shippingAddress, [event.target.name]: event.target.value },
+    });
+  };
+
+  /**
    * Handles component state updates
    * @param {Object} query
    * */
@@ -119,7 +130,9 @@ class CheckoutShippingAddressForm extends Component {
       company: query.shippingAddress.company || null,
       contactNumber: query.shippingAddress.contactNumber || null,
       countryId: query.shippingAddress.country.id || null,
-      addressUnavailableInstructionId: query.shippingAddress.addressUnavailableInstruction.id || null,
+      addressUnavailableInstructionId: parseInt(
+        query.shippingAddress.addressUnavailableInstruction.id, 10
+      ) || null,
     };
 
     this.setState({
@@ -130,13 +143,37 @@ class CheckoutShippingAddressForm extends Component {
     handleShippingAddressChange({ ...shippingAddressUpdated });
   };
 
+  /**
+   * Rendering options for state select input
+   * */
+  renderStateOptions = () => {
+    const options = [];
+    options.push(<option key="default" value=" " defaultValue> - </option>);
+    AU_STATES.forEach((value, key) => {
+      options.push(<option key={value} value={value}>{key}</option>);
+    });
+    return options;
+  };
+
+  /**
+   * Rendering options for addressUnavailableInstruction select input
+   * */
+  renderAddressUnavailableOptions = () => {
+    const options = [];
+    options.push(<option key="default" value=" " defaultValue> - </option>);
+    ADDRESS_UNAVAILABLE_IDS.forEach((value, key) => {
+      options.push(<option key={value} value={key}>{value}</option>);
+    });
+    return options;
+  };
+
   render() {
     const { state } = this;
     const { isCheckoutPage } = this.props;
 
     return (
-      <div className="ShippingAddressForm">
-        <div className="ShippingAddressForm--form">
+      <div className="CheckoutShippingAddressForm">
+        <div className="CheckoutShippingAddressForm--form">
           <h2>My Shipping Address</h2>
           <InputField
             type="text"
@@ -173,15 +210,26 @@ class CheckoutShippingAddressForm extends Component {
             value={state.shippingAddress.line2}
             onChange={this.handleChange}
           />
-          <InputField
-            type="text"
-            label="State"
-            name="state"
-            id="state"
-            validations={[checkState]}
-            value={state.shippingAddress.state}
-            onChange={this.handleChange}
-          />
+
+          {/* TODO Consider make a select input field atomic component */}
+          {/* Eslint bug on select elements https://github.com/evcohen/eslint-plugin-jsx-a11y/issues/477 */}
+          <div className="input-select">
+            <label // eslint-disable-line jsx-a11y/label-has-for
+              htmlFor="state"
+              id="labelForState"
+            >
+              State
+              <select
+                name="state"
+                id="state"
+                value={state.shippingAddress.state}
+                onChange={event => this.handleChangeSelects(event)}
+              >
+                {this.renderStateOptions()}
+              </select>
+            </label>
+          </div>
+
           <InputField
             type="number"
             label="Contact number"
@@ -196,14 +244,6 @@ class CheckoutShippingAddressForm extends Component {
             name="postcode"
             id="postcode"
             value={state.shippingAddress.postcode}
-            onChange={this.handleChange}
-          />
-          <InputField
-            type="number"
-            label="Country"
-            name="countryId"
-            id="countryId"
-            value={state.shippingAddress.countryId}
             onChange={this.handleChange}
           />
           <InputField
@@ -222,14 +262,26 @@ class CheckoutShippingAddressForm extends Component {
             value={state.shippingAddress.company}
             onChange={this.handleChange}
           />
-          <InputField
-            type="number"
-            label="Select Delivery Instructions"
-            name="addressUnavailableInstructionId"
-            id="addressUnavailableInstructionId"
-            value={state.shippingAddress.addressUnavailableInstructionId}
-            onChange={this.handleChange}
-          />
+
+          {/* TODO Consider make a select input field atomic component */}
+          {/* Eslint bug on select elements https://github.com/evcohen/eslint-plugin-jsx-a11y/issues/477 */}
+          <div className="input-select">
+            <label // eslint-disable-line jsx-a11y/label-has-for
+              htmlFor="addressUnavailableInstructionId"
+              id="addressUnavailableInstructionId"
+            >
+              Select Delivery Instructions
+              <select
+                name="addressUnavailableInstructionId"
+                id="addressUnavailableInstructionId"
+                value={state.shippingAddress.addressUnavailableInstructionId}
+                onChange={event => this.handleChangeSelects(event)}
+              >
+                {this.renderAddressUnavailableOptions()}
+              </select>
+            </label>
+          </div>
+
           {
 
             // Form is submitted from Checkout component if checkout page
