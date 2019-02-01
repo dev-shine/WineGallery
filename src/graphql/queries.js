@@ -128,6 +128,10 @@ const GET_WINE = gql`
       wineType {
         id
         name
+        wineClass {
+          id
+          name
+        }
       }
       wineMaker {
         id
@@ -220,6 +224,7 @@ const GET_WINES = gql`
       id
       year
       country {
+        id
         name
       }
       product {
@@ -228,14 +233,22 @@ const GET_WINES = gql`
         slug
         sellingPrice
         productPhotos {
+          id
           photoWineListing
+          photoLarge
         }
       }
-      wineType{
+      wineType {
+        id
         name
         wineClass {
+          id
           name
         }
+      }
+      wineRegion {
+        id
+        name
       }
     }
   }
@@ -286,17 +299,33 @@ const GET_MEMBER = gql`
           quantity
           wine {
             id
-            wineRegion {
+            year
+            country {
               id
               name
             }
             product {
               id
               name
+              slug
+              sellingPrice
               productPhotos {
                 id
+                photoWineListing
                 photoLarge
               }
+            }
+            wineType {
+              id
+              name
+              wineClass {
+                id
+                name
+              }
+            }
+            wineRegion {
+              id
+              name
             }
           }
         }
@@ -330,11 +359,42 @@ const GET_MEMBER = gql`
           product {
             id
             name
-            productType {
-              id
-              name
-            }
             sellingPrice
+            productPhotos {
+              id
+              photoLarge
+            }
+            wine {
+              id
+              year
+              country {
+                id
+                name
+              }
+              product {
+                id
+                name
+                slug
+                sellingPrice
+                productPhotos {
+                  id
+                  photoWineListing
+                  photoLarge
+                }
+              }
+              wineType{
+                id
+                name
+                wineClass {
+                  id
+                  name
+                }
+              }
+              wineRegion {
+                id
+                name
+              }
+            }
           }
         }
       }
@@ -349,56 +409,7 @@ const GET_MEMBER = gql`
   }
 `;
 
-const GET_SHOPPING_CART = gql`
-  query Me {
-    me {
-      id
-      subscription {
-        id
-        sellingPrice
-        subscriptionwineSet {
-          quantity
-          wine {
-            id
-            wineRegion {
-              id
-              name
-            }
-            product {
-              id
-              name
-              productPhotos {
-                photoLarge
-              }
-            }
-          }
-        }
-      }
-      shoppingCart {
-        id
-        shoppingcartitemSet {
-          quantity
-          product {
-            id
-            name
-            sellingPrice
-            productPhotos {
-              id
-              photoLarge
-            }
-            wine {
-              id
-              wineRegion {
-                id
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+const GET_SHOPPING_CART = GET_MEMBER;
 
 const GET_QUIZ_QUESTIONS = gql`
   query QuizQuestions {
@@ -508,7 +519,7 @@ const GET_SPECIAL_PACK_DETAILS = gql`
             }
             sellingPrice
           }
-          wineType  {
+          wineType {
             name
             id
           }

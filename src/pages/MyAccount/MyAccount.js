@@ -121,7 +121,7 @@ class MyAccount extends Component {
                   );
 
                   return (
-                    <Query query={GET_MEMBER} fetchPolicy="cache-and-network">
+                    <Query query={GET_MEMBER} fetchPolicy="cache-and-network" partialRefetch>
                       {({ loading, error, data }) => {
                         if (loading) return 'Loading...';
                         if (error) return `Error! ${error.message}`;

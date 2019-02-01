@@ -19,7 +19,7 @@ const QuizResults = props => {
     <div className="QuizResults">
       <div className="QuizResults--container">
         <h1 className="QuizResults--title">Recommended wines</h1>
-        <Query query={GET_SHOPPING_CART}>
+        <Query query={GET_SHOPPING_CART} partialRefetch>
           {({ loading, error, data }) => {
 
             if (loading) return 'Loading...';

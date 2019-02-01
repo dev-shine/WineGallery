@@ -221,17 +221,7 @@ const ADD_SHOPPING_CART_ITEM = gql`
     addShoppingCartItem(input: $input) {
       errors {
         field
-      }
-      shoppingCart {
-        id
-        shoppingcartitemSet {
-          quantity
-          product {
-            id
-            name
-            sellingPrice
-          }
-        }
+        messages
       }
     }
   }
