@@ -70,7 +70,7 @@ class Wines extends Component {
             {
               isWineSubscriptionBox && (
                 <div>
-                  <Query query={GET_SHOPPING_CART}>
+                  <Query query={GET_SHOPPING_CART} partialRefetch>
                     {({ loading, error, data }) => {
                       if (loading) return 'Loading...';
                       if (error) console.error(`Error! ${error.message}`);

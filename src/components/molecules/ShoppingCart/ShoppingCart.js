@@ -92,7 +92,7 @@ class ShoppingCart extends Component {
     const shoppingCartLocal = shoppingCartLocalStorage();
 
     return (
-      <Query query={GET_SHOPPING_CART}>
+      <Query query={GET_SHOPPING_CART} partialRefetch>
         {({ loading, error, data }) => {
           if (loading) return '';
           if (error) console.error(`Shopping cart error! ${error.message}`);
