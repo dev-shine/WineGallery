@@ -354,6 +354,7 @@ const GET_MEMBER = gql`
         discount
         discountCode
         total
+        totalShippingFee
         shoppingcartitemSet {
           quantity
           product {
