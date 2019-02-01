@@ -106,9 +106,11 @@ class ShoppingCart extends Component {
           // TODO: Possibly change sorting to back end to improve FE performance
           // Result without sorting: https://www.useloom.com/share/781edb12b9b84d899b656e6d5bc0c30a
           let productsCartArray = null;
+
           if (hasShoppingCartSet) {
             productsCartArray = data.me.shoppingCart.shoppingcartitemSet
               .sort((a, b) => a.product.id - b.product.id);
+
           } else if (hasShoppingLocalStorage) {
             productsCartArray = shoppingCartLocal.items.sort((a, b) => a.product.id - b.product.id);
           }

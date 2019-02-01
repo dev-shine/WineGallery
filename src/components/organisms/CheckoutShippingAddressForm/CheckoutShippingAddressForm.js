@@ -94,7 +94,6 @@ class CheckoutShippingAddressForm extends Component {
   handleChange = async (field, value) => {
     const { shippingAddress } = this.state;
     const { handleShippingAddressChange } = this.props;
-
     this.setState({ shippingAddress: { ...shippingAddress, [field]: value } });
 
     // TODO: [DEV-203] Improve this when link state is introduced
@@ -105,11 +104,11 @@ class CheckoutShippingAddressForm extends Component {
    * Handle changes on the select input fields
    * @param {Object} event
    * */
-  handleChangeSelects = event => {
+  handleChangeSelects = async event => {
     const { shippingAddress } = this.state;
-    this.setState({
-      shippingAddress: { ...shippingAddress, [event.target.name]: event.target.value },
-    });
+    const { handleShippingAddressChange } = this.props;
+    this.setState({ shippingAddress: { ...shippingAddress, [event.target.name]: event.target.value } });
+    await handleShippingAddressChange({ ...shippingAddress, [event.target.name]: event.target.value });
   };
 
   /**
