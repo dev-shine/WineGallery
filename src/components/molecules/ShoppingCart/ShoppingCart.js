@@ -241,7 +241,7 @@ class ShoppingCart extends Component {
                                 .reduce((a, b) => a + b)
                             )}`
                           }
-                          (+ $9.00 SHIPPING)
+                          {`(+ ${formatNumber(data.me.shoppingCart.totalShippingFee)} SHIPPING)`}
                         </p>
                       )
                     }

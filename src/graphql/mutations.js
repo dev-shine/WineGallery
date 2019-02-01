@@ -243,6 +243,8 @@ const UPDATE_SHOPPING_CART_ITEM = gql`
   mutation UpdateShoppingCartItem($input: UpdateShoppingCartItemInput!){
     updateShoppingCartItem (input: $input) {
       shoppingCart {
+        total
+        totalShippingFee
         member {
           id
         }
