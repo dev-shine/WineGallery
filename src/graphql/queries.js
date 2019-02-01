@@ -264,6 +264,7 @@ const GET_MEMBER = gql`
       gender
       firstName
       lastName
+      hasUpdatedPassword
       shippingAddress {
         id
         firstName
@@ -361,6 +362,10 @@ const GET_MEMBER = gql`
             id
             name
             sellingPrice
+            productType {
+              id
+              name
+            }
             productPhotos {
               id
               photoLarge

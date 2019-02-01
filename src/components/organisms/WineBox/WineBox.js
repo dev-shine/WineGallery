@@ -20,11 +20,14 @@ class WineBox extends Component {
     data: PropTypes.shape({}).isRequired,
     isEditing: PropTypes.bool,
     client: PropTypes.shape({}).isRequired,
-    history: PropTypes.shape({}).isRequired,
+    history: PropTypes.shape({}),
+    location: PropTypes.shape({}),
   };
 
   static defaultProps = {
     isEditing: false,
+    history: null,
+    location: null,
   };
 
   componentDidMount() {
@@ -59,7 +62,7 @@ class WineBox extends Component {
   };
 
   render() {
-    const { data, isEditing } = this.props;
+    const { data, isEditing, location } = this.props;
     const subscriptionWinesSorted = data.me.subscription && data.me.subscription.subscriptionwineSet
       .sort((a, b) => a.wine.id - b.wine.id);
 
@@ -111,7 +114,10 @@ class WineBox extends Component {
               The amount of bottles in your box will set the total to be sent each month.
               You can always change this later.
               <br />
-              <Link className="cta-link" to={urlPatterns.CHECKOUT}>Get My Wine Box</Link>
+              {
+                location && location.pathname === urlPatterns.WINES_BOX
+                && <Link className="cta-link" to={urlPatterns.CHECKOUT}>Get My Wine Box</Link>
+              }
             </div>
           )
         }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { Query, withApollo } from 'react-apollo';
 
@@ -20,6 +21,10 @@ import './Checkout.scss';
  * React.Component: https://reactjs.org/docs/react-component.html
  * */
 class Checkout extends Component {
+  static propTypes = {
+    history: PropTypes.shape({}).isRequired,
+  };
+
   state = {
     shippingAddress: null,
     isProcessingCheckout: false,
@@ -109,12 +114,12 @@ class Checkout extends Component {
 
   render() {
     const { shippingAddress, isProcessingCheckout, processingError } = this.state;
+    const { history } = this.props;
 
     // Disables and enables button to submit based on required fields
     const isShippingAddressFormCompleted = Boolean(
       shippingAddress && shippingAddress.line1 && shippingAddress.city && shippingAddress.state
-      && shippingAddress.postcode && shippingAddress.countryId
-      && shippingAddress.addressUnavailableInstructionId
+      && shippingAddress.postcode && shippingAddress.addressUnavailableInstructionId
     );
 
     return (
@@ -132,6 +137,11 @@ class Checkout extends Component {
             if (loading) return 'Loading...';
             if (error) return `Error! ${error.message}`;
             if (data.me) {
+              if (!data.me.hasUpdatedPassword) {
+                history.push(
+                  urlPatterns.SIGN_UP, { quiz: true, email: data.me.email, memberId: data.me.id }
+                );
+              }
               return (
                 <div className="Checkout--container">
                   <h1 className="Checkout--forms__title">Checkout</h1>

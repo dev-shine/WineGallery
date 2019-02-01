@@ -31,27 +31,21 @@ class Header extends Component {
           <nav className="Header--main-navigation">
             <ul className="Header--main-navigation--list">
               <li>
-                <NavLink to="/home">Home</NavLink>
+                <NavLink to={urlPatterns.HOME}>Home</NavLink>
               </li>
               <li>
-                <NavLink to="/quiz">Quiz</NavLink>
+                <NavLink to={urlPatterns.QUIZ}>Quiz</NavLink>
               </li>
               <li>
-                <NavLink to="/wines">Wines</NavLink>
+                <NavLink to={urlPatterns.WINES}>Wines</NavLink>
               </li>
               <li>
                 <NavLink to={urlPatterns.SPECIAL_PACKS}>Special Boxes</NavLink>
               </li>
-              <li>
-                <NavLink to="/signup">SignUp</NavLink>
-              </li>
-              <li>
-                <NavLink to="/login">{isLoggedIn() ? 'Logout' : 'Login'}</NavLink>
-              </li>
               {
-                isLoggedIn() && (
+                !isLoggedIn() && (
                   <li>
-                    <NavLink to={urlPatterns.MY_ACCOUNT}>My Account</NavLink>
+                    <NavLink to={urlPatterns.SIGN_UP}>SignUp</NavLink>
                   </li>
                 )
               }
@@ -62,6 +56,16 @@ class Header extends Component {
                   </li>
                 )
               }
+              {
+                isLoggedIn() && (
+                  <li>
+                    <NavLink to={urlPatterns.MY_ACCOUNT}>My Account</NavLink>
+                  </li>
+                )
+              }
+              <li>
+                <NavLink to={urlPatterns.LOGIN}>{isLoggedIn() ? 'Logout' : 'Login'}</NavLink>
+              </li>
               <li>
                 <ShoppingCart />
               </li>

@@ -101,15 +101,16 @@ class PaymentMethod extends Component {
     const { state } = this;
     const { me, isCheckoutPage } = this.props;
     const paymentList = me && me.paymentmethodSet && me.paymentmethodSet;
+    const hasPaymentMethod = me && me.paymentmethodSet.length;
 
     return (
       <div className="PaymentMethod">
-        <h2>Update Subscription Status</h2>
+        {!isCheckoutPage && <h2>Update Payment Methods</h2>}
         <div className="PaymentMethod--container">
           <div className="PaymentMethod--title">
             <h3>Payment Methods</h3>
             {
-              state.showFormAddNewPaymentMethod
+              state.showFormAddNewPaymentMethod || (!hasPaymentMethod && isCheckoutPage)
                 ? (
                   <StripeProvider apiKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}>
                     <Elements>

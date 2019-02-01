@@ -55,11 +55,7 @@ class Quiz extends Component {
         }
 
         // Navigates to the Quiz Results page for new users
-        if (email) {
-          window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.QUIZ_RESULTS}`;
-        } else {
-          window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.WINES_BOX}`;
-        }
+        window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.QUIZ_RESULTS}`;
       }
     );
   };
@@ -84,48 +80,59 @@ class Quiz extends Component {
 
               return (
                 <Mutation mutation={SUBMIT_QUIZ}>
-                  { submitQuiz => (
-                    <div className="Quiz--form">
-                      {data.quizQuestions.map(quizQuestion => (
-                        <QuizQuestion
-                          key={quizQuestion.id}
-                          question={quizQuestion.description}
-                          answers={quizQuestion.quizanswerSet}
-                          maxAnswers={quizQuestion.maxAnswers}
-                          selectedAnswers={selectedAnswers[quizQuestion.id] || []}
-                          handleAnswerSelectParent={this.handleAnswerSelect}
-                          questionId={quizQuestion.id}
-                        />
-                      ))}
+                  {(submitQuiz, response) => {
+                    let errorValidation = null;
+                    if (response && response.error) {
+                      response.error.graphQLErrors.map(
+                        message => console.log('Non-friendly error message', message)
+                      );
+                      errorValidation = 'Sorry you cannot update your quiz answers yet.';
+                    }
+                    return (
+                      <div className="Quiz--form">
+                        {data.quizQuestions.map(quizQuestion => (
+                          <QuizQuestion
+                            key={quizQuestion.id}
+                            question={quizQuestion.description}
+                            answers={quizQuestion.quizanswerSet}
+                            maxAnswers={quizQuestion.maxAnswers}
+                            selectedAnswers={selectedAnswers[quizQuestion.id] || []}
+                            handleAnswerSelectParent={this.handleAnswerSelect}
+                            questionId={quizQuestion.id}
+                          />
+                        ))}
 
-                      {
-                        isLoggedIn() // Renders email input for new users only
-                          ? null
-                          : (
-                            <div className="Quiz--form-input">
-                              <InputField
-                                label="Email"
-                                placeholder="Email"
-                                name="email"
-                                id="email"
-                                type="email"
-                                onChange={(field, value) => this.setState({ [field]: value })}
-                                validations={[checkEmail]}
-                              />
-                            </div>
-                          )
-                      }
+                        {
+                          isLoggedIn() // Renders email input for new users only
+                            ? null
+                            : (
+                              <div className="Quiz--form-input">
+                                <InputField
+                                  label="Email"
+                                  placeholder="Email"
+                                  name="email"
+                                  id="email"
+                                  type="email"
+                                  onChange={(field, value) => this.setState({ [field]: value })}
+                                  validations={[checkEmail]}
+                                />
+                              </div>
+                            )
+                        }
 
-                      <button
-                        onClick={() => this.handleSubmitQuiz(submitQuiz)}
-                        type="button"
-                        disabled={!isQuizValid}
-                      >
-                        submit
-                      </button>
+                        <button
+                          onClick={() => this.handleSubmitQuiz(submitQuiz)}
+                          type="button"
+                          disabled={!isQuizValid}
+                        >
+                          submit
+                        </button>
 
-                    </div>
-                  )}
+                        {/* Renders validation errors */}
+                        { errorValidation && <span>{errorValidation}</span> }
+                      </div>
+                    );
+                  }}
                 </Mutation>
               );
             }}

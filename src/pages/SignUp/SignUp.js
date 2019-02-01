@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import { Mutation } from 'react-apollo';
+import { Mutation, withApollo } from 'react-apollo';
 
-import { ADD_SHOPPING_CART_ITEM, SIGN_UP } from '../../graphql/mutations';
+import { ADD_SHOPPING_CART_ITEM, SIGN_UP, UPDATE_MEMBER_ACCOUNT_DETAILS } from '../../graphql/mutations';
 import urlPatterns from '../../urls';
 import { executeLogInRequest } from '../../helpers/auth';
 import {
@@ -21,12 +22,25 @@ import './SignUp.scss';
  * React.Component: https://reactjs.org/docs/react-component.html
  * */
 class SignUp extends Component {
+  static propTypes = {
+    client: PropTypes.shape({}).isRequired,
+    location: PropTypes.shape({
+      state: PropTypes.shape({
+        email: PropTypes.string,
+        quiz: PropTypes.bool,
+      }),
+    }).isRequired,
+  };
+
   state = {
     errors: [],
     form: {
       firstName: '',
       lastName: '',
-      email: '',
+      email: (
+        this.props.location.state // eslint-disable-line react/destructuring-assignment
+        && this.props.location.state.email // eslint-disable-line react/destructuring-assignment
+      ) || '',
       password: '',
       birthDate: '',
       confirmPassword: '',
@@ -51,16 +65,26 @@ class SignUp extends Component {
    * @return {Promise<void>}
    * */
   handleSubmit = async (signUp, addShoppingCart) => {
-    const { state } = this;
+    const { state, props } = this;
+    const isQuiz = props.location.state && props.location.state.quiz;
+    const id = props.location.state && props.location.state.memberId;
     const shoppingCart = shoppingCartLocalStorage();
 
     // Creates an array (signUpInput) removing unnecessary info
     const { confirmPassword, ...signUpInput } = state.form;
 
+    // Builds input depending on which page the user is accessing
+    let input = null;
+    if (!isQuiz) {
+      input = { ...signUpInput };
+    } else {
+      input = { ...signUpInput, id, hasUpdatedPassword: true };
+    }
+
     if (confirmPassword === signUpInput.password) {
 
       // Saves new member (signup)
-      await signUp({ variables: { input: { ...signUpInput } } })
+      await signUp({ variables: { input } })
         .then(member => {
 
           // Checks if user has added items to local storage shopping cart
@@ -84,9 +108,11 @@ class SignUp extends Component {
               window.localStorage.removeItem('shoppingCart')
             ));
           }
+          if (isQuiz) {
+            window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.CHECKOUT}`;
 
-          // Only executes login in case SignUp mutation returns no error
-          if (!member.data.signUp.errors) {
+            // Only executes login in case SignUp mutation returns no error
+          } else if (!member.data.signUp.errors) {
 
             // Executes Login and redirects user to MyAccount page
             executeLogInRequest(state.form.email, state.form.password)
@@ -113,10 +139,12 @@ class SignUp extends Component {
     } else {
       this.setState({ errors: ['Sorry, your passwords do not match.'] });
     }
-  };
+  }
+  ;
 
   render() {
-    const { state } = this;
+    const { state, props } = this;
+    const isQuiz = props.location.state && props.location.state.quiz;
     const { errors } = state;
     const {
       firstName,
@@ -134,7 +162,7 @@ class SignUp extends Component {
           if (errorAddShoppingCart) console.log('Non-friendly error message', errorAddShoppingCart.message);
 
           return (
-            <Mutation mutation={SIGN_UP}>
+            <Mutation mutation={isQuiz ? UPDATE_MEMBER_ACCOUNT_DETAILS : SIGN_UP}>
               {(signUp, { data, error, loading }) => {
                 if (loading) return 'Loading...';
                 if (error) console.log('Non-friendly error message', error.message);
@@ -227,7 +255,7 @@ class SignUp extends Component {
                         {errors && <div>{errors}</div>}
 
                         {/* Prints in the screen response from server in case it succeeds */}
-                        {data && data.signUp.id && (
+                        {!isQuiz && data && data.signUp.id && (
                           <div>
                             <div>
                               <p>Success direct from graphql:</p>
@@ -251,4 +279,4 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+export default withApollo(SignUp);
