@@ -102,7 +102,9 @@ class ShoppingCart extends Component {
           const hasShoppingLocalStorage = Boolean(
             shoppingCartLocal && shoppingCartLocal.items.length
           );
-          const shippingFee = (data && data.me && data.me.shoppingCart.totalShippingFee) || 9;
+          const shippingFee = (
+            data && data.me && data.me.shoppingCart && data.me.shoppingCart.totalShippingFee
+          ) || 9;
 
           // TODO: Possibly change sorting to back end to improve FE performance
           // Result without sorting: https://www.useloom.com/share/781edb12b9b84d899b656e6d5bc0c30a
