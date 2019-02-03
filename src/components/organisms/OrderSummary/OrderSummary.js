@@ -68,7 +68,7 @@ const OrderSummary = props => {
                       {`Discount applied: $${formatNumber(discount)}`}
                     </div>)
                 }
-                {`Final total: $${formatNumber(total - discount)}`}
+                {`Final total: $${formatNumber(total + totalShippingFee - discount)}`}
               </div>
             )
           }
