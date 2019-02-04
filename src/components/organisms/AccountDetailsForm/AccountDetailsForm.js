@@ -53,7 +53,7 @@ const AccountDetailsForm = props => {
       firstName: firstName.value,
       lastName: lastName.value,
       birthDate: birthDate.value,
-      gender: gender.value,
+      gender: gender.value || null,
       mobileNumber: mobileNumber.value,
       email: email.value,
       password: newPassword.value,
