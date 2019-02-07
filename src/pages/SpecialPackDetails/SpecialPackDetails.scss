@@ -86,6 +86,11 @@
         height: auto;
       }
     }
+
+    &__option-name {
+      display: inline-flex;
+      font-weight: bold;
+    }
   }
 
   button {

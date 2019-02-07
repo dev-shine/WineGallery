@@ -449,10 +449,7 @@ const GET_ALL_SPECIAL_PACKS = gql`
       seoDescription
       heroTopImageLargeUrl
       isAvailable
-      product {
-        id
-        slug
-      }
+      slug
     }
   }
 `;
@@ -489,108 +486,111 @@ const GET_SPECIAL_PACK_DETAILS = gql`
       section2ImageLargeUrl
       section3ImageLargeUrl
       isAvailable
-      product {
+      specialpackoptionSet {
         id
-        name
-        productType {
+        product {
           id
-          isEnabled
           name
-        }
-        coverPhotoLarge
-        slug
-        skuCode
-        sellingPrice
-        productPhotos {
-          id
-          photoLarge
-          photoWineListing
-        }
-        wine {
-          id
-          wineMaker  {
-            name
+          productType {
             id
+            isEnabled
+            name
           }
-          product  {
-            name
+          coverPhotoLarge
+          slug
+          skuCode
+          sellingPrice
+          productPhotos {
             id
-            productType {
+            photoLarge
+            photoWineListing
+          }
+          wine {
+            id
+            wineMaker  {
+              name
+              id
+            }
+            product  {
+              name
+              id
+              productType {
+                id
+                name
+              }
+              productPhotos {
+                id
+                photoLarge
+              }
+              sellingPrice
+            }
+            wineType {
+              name
+              id
+            }
+            wineRegion {
+              name
+              id
+            }
+            country  {
+              name
+              id
+              code
+            }
+            wineBody {
+              name
+              id
+            }
+            wineTannin {
+              name
+              id
+            }
+            wineAcidity {
+              name
+              id
+            }
+            wineSweetness {
+              name
+              id
+            }
+            wineBarrelType {
+              name
+              id
+            }
+            wineCellarPeriod {
+              name
+              id
+            }
+            wineProductionMethods  {
+              name
+              id
+            }
+            fullDescription
+            country {
               id
               name
+              code
             }
-            productPhotos {
+            food {
+              name
               id
-              photoLarge
             }
-            sellingPrice
+            moods  {
+              name
+              id
+            }
+            tastes {
+              name
+              id
+            }
+            year
+            alcoholPercentage
+            sommelierNotes
+            videoUrl
+            pairingsDescription
+            oakAged
+            memberLikelihood
           }
-          wineType {
-            name
-            id
-          }
-          wineRegion {
-            name
-            id
-          }
-          country  {
-            name
-            id
-            code
-          }
-          wineBody {
-            name
-            id
-          }
-          wineTannin {
-            name
-            id
-          }
-          wineAcidity {
-            name
-            id
-          }
-          wineSweetness {
-            name
-            id
-          }
-          wineBarrelType {
-            name
-            id
-          }
-          wineCellarPeriod {
-            name
-            id
-          }
-          wineProductionMethods  {
-            name
-            id
-          }
-          fullDescription
-          country {
-            id
-            name
-            code
-          }
-          food {
-            name
-            id
-          }
-          moods  {
-            name
-            id
-          }
-          tastes {
-            name
-            id
-          }
-          year
-          alcoholPercentage
-          sommelierNotes
-          videoUrl
-          pairingsDescription
-          oakAged
-          memberLikelihood
         }
       }
     }
