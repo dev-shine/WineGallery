@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 
 import { Mutation, Query } from 'react-apollo';
 
-import { AddWineToShoppingCartButton } from '../../components';
 import {
   GET_MEMBER,
   GET_SHOPPING_CART,
   GET_SPECIAL_PACK_DETAILS,
 } from '../../graphql/queries';
-import { ADD_SPECIAL_PACK_INTEREST } from '../../graphql/mutations';
+import { ADD_SHOPPING_CART_ITEM, ADD_SPECIAL_PACK_INTEREST } from '../../graphql/mutations';
+import { saveCartItemToLocalStorage } from '../../helpers/tools';
 import urlPatterns from '../../urls';
 import { isLoggedIn } from '../../helpers/auth';
 
@@ -28,7 +28,7 @@ class SpecialPackDetails extends Component {
   static contextTypes = {};
 
   state = {
-    boxQuantity: 1,
+    boxQuantities: {}, // stores {productId: quantity}
   };
 
   buySection = React.createRef();
@@ -69,20 +69,27 @@ class SpecialPackDetails extends Component {
   /**
    * Sets quantity of special boxes the user wants to purchase
    * @param {Event} e
+   * @param {object} specialPackOption
    * */
-  handleQuantityChange = e => {
+  handleQuantityChange = (e, specialPackOption) => {
     const quantity = parseInt(e.target.value, 10);
-    this.setState({ boxQuantity: quantity });
+    const { boxQuantities } = this.state;
+    this.setState({ boxQuantities: { ...boxQuantities, [specialPackOption.product.id]: quantity } });
   };
 
   /**
    * Renders options for select input field from the quantity user wants to purchase.
    * */
-  renderOptions = () => {
-    const options = [];
+  renderOptions = specialPackOption => {
+    const defaultOption = (
+      <option value={0} key={specialPackOption.product.id}>
+        {'Qty'}
+      </option>
+    );
+    const options = [defaultOption];
     for (let index = 1; index < 25; index++) {
       options.push(
-        <option value={index} key={index}>
+        <option value={index} key={`${index}-${specialPackOption.product.id}`}>
           {`${index} ${index === 1 ? ' box' : ' boxes'}`}
         </option>
       );
@@ -90,8 +97,66 @@ class SpecialPackDetails extends Component {
     return options;
   };
 
+  /**
+   * Adds selected Special Packs to the Shopping Cart.
+   *
+   * @param {Function} addShoppingCartItem - GraphQL mutation to add item to shopping cart
+   * @param {Array} specialPackOptions - array of Special Pack Options required to retrieve their data
+   * */
+  handleAddSpecialPacksToShoppingCart = (addShoppingCartItem, specialPackOptions) => {
+    const { boxQuantities } = this.state;
+
+    // TODO: [DEV-203] get Member ID from apollo-link-state
+    const memberId = window.localStorage.getItem('memberId');
+
+    // TODO: [DEV-285] send 1 request for multiple Products
+    let promises = []; // promises are required as multiple Special Packs can be added at once
+
+    if (isLoggedIn()) {
+      promises = Object.entries(boxQuantities).map(([productId, quantity]) => (
+        addShoppingCartItem({
+          variables: {
+            input: {
+              memberId,
+              productId,
+              quantity,
+            },
+          },
+        })
+      ));
+    } else {
+
+      // Maps special pack options to an object to retrieve name and sellingPrice per product later
+      const specialPackOptionsAsObject = {};
+      specialPackOptions.forEach(specialPackOption => {
+        specialPackOptionsAsObject[specialPackOption.product.id] = {
+          name: specialPackOption.product.name,
+          sellingPrice: specialPackOption.product.sellingPrice,
+        };
+      });
+
+      // Saves special pack item to shopping cart in browser session in case user is not logged in
+      promises = Object.entries(boxQuantities).map(([productId, quantity]) => {
+        const shoppingCartItem = {
+          quantity,
+          product: {
+            id: productId,
+            name: specialPackOptionsAsObject[productId].name,
+            sellingPrice: specialPackOptionsAsObject[productId].sellingPrice,
+          },
+        };
+        return saveCartItemToLocalStorage(shoppingCartItem, true, false, false);
+      });
+    }
+
+    Promise.all(promises).then(() => {
+      // TODO DEV-203: bind shopping cart counter to apollo-link-state variable
+      window.shoppingCartRefresh();
+      window.showShoppingCart();
+    });
+  };
+
   render() {
-    const { boxQuantity } = this.state;
     const { match } = this.props;
     const { slug } = match.params;
 
@@ -102,27 +167,27 @@ class SpecialPackDetails extends Component {
             if (loading) return 'Loading...';
             if (error) console.error(`Shopping cart error! ${error.message}`);
 
-            const specialPack = data && data.specialPackEdition;
-            if (!specialPack) return 'Sorry this pack is not available anymore...';
+            const specialPackEdition = data && data.specialPackEdition;
+            if (!specialPackEdition) return 'Sorry this pack is not available anymore...';
 
             return (
               <div className="SpecialPackDetails--container">
                 <div className="SpecialPackDetails--container__inner">
 
                   {/* HERO BANNER */}
-                  <section className={`SpecialPackDetails--hero-banner ${specialPack.heroTopTheme}`}>
+                  <section className={`SpecialPackDetails--hero-banner ${specialPackEdition.heroTopTheme}`}>
                     <img
                       className="SpecialPackDetails--hero-banner__image"
-                      src={specialPack.heroTopImageLargeUrl}
-                      alt={specialPack.section1Title}
+                      src={specialPackEdition.heroTopImageLargeUrl}
+                      alt={specialPackEdition.section1Title}
                     />
                     <div className="SpecialPackDetails--hero-banner__title">
-                      <h1>{specialPack.seoTitle}</h1>
+                      <h1>{specialPackEdition.seoTitle}</h1>
                       <p>
-                        {specialPack.seoDescription}
+                        {specialPackEdition.seoDescription}
                       </p>
                       <button type="button" onClick={this.handleScrollToBuySection}>
-                        {specialPack.isAvailable ? 'Order now' : 'Register your interest'}
+                        {specialPackEdition.isAvailable ? 'Order now' : 'Register your interest'}
                       </button>
                     </div>
                   </section>
@@ -130,14 +195,14 @@ class SpecialPackDetails extends Component {
                   {/* SECTION 1 */}
                   <section className="SpecialPackDetails--content">
                     <div className="SpecialPackDetails--content__title">
-                      <h2>{specialPack.section1Title}</h2>
-                      <p>{specialPack.section1Text}</p>
+                      <h2>{specialPackEdition.section1Title}</h2>
+                      <p>{specialPackEdition.section1Text}</p>
                     </div>
                     <div className="SpecialPackDetails--content__image">
                       <img
                         className="SpecialPackDetails--content__image"
-                        src={specialPack.section1ImageLargeUrl}
-                        alt={specialPack.section1Title}
+                        src={specialPackEdition.section1ImageLargeUrl}
+                        alt={specialPackEdition.section1Title}
                       />
                     </div>
                   </section>
@@ -145,14 +210,14 @@ class SpecialPackDetails extends Component {
                   {/* SECTION 2 */}
                   <section className="SpecialPackDetails--content">
                     <div className="SpecialPackDetails--content__title">
-                      <h2>{specialPack.section2Title}</h2>
-                      <p>{specialPack.section2Text}</p>
+                      <h2>{specialPackEdition.section2Title}</h2>
+                      <p>{specialPackEdition.section2Text}</p>
                     </div>
                     <div className="SpecialPackDetails--content__image">
                       <img
                         className="SpecialPackDetails--content__image"
-                        src={specialPack.section2ImageLargeUrl}
-                        alt={specialPack.section2Title}
+                        src={specialPackEdition.section2ImageLargeUrl}
+                        alt={specialPackEdition.section2Title}
                       />
                     </div>
                   </section>
@@ -160,13 +225,13 @@ class SpecialPackDetails extends Component {
                   {/* SECTION 3 */}
                   <section className="SpecialPackDetails--content">
                     <div className="SpecialPackDetails--content__title">
-                      <h2>{specialPack.section3Title}</h2>
-                      <p>{specialPack.section3Text}</p>
+                      <h2>{specialPackEdition.section3Title}</h2>
+                      <p>{specialPackEdition.section3Text}</p>
                     </div>
                     <div className="SpecialPackDetails--content__image">
                       <img
-                        src={specialPack.section3ImageLargeUrl}
-                        alt={specialPack.section3Title}
+                        src={specialPackEdition.section3ImageLargeUrl}
+                        alt={specialPackEdition.section3Title}
                       />
                     </div>
                   </section>
@@ -174,42 +239,58 @@ class SpecialPackDetails extends Component {
                   {/* SECTION BOTTOM */}
                   <section className="SpecialPackDetails--content bottom" ref={this.buySection}>
                     <div className="SpecialPackDetails--content__title">
-                      <h2>{specialPack.heroBottomTitle}</h2>
-                      <p>{specialPack.heroBottomSubTitle}</p>
+                      <h2>{specialPackEdition.heroBottomTitle}</h2>
+                      <p>{specialPackEdition.heroBottomSubTitle}</p>
                       {
-                        specialPack.isAvailable && (
-                          <div>
-                            <select
-                              name="select-boxes"
-                              id="select-boxes"
-                              onChange={e => this.handleQuantityChange(e)}
-                            >
-                              {this.renderOptions()}
-                            </select>
-                          </div>
+                        specialPackEdition.isAvailable && specialPackEdition.specialpackoptionSet.map(
+                          specialPackOption => (
+                            <div key={specialPackOption.id}>
+                              <select
+                                name="select-boxes"
+                                id="select-boxes"
+                                onChange={e => this.handleQuantityChange(e, specialPackOption)}
+                              >
+                                {this.renderOptions(specialPackOption)}
+                              </select>
+                              <p className="SpecialPackDetails--content__option-name">
+                                {specialPackOption.product.name}
+                              </p>
+                            </div>
+                          )
                         )
                       }
                       {
 
                         // Renders button to add special pack to shopping cart or to register interest
-                        specialPack.isAvailable
+                        specialPackEdition.isAvailable
                           ? (
-                            <AddWineToShoppingCartButton
-                              wine={specialPack}
-                              quantity={boxQuantity}
-                              label="Order Now"
-                            />
+                            <Mutation
+                              mutation={ADD_SHOPPING_CART_ITEM}
+                              refetchQueries={() => [{ query: GET_MEMBER }, { query: GET_SHOPPING_CART }]}
+                            >
+                              {addShoppingCartItem => (
+                                <button
+                                  type="button"
+                                  onClick={
+                                    () => this.handleAddSpecialPacksToShoppingCart(
+                                      addShoppingCartItem, specialPackEdition.specialpackoptionSet
+                                    )
+                                  }
+                                >
+                                  Order Now
+                                </button>
+                              )}
+                            </Mutation>
                           )
                           : (
                             <Mutation
                               mutation={ADD_SPECIAL_PACK_INTEREST}
-                              refetchQueries={() => [{ query: GET_MEMBER }, { query: GET_SHOPPING_CART }]}
                             >
                               {registerInterestMutation => (
                                 <button
                                   type="button"
                                   onClick={() => this.handleAddSpecialPackInterest(
-                                    specialPack, registerInterestMutation
+                                    specialPackEdition, registerInterestMutation
                                   )}
                                 >
                                   Register Interest
@@ -221,8 +302,8 @@ class SpecialPackDetails extends Component {
                     </div>
                     <div className="SpecialPackDetails--content__image">
                       <img
-                        src={specialPack.heroBottomImageLargeUrl}
-                        alt={specialPack.heroBottomSubTitle}
+                        src={specialPackEdition.heroBottomImageLargeUrl}
+                        alt={specialPackEdition.heroBottomSubTitle}
                       />
                     </div>
                   </section>

@@ -56,7 +56,7 @@ class SpecialPacks extends Component {
                             <p>{specialPack.seoDescription}</p>
                             <Link
                               className="link-button"
-                              to={urlPatterns.SPECIAL_PACK_DETAILS(specialPack.product.slug)}
+                              to={urlPatterns.SPECIAL_PACK_DETAILS(specialPack.slug)}
                             >
                               {specialPack.isAvailable ? 'Order Now' : 'Sold-out. Register Interest!'}
                             </Link>
