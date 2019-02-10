@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { executeLogInRequest, getLocalStorageToken } from '../../helpers/auth';
 import urlPatterns from '../../urls';
-
 import { InputField } from '../../components';
 
 import './Login.scss';
@@ -26,18 +25,8 @@ class Login extends Component {
     },
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const { state } = this;
-
-    // Logs user out from application once they land back in to Login page
-    if (localStorage.getItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE)) {
-      localStorage.removeItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE);
-      localStorage.removeItem('memberId');
-
-      // Ensures user is logged out
-      // TODO DEV-203: remove this when we introduce local state from Apollo
-      window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.LOGIN}`;
-    }
 
     // Decodes tokens from localStorage --> https://www.npmjs.com/package/jsonwebtoken
     const jwToken = state.auth.encodedTokens && getLocalStorageToken();
@@ -69,7 +58,7 @@ class Login extends Component {
   /**
    * Executes login and redirects to my account page if login successful
    * */
-  handleSubmit = () => {
+  handleSubmit = async () => {
     const { state } = this;
     const { email, password } = state.form;
 
@@ -83,7 +72,6 @@ class Login extends Component {
       .then(() => {
 
         // Redirects to my account page
-        // TODO DEV-203 change this to this.props.history.push() when added local state from Apollo
         window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.MY_ACCOUNT}`;
       })
 
@@ -95,7 +83,7 @@ class Login extends Component {
           form: {
             ...state.form,
             error: {
-              errorStatus: error.response.status,
+              errorStatus: error,
               errorDescription: error.response.data.error_description,
             },
           },

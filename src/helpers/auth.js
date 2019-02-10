@@ -80,7 +80,7 @@ const executeLogInRequest = async (email, password) => {
   };
 
   // Logs user in, if sign up is successful
-  await executeRestApi(HTTP_METHODS.POST, urlPath, { data })
+  return executeRestApi(HTTP_METHODS.POST, urlPath, { data })
 
   // Stores response from request in local storage and redirects to my account page
     .then(response => {
@@ -91,6 +91,7 @@ const executeLogInRequest = async (email, password) => {
         response.data.refresh_token,
         email
       );
+      return response;
     });
 };
 

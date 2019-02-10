@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Query } from 'react-apollo';
+import { compose, graphql, Query } from 'react-apollo';
 import { GET_WINE } from '../../graphql/queries';
 import { AddWineToShoppingCartButton } from '../../components';
+import { GET_AUTH } from '../../graphql/resolvers/auth';
 import { DEFAULT_BOTTLE_URL } from '../../helpers/constants';
 import { formatNumber } from '../../helpers/tools';
 
@@ -16,16 +17,15 @@ import './WineDetails.scss';
 class WineDetails extends Component {
   static propTypes = {
     match: PropTypes.shape().isRequired,
+    authQuery: PropTypes.shape({}).isRequired,
   };
 
   static contextTypes = {};
 
   render() {
-    const { match } = this.props;
+    const { match, authQuery } = this.props;
     const { slug } = match.params;
-
-    // TODO: [DEV-203] get Member ID from apollo-link-state
-    const memberId = window.localStorage.getItem('memberId');
+    const memberId = authQuery.auth && authQuery.auth.memberId;
 
     return (
       <div className="WineDetails">
@@ -150,7 +150,7 @@ class WineDetails extends Component {
                   </p>
                   <p>
                     <b>Oak: </b>
-                    { wine.oakAged ? wine.wineBarrelType.name : 'No' }
+                    {wine.oakAged ? wine.wineBarrelType.name : 'No'}
                   </p>
                 </div>
               </div>
@@ -162,4 +162,6 @@ class WineDetails extends Component {
   }
 }
 
-export default WineDetails;
+export default compose(
+  graphql(GET_AUTH, { name: 'authQuery' }),
+)(WineDetails);

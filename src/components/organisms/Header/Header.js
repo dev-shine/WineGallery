@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withApollo } from 'react-apollo';
 import { Link, NavLink } from 'react-router-dom';
 
 import { ShoppingCart } from '../..';
@@ -13,11 +15,34 @@ import './Header.scss';
  * React.Component: https://reactjs.org/docs/react-component.html
  * */
 class Header extends Component {
-  static propTypes = {};
+  static propTypes = {
+    client: PropTypes.shape({}), // Apollo client coming form withApollo
+    persistentCache: PropTypes.shape({}),
+  };
 
-  static contextTypes = {};
+  static defaultProps = {
+    client: null,
+    persistentCache: null,
+  };
 
   componentDidMount() {}
+
+  handleLogout = event => {
+    event.preventDefault();
+
+    const { client, persistentCache } = this.props;
+
+    // Logs user out from application once they land back in to Login page
+    if (localStorage.getItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE)) {
+      window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.HOME}`;
+
+      // Removes all the state from session and local storage
+      client.resetStore();
+      persistentCache.purge();
+      localStorage.removeItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE);
+      localStorage.removeItem(process.env.REACT_APP_STORE_LOCAL_STORAGE);
+    }
+  };
 
   render() {
     return (
@@ -64,7 +89,10 @@ class Header extends Component {
                 )
               }
               <li>
-                <NavLink to={urlPatterns.LOGIN}>{isLoggedIn() ? 'Logout' : 'Login'}</NavLink>
+                {isLoggedIn()
+                  ? <button type="button" onClick={e => this.handleLogout(e)}>Logout</button>
+                  : <NavLink to={urlPatterns.LOGIN}>Login</NavLink>
+                }
               </li>
               <li>
                 <ShoppingCart />
@@ -77,4 +105,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withApollo(Header);

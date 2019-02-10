@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import { Mutation, Query } from 'react-apollo';
+import {
+  compose,
+  graphql,
+  Mutation,
+  Query,
+} from 'react-apollo';
+
+import { GET_AUTH, SET_MEMBER_AUTH } from '../../graphql/resolvers/auth';
 import { ADD_SHOPPING_CART_ITEM, UPDATE_SHOPPING_CART_ITEM } from '../../graphql/mutations';
-
 import { GET_MEMBER, GET_SHOPPING_CART } from '../../graphql/queries';
 import {
   AccountDetailsForm,
@@ -22,7 +29,12 @@ import './MyAccount.scss';
  * React.Component: https://reactjs.org/docs/react-component.html
  * */
 class MyAccount extends Component {
-  state = {};
+  static propTypes = {
+    setMemberAuth: PropTypes.func.isRequired,
+    authQuery: PropTypes.shape({}).isRequired,
+  };
+
+  componentDidMount() { }
 
   /**
    * Updates shopping cart and memberId from local storage.
@@ -34,12 +46,22 @@ class MyAccount extends Component {
    * @param {string} lastName
    * @param {string} email
    * */
-  handleUpdatesOnLogin = (
+  handleUpdatesOnLogin = async (
     addShoppingCart, updateShoppingCart, memberId, shoppingCartSet, firstName, lastName, email,
   ) => {
+    const { setMemberAuth } = this.props;
 
-    // TODO DEV-203 replace this once we introduce apollo-link-state
-    window.localStorage.setItem('memberId', memberId);
+    // Sets values related to member's Auth
+    setMemberAuth({
+      variables: {
+        memberId,
+        token: localStorage.getItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE),
+      },
+    })
+      .catch(error => {
+        console.error(error);
+      });
+
     const shoppingCart = shoppingCartLocalStorage();
 
     const analyticsIdentityData = {
@@ -186,4 +208,8 @@ class MyAccount extends Component {
   }
 }
 
-export default MyAccount;
+export default compose(
+  graphql(SET_MEMBER_AUTH, { name: 'setMemberAuth' }),
+  graphql(GET_AUTH, { name: 'authQuery' }),
+)(MyAccount);
+

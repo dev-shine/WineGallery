@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Query } from 'react-apollo';
+import { compose, graphql, Query } from 'react-apollo';
 
 import { WineBox } from '../../components';
 import { GET_SHOPPING_CART } from '../../graphql/queries';
+import { SET_MEMBER_AUTH } from '../../graphql/resolvers/auth';
 import urlPatterns from '../../urls';
 
 import './QuizResults.scss';
@@ -13,17 +14,30 @@ import './QuizResults.scss';
  * Renders QuizResults component.
  * */
 const QuizResults = props => {
-  const { history } = props;
+  const { history, setMemberAuth } = props;
 
   return (
     <div className="QuizResults">
       <div className="QuizResults--container">
         <h1 className="QuizResults--title">Recommended wines</h1>
-        <Query query={GET_SHOPPING_CART} partialRefetch>
+        <Query query={GET_SHOPPING_CART} fetchPolicy="cache-and-network" partialRefetch>
           {({ loading, error, data }) => {
 
             if (loading) return 'Loading...';
             if (error) return `Error! ${error.message}`;
+
+            // Sets member information to link state
+            if (data.me) {
+              setMemberAuth({
+                variables: {
+                  memberId: data.me.id,
+                  token: localStorage.getItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE),
+                },
+              })
+                .catch(errorMutation => {
+                  console.error(errorMutation);
+                });
+            }
 
             return (
               <div className="QuizResults--recommendation-list">
@@ -53,9 +67,12 @@ const QuizResults = props => {
 };
 
 QuizResults.propTypes = {
-  history: PropTypes.shape().isRequired,
+  history: PropTypes.shape({}).isRequired,
+  setMemberAuth: PropTypes.func.isRequired,
 };
 
 QuizResults.defaultProps = {};
 
-export default QuizResults;
+export default compose(
+  graphql(SET_MEMBER_AUTH, { name: 'setMemberAuth' }),
+)(QuizResults);

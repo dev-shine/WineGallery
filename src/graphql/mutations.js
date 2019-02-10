@@ -1,333 +1,45 @@
-import gql from 'graphql-tag';
+/**
+ * All mutations should be imported and exported to and from this file.
+ * */
 
-const APPLY_DISCOUNT_CODE = gql`
-  mutation AddPromoCodeInfo($input: PromoCodeInfoInput!){
-    addPromoCodeInfo(input: $input) {
-      name
-      discountValue
-      message
-      errors {
-        field
-        messages
-      }
-    }
-  }
-`;
+// Member
+import {
+  CREATE_CONTACT_PREFERENCE,
+  CREATE_PAYMENT_METHOD,
+  DELETE_CONTACT_PREFERENCE,
+  DELETE_PAYMENT_METHOD,
+  RESET_PASSWORD,
+  SET_NEW_PASSWORD,
+  SIGN_UP,
+  UPDATE_WINE_PREFERENCE,
+  UPDATE_MEMBER_ACCOUNT_DETAILS,
+  UPDATE_MEMBER_PAYMENT_METHOD,
+  UPDATE_MEMBER_SHIPPING_ADDRESS,
+} from './resolvers/member';
 
-const CREATE_PAYMENT_METHOD = gql`
-  mutation CreateMemberPaymentMethod($input: CreateMemberPaymentMethodInput!) {
-    createMemberPaymentMethod(input: $input) {
-      paymentMethod{
-        id
-        paymentApiMethodUuid
-        isDefault
-        cardBrand
-        cardLast4
-        cardExpiryMonth
-        cardExpiryYear
-      }
-      errors {
-        messages
-        field
-      }
-    }
-  }
-`;
+// Shopping Cart
+import {
+  ADD_SHOPPING_CART_ITEM,
+  CHECKOUT,
+  DELETE_SHOPPING_CART_ITEM,
+  UPDATE_SHOPPING_CART_ITEM,
+} from './resolvers/cart';
 
-const DELETE_PAYMENT_METHOD = gql`
-  mutation DeleteMemberPaymentMethod($input: DeletePaymentMethodInput!) {
-    deleteMemberPaymentMethod(input: $input) {
-      isDeleted
-      errors {
-        messages
-        field
-      }
-    }
-  }
-`;
+// Subscription
+import {
+  ADD_WINE_TO_SUBSCRIPTION,
+  DELETE_WINE_FROM_SUBSCRIPTION,
+  UPDATE_SUBSCRIPTION,
+} from './resolvers/subscription';
 
-const UPDATE_MEMBER_PAYMENT_METHOD = gql`
-  mutation UpdateMemberPaymentMethod($input: UpdateMemberPaymentMethodInput!) {
-    updateMemberPaymentMethod(input: $input) {
-      paymentMethod {
-        paymentApiMethodUuid
-        isDefault
-        cardBrand
-        cardLast4
-        cardExpiryMonth
-        cardExpiryYear
-      }
-      errors {
-        messages
-        field
-      }
-    }
-  }
-`;
+// Special Pack
+import { ADD_SPECIAL_PACK_INTEREST } from './resolvers/specialPack';
 
-const CREATE_CONTACT_PREFERENCE = gql`
-  mutation CreateMemberContactPreference($input: CreateContactPreferenceInput!) {
-    createMemberContactPreference(input: $input) {
-      contactPreference {
-        id
-        contactType{
-          id
-        }
-        contactMethod{
-          id
-        }
-      }
-      errors {
-        messages
-        field
-      }
-    }
-  }
-`;
+// Order
+import { APPLY_DISCOUNT_CODE } from './resolvers/order';
 
-const DELETE_CONTACT_PREFERENCE = gql`
-  mutation DeleteMemberContactPreference($input: DeleteContactPreferenceInput!) {
-    deleteMemberContactPreference(input: $input) {
-      isDeleted
-      errors {
-        messages
-        field
-      }
-    }
-  }
-`;
-
-const SIGN_UP = gql`
-  mutation SignUpMutation($input: MemberMutationInput!) {
-    signUp(input: $input) {
-      id
-      firstName
-      clientMutationId
-      errors {
-        messages
-        field
-      }
-    }
-  }
-`;
-
-const SUBMIT_QUIZ = gql`
-  mutation SubmitQuiz($input: SubmitQuizInput!) {
-    submitQuiz(input: $input) {
-      isSuccessful
-      accessToken
-      refreshToken
-      memberId
-      errors {
-        messages
-        field
-      }
-    }
-  }
-`;
-
-const RESET_PASSWORD = gql`
-  mutation ResetPasswordMutation($email: String!) {
-    resetPassword(email: $email) {
-      success
-      error
-    }
-  }
-`;
-
-const SET_NEW_PASSWORD = gql`
-  mutation SetNewPassword(
-  $password: String!, $passwordConfirmation: String!, $token: String!, $uidb64: String!
-  ) {
-    setNewPassword(
-      password: $password, passwordConfirmation: $passwordConfirmation, token: $token, uidb64: $uidb64
-    ) {
-      success
-      error
-    }
-  }
-`;
-
-const UPDATE_MEMBER_SHIPPING_ADDRESS = gql`
-  mutation UpdateMemberShippingAddress($input: ShippingAddressInput!) {
-    updateMemberShippingAddress(input: $input) {
-      shippingAddress {
-        id
-        firstName
-        lastName
-        company
-        line1
-        line2
-        postcode
-        contactNumber
-        city
-        state
-        country {
-          id
-        }
-        addressUnavailableInstruction {
-          id
-        }
-      }
-      errors {
-        messages
-        field
-      }
-    }
-  }
-`;
-
-const UPDATE_MEMBER_ACCOUNT_DETAILS = gql`
-  mutation UpdateMemberAccountDetails($input: MemberMutationInput!) {
-    updateMember(input: $input) {
-      id
-      email
-      birthDate
-      mobileNumber
-      gender
-      firstName
-      lastName
-      errors {
-        messages
-        field
-      }
-    }
-  }
-`;
-
-const UPDATE_SUBSCRIPTION = gql`
-  mutation UpdateSubscription ($input:  SubscriptionInput!){
-    updateSubscription(input: $input) {
-      subscription {
-        id
-        billingDay
-        subscriptionStatus {
-          id
-          name
-        }
-        holdUntilDate
-        monthFrequency
-      }
-      errors{
-        field
-        messages
-      }
-    }
-  }
-`;
-
-const ADD_SHOPPING_CART_ITEM = gql`
-  mutation AddShoppingCartItem($input: AddShoppingCartItemInput!){
-    addShoppingCartItem(input: $input) {
-      errors {
-        field
-        messages
-      }
-    }
-  }
-`;
-
-const DELETE_SHOPPING_CART_ITEM = gql`
-  mutation DeleteShoppingCartItem($input: DeleteShoppingCartItemInput!){
-    deleteShoppingCartItem (input: $input) {
-      isDeleted
-      errors {
-        field
-        messages
-      }
-    }
-  }
-`;
-
-const UPDATE_SHOPPING_CART_ITEM = gql`
-  mutation UpdateShoppingCartItem($input: UpdateShoppingCartItemInput!){
-    updateShoppingCartItem (input: $input) {
-      shoppingCart {
-        total
-        totalShippingFee
-        member {
-          id
-        }
-        discount
-        shoppingcartitemSet {
-          id
-          quantity
-          product {
-            id
-            sellingPrice
-          }
-        }
-      }
-      errors {
-        field
-        messages
-      }
-    }
-  }
-`;
-
-const UPDATE_WINE_PREFERENCE = gql`
-  mutation UpdateMemberWinePreference($input: UpdateMemberWinePreferenceInput!) {
-    updateMemberWinePreference (input: $input){
-      winePreference{
-        redBottles
-        whiteBottles
-        roseBottles
-        sparklingBottles
-      }
-      errors {
-        field
-        messages
-      }
-    }
-  }
-`;
-
-const CHECKOUT = gql`
-  mutation Checkout ($input: CheckoutInput!) {
-    checkout (input: $input){
-      isSuccessful
-      errors {
-        field
-      }
-    }
-  }
-`;
-
-const DELETE_WINE_FROM_SUBSCRIPTION = gql`
-  mutation DeleteRecommendedWine($input: SwitchRecommendedWineInput!) {
-    deleteRecommendedWine(input: $input) {
-      isSuccessful
-      errors {
-        field
-        messages
-      }
-    }
-  }
-`;
-
-const ADD_WINE_TO_SUBSCRIPTION = gql`
-  mutation AddRecommendedWine($input: SwitchRecommendedWineInput!) {
-    addRecommendedWine(input: $input) {
-      errors {
-        field
-        messages
-      }
-    }
-  }
-`;
-
-const ADD_SPECIAL_PACK_INTEREST = gql`
-  mutation RegisterSpecialPackInterest($input: RegisterSpecialPackInterestInput!) {
-    registerSpecialPackInterest(input: $input) {
-      isSuccessful
-      errors {
-        field
-        messages
-      }
-    }
-  }
-`;
+// Quiz
+import { SUBMIT_QUIZ } from './resolvers/quiz';
 
 export {
   ADD_SHOPPING_CART_ITEM,
