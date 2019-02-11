@@ -1,14 +1,20 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import { Mutation, Query } from 'react-apollo';
+import {
+  compose,
+  graphql,
+  Mutation,
+  Query,
+} from 'react-apollo';
 
 import {
   GET_MEMBER,
   GET_SHOPPING_CART,
   GET_SPECIAL_PACK_DETAILS,
 } from '../../graphql/queries';
-import { ADD_SHOPPING_CART_ITEM, ADD_SPECIAL_PACK_INTEREST } from '../../graphql/mutations';
+import { ADD_SPECIAL_PACK_INTEREST, ADD_SHOPPING_CART_ITEM } from '../../graphql/mutations';
+import { GET_AUTH } from '../../graphql/resolvers/auth';
 import { saveCartItemToLocalStorage } from '../../helpers/tools';
 import urlPatterns from '../../urls';
 import { isLoggedIn } from '../../helpers/auth';
@@ -21,11 +27,10 @@ import './SpecialPackDetails.scss';
  * */
 class SpecialPackDetails extends Component {
   static propTypes = {
-    match: PropTypes.shape().isRequired,
-    history: PropTypes.shape().isRequired,
+    match: PropTypes.shape({}).isRequired,
+    history: PropTypes.shape({}).isRequired,
+    authQuery: PropTypes.shape({}).isRequired,
   };
-
-  static contextTypes = {};
 
   state = {
     boxQuantities: {}, // stores {productId: quantity}
@@ -48,10 +53,10 @@ class SpecialPackDetails extends Component {
    * @return {Promise<void>}
    * */
   handleAddSpecialPackInterest = async (specialPack, registerInterestMutation) => {
-    const { history } = this.props;
+    const { history, authQuery } = this.props;
 
     if (isLoggedIn()) {
-      const memberId = parseInt(window.localStorage.getItem('memberId'), 10);
+      const memberId = authQuery.auth && authQuery.auth.memberId;
       await registerInterestMutation({
         variables: {
           input: {
@@ -63,7 +68,6 @@ class SpecialPackDetails extends Component {
     } else {
       history.push(urlPatterns.LOGIN);
     }
-
   };
 
   /**
@@ -78,26 +82,6 @@ class SpecialPackDetails extends Component {
   };
 
   /**
-   * Renders options for select input field from the quantity user wants to purchase.
-   * */
-  renderOptions = specialPackOption => {
-    const defaultOption = (
-      <option value={0} key={specialPackOption.product.id}>
-        {'Qty'}
-      </option>
-    );
-    const options = [defaultOption];
-    for (let index = 1; index < 25; index++) {
-      options.push(
-        <option value={index} key={`${index}-${specialPackOption.product.id}`}>
-          {`${index} ${index === 1 ? ' box' : ' boxes'}`}
-        </option>
-      );
-    }
-    return options;
-  };
-
-  /**
    * Adds selected Special Packs to the Shopping Cart.
    *
    * @param {Function} addShoppingCartItem - GraphQL mutation to add item to shopping cart
@@ -105,9 +89,9 @@ class SpecialPackDetails extends Component {
    * */
   handleAddSpecialPacksToShoppingCart = (addShoppingCartItem, specialPackOptions) => {
     const { boxQuantities } = this.state;
+    const { authQuery } = this.props;
 
-    // TODO: [DEV-203] get Member ID from apollo-link-state
-    const memberId = window.localStorage.getItem('memberId');
+    const memberId = authQuery.auth && authQuery.auth.memberId;
 
     // TODO: [DEV-285] send 1 request for multiple Products
     let promises = []; // promises are required as multiple Special Packs can be added at once
@@ -154,6 +138,26 @@ class SpecialPackDetails extends Component {
       window.shoppingCartRefresh();
       window.showShoppingCart();
     });
+  };
+
+  /**
+   * Renders options for select input field from the quantity user wants to purchase.
+   * */
+  renderOptions = specialPackOption => {
+    const defaultOption = (
+      <option value={0} key={specialPackOption.product.id}>
+        {'Qty'}
+      </option>
+    );
+    const options = [defaultOption];
+    for (let index = 1; index < 25; index++) {
+      options.push(
+        <option value={index} key={`${index}-${specialPackOption.product.id}`}>
+          {`${index} ${index === 1 ? ' box' : ' boxes'}`}
+        </option>
+      );
+    }
+    return options;
   };
 
   render() {
@@ -317,4 +321,6 @@ class SpecialPackDetails extends Component {
   }
 }
 
-export default SpecialPackDetails;
+export default compose(
+  graphql(GET_AUTH, { name: 'authQuery' }),
+)(SpecialPackDetails);

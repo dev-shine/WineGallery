@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { compose, graphql } from 'react-apollo';
 import { Link } from 'react-router-dom';
 
 import { ADD_WINE_TO_SUBSCRIPTION } from '../../../graphql/mutations';
 import { GET_SHOPPING_CART } from '../../../graphql/queries';
+import { GET_AUTH } from '../../../graphql/resolvers/auth';
 import urlPatterns from '../../../urls';
 import { AddWineToShoppingCartButton, ButtonMutation } from '../..';
 import { DEFAULT_BOTTLE_URL } from '../../../helpers/constants';
@@ -15,18 +17,19 @@ import './WineItems.scss';
  * React.Component: https://reactjs.org/docs/react-component.html
  * */
 class WineItems extends Component {
-  state = {
-    showNotification: false,
-  };
-
   static propTypes = {
     data: PropTypes.shape({}),
     isWineSubscriptionBox: PropTypes.bool,
+    authQuery: PropTypes.shape({}).isRequired,
   };
 
   static defaultProps = {
     data: null,
     isWineSubscriptionBox: false,
+  };
+
+  state = {
+    showNotification: false,
   };
 
   /**
@@ -35,9 +38,9 @@ class WineItems extends Component {
    * @return {React.Component}
    * */
   renderWineItem = wine => {
-    const { isWineSubscriptionBox } = this.props;
+    const { isWineSubscriptionBox, authQuery } = this.props;
     const { showNotification } = this.state;
-    const memberId = parseInt(window.localStorage.getItem('memberId'), 10);
+    const memberId = authQuery.auth && authQuery.auth.memberId;
 
     // Gets wine's photo URL or sets the default one if it doesn't exist
     const photoUrl = wine.product.productPhotos.length
@@ -100,4 +103,6 @@ class WineItems extends Component {
   }
 }
 
-export default WineItems;
+export default compose(
+  graphql(GET_AUTH, { name: 'authQuery' }),
+)(WineItems);

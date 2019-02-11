@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { withApollo } from 'react-apollo';
+import { compose, graphql, withApollo } from 'react-apollo';
 
 import { DELETE_WINE_FROM_SUBSCRIPTION } from '../../../graphql/mutations';
 import { GET_MEMBER, GET_SHOPPING_CART } from '../../../graphql/queries';
+import { GET_AUTH } from '../../../graphql/resolvers/auth';
 import { DEFAULT_BOTTLE_URL } from '../../../helpers/constants';
 import urlPatterns from '../../../urls';
 
@@ -22,6 +23,7 @@ class WineBox extends Component {
     client: PropTypes.shape({}).isRequired,
     history: PropTypes.shape({}),
     location: PropTypes.shape({}),
+    authQuery: PropTypes.shape({}).isRequired,
   };
 
   static defaultProps = {
@@ -50,8 +52,8 @@ class WineBox extends Component {
    * @param wineId
    * */
   handleRemoveWineFromBox = wineId => {
-    const { client } = this.props;
-    const memberId = parseInt(window.localStorage.getItem('memberId'), 10) || null;
+    const { client, authQuery } = this.props;
+    const memberId = authQuery.auth.memberId || null;
     const input = { wineId, memberId };
 
     client.mutate({
@@ -126,4 +128,7 @@ class WineBox extends Component {
   }
 }
 
-export default withApollo(WineBox);
+export default compose(
+  withApollo,
+  graphql(GET_AUTH, { name: 'authQuery' }),
+)(WineBox);

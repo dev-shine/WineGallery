@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import { Query, Mutation } from 'react-apollo';
-
+import {
+  Query,
+  Mutation,
+  compose,
+  graphql,
+} from 'react-apollo';
 import { GET_QUIZ_QUESTIONS } from '../../graphql/queries';
-import { checkEmail } from '../../helpers/validations';
+import { SET_MEMBER_AUTH } from '../../graphql/resolvers/auth';
 import { SUBMIT_QUIZ } from '../../graphql/mutations';
+import { checkEmail } from '../../helpers/validations';
 import { isLoggedIn, setLocalStorageToken } from '../../helpers/auth';
 import urlPatterns from '../../urls';
 
@@ -17,7 +23,9 @@ import './Quiz.scss';
  * React.Component: https://reactjs.org/docs/react-component.html
  * */
 class Quiz extends Component {
-  static propTypes = {};
+  static propTypes = {
+    setMemberAuth: PropTypes.func.isRequired,
+  };
 
   state = {
     selectedAnswers: {}, // eg. { questionId: [selectedAnswer1, selectedAnswer2] }
@@ -29,9 +37,9 @@ class Quiz extends Component {
     this.setState({ selectedAnswers: { ...selectedAnswers, [questionID]: selectedAnswersIDs } });
   };
 
-  handleSubmitQuiz = async submitQuiz => {
-    const { state } = this;
-    const { selectedAnswers, email } = state;
+  handleSubmitQuiz = submitQuiz => {
+    const { setMemberAuth } = this.props;
+    const { selectedAnswers, email } = this.state;
     const selectedAnswersAsArray = Object.values(selectedAnswers).flat();
 
     // Auth data required for user authentication
@@ -40,14 +48,21 @@ class Quiz extends Component {
       clientSecret: `${process.env.REACT_APP_CLIENT_SECRET}`,
     };
 
-    await submitQuiz(
+    submitQuiz(
       { variables: { input: { answersIds: selectedAnswersAsArray, email, ...authData } } }
     ).then(
       ({ data }) => {
         if (data && data.submitQuiz.isSuccessful && data.submitQuiz.accessToken) {
 
-          // TODO DEV-203 replace this once we introduce apollo-link-state
-          window.localStorage.setItem('memberId', data.submitQuiz.memberId);
+          setMemberAuth({
+            variables: {
+              memberId: data.submitQuiz.memberId,
+              token: localStorage.getItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE),
+            },
+          })
+            .catch(errorMutation => {
+              console.error(errorMutation);
+            });
 
           setLocalStorageToken(
             data.submitQuiz.accessToken, data.submitQuiz.refreshToken, email,
@@ -143,4 +158,6 @@ class Quiz extends Component {
   }
 }
 
-export default Quiz;
+export default compose(
+  graphql(SET_MEMBER_AUTH, { name: 'setMemberAuth' }),
+)(Quiz);

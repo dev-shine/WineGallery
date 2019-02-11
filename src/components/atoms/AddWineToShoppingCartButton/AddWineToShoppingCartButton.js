@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import { Mutation } from 'react-apollo';
+import { compose, graphql, Mutation } from 'react-apollo';
+import { GET_AUTH } from '../../../graphql/resolvers/auth';
 
 import { isLoggedIn } from '../../../helpers/auth';
 import { saveCartItemToLocalStorage } from '../../../helpers/tools';
@@ -23,6 +24,7 @@ class AddWineToShoppingCartButton extends Component {
     }).isRequired,
     quantity: PropTypes.number,
     label: PropTypes.string,
+    authQuery: PropTypes.shape({}).isRequired,
   };
 
   static defaultProps = {
@@ -39,12 +41,10 @@ class AddWineToShoppingCartButton extends Component {
    * @return {Promise<void>}
    * */
   handleAddItemToShoppingCart = async (wine, addShoppingCartItem) => {
-    const { quantity } = this.props;
+    const { quantity, authQuery } = this.props;
 
     if (isLoggedIn()) {
-      // TODO: [DEV-203] get Member ID from apollo-link-state
-      const memberId = window.localStorage.getItem('memberId');
-
+      const memberId = authQuery.auth && authQuery.auth.memberId;
       if (!memberId) {
         console.error('User is logged in, but does not have a memberId in local storage.');
       } else {
@@ -105,4 +105,6 @@ class AddWineToShoppingCartButton extends Component {
   }
 }
 
-export default AddWineToShoppingCartButton;
+export default compose(
+  graphql(GET_AUTH, { name: 'authQuery' }),
+)(AddWineToShoppingCartButton);

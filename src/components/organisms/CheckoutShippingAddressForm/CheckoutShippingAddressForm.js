@@ -53,6 +53,7 @@ class CheckoutShippingAddressForm extends Component {
   };
 
   state = {
+    isLoaded: false,
     shippingAddress: {
       shippingAddressId: null,
       firstName: null,
@@ -69,13 +70,13 @@ class CheckoutShippingAddressForm extends Component {
     },
   };
 
-  /**
-   *  TODO: [DEV-167] & [DEV-203] This React lifecycle method will be deprecated in future versions of React
-   *  Actions: to consider a better design
-   *  */
-  componentWillMount() {
+  async componentDidMount() {
     const { props } = this;
-    if (props.me.shippingAddress) this.handleQueryUpdate(props.me);
+    if (props.me.shippingAddress) await this.handleQueryUpdate(props.me);
+
+    this.setState({
+      isLoaded: true,
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -115,7 +116,7 @@ class CheckoutShippingAddressForm extends Component {
    * Handles component state updates
    * @param {Object} query
    * */
-  handleQueryUpdate = async query => {
+  handleQueryUpdate = query => {
     const { handleShippingAddressChange } = this.props;
     const shippingAddressUpdated = {
       shippingAddressId: query.shippingAddress.id || null,
@@ -135,6 +136,7 @@ class CheckoutShippingAddressForm extends Component {
     };
 
     this.setState({
+      isLoaded: true,
       shippingAddress: { ...shippingAddressUpdated },
     });
 
@@ -169,6 +171,8 @@ class CheckoutShippingAddressForm extends Component {
   render() {
     const { state } = this;
     const { isCheckoutPage } = this.props;
+
+    if (!state.isLoaded) return <div>Loading...</div>;
 
     return (
       <div className="CheckoutShippingAddressForm">

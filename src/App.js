@@ -1,40 +1,12 @@
 import React, { Component } from 'react';
 
 import { ApolloProvider } from 'react-apollo';
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { createHttpLink } from 'apollo-link-http';
-import { setContext } from 'apollo-link-context';
 
 import Routes from './routes';
 import { Header } from './components';
-import { getLocalStorageToken } from './helpers/auth';
+import { client, persistent } from './graphql/client';
 
 import './styles/App.scss';
-
-// Gets the authentication token from local storage if it exists
-const token = getLocalStorageToken().accessToken;
-
-const httpLink = createHttpLink({
-  uri: process.env.REACT_APP_API_ENDPOINT_GQL,
-});
-
-const cache = new InMemoryCache();
-
-// Returns headers to the context so httpLink can read them
-const authLink = setContext((_, { headers }) => ({
-  headers: {
-    ...headers,
-    authorization: token ? `Bearer ${token}` : '',
-  },
-}));
-
-// Instantiates Apollo Client object for GraphQL
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  connectToDevTools: process.env.NODE_ENV === 'development',
-  cache,
-});
 
 // TODO DEV-203 replace this with apollo-link-state
 window.store = {};
@@ -43,14 +15,38 @@ window.store = {};
  * Renders our app entry point
  * */
 class App extends Component {
-  static propTypes = {};
+  state = {
+    loaded: false,
+  };
 
-  static defaultProps = {};
+  async componentDidMount() {
 
-  componentDidMount() {
+    // Loads application only once the persisted cache is loaded
+    try {
+      if (localStorage.getItem(process.env.REACT_APP_STORE_LOCAL_STORAGE)) {
+
+        await persistent.restore();
+      } else {
+
+        await persistent.persist();
+      }
+    } catch (error) {
+      console.error('Error restoring Apollo cache', error);
+    }
+
+    // Sets 'loaded' to true, so application can be loaded
+    this.setState({
+      loaded: true,
+    });
   }
 
   render() {
+    const { loaded } = this.state;
+
+    if (!loaded) return <div>Loading...</div>;
+
+    persistent.getLogs(process.env.NODE_ENV === 'development');
+
     return (
 
       // Provides apollo client across the application
@@ -60,7 +56,7 @@ class App extends Component {
 
           {/* Renders header in application */}
           <header className="App-header">
-            <Header />
+            <Header persistentCache={persistent} />
           </header>
 
           {/* Renders main area of the application */}
