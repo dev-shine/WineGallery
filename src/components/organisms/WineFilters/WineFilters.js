@@ -12,6 +12,7 @@ import {
   GET_WINE_BODIES,
   GET_WINE_COLOURS,
   GET_WINE_COUNTRIES,
+  GET_WINE_PRICE_POINTS,
   GET_WINE_PRODUCTIONS,
   GET_WINE_SWEETNESSES,
   GET_WINE_TANNINS,
@@ -36,6 +37,7 @@ class WineFilters extends Component {
   state = {
     filters: {
       year: null,
+      winePricePointId: null,
       wineClassId: null,
       wineTypeId: null,
       wineBodyId: null,
@@ -50,6 +52,7 @@ class WineFilters extends Component {
     },
     selections: {
       year: null,
+      winePricePointId: null,
       wineClassId: null,
       wineTypeId: null,
       wineBodyId: null,
@@ -90,6 +93,7 @@ class WineFilters extends Component {
   render() {
     const { selections } = this.state;
     const {
+      winePricePointId,
       wineClassId,
       wineBodyId,
       wineSweetnessId,
@@ -189,6 +193,35 @@ class WineFilters extends Component {
                     placeholder="Wine sweetness"
                     onChange={this.handleChangeFilter}
                     value={wineSweetnessId}
+                  />);
+              }}
+            </Query>
+          </div>
+          <div className="WineFilters--filter">
+            <Query query={GET_WINE_PRICE_POINTS}>
+              {({ loading, error, data }) => {
+                if (loading) return 'Loading...';
+                if (error) return `Error! ${error.message}`;
+                const clearOption = [{
+                  value: JSON.stringify({
+                    group: 'winePricePointId',
+                    valueId: null,
+                  }),
+                  label: 'All prices',
+                }];
+                const options = clearOption.concat(data.allWinePricePoints.map(item => ({
+                  value: JSON.stringify({
+                    group: 'winePricePointId',
+                    valueId: item.id,
+                  }),
+                  label: item.name,
+                })));
+                return (
+                  <Dropdown
+                    options={options}
+                    placeholder="Price"
+                    onChange={this.handleChangeFilter}
+                    value={winePricePointId}
                   />);
               }}
             </Query>

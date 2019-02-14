@@ -63,6 +63,15 @@ export const GET_WINE_TYPES = gql`
   }
 `;
 
+export const GET_WINE_PRICE_POINTS = gql`
+  query WinePricePoints {
+    allWinePricePoints {
+      id
+      name
+    }
+  }
+`;
+
 export const GET_WINE_BODIES = gql`
   query WineBodies {
     allWineBodies {
@@ -92,8 +101,8 @@ export const GET_WINE_SWEETNESSES = gql`
 
 export const GET_WINE = gql`
   query GetWine (
-  $slug: String!
-  $memberId: Int
+    $slug: String!
+    $memberId: Int
   ) {
     wine (
       slug: $slug
@@ -193,22 +202,24 @@ export const GET_WINE = gql`
 
 export const GET_WINES = gql`
   query GetWines (
-  $year: String
-  $wineClassId: Int
-  $wineTypeId: Int
-  $wineBodyId: Int
-  $wineSweetnessId: Int
-  $wineTanninId: Int
-  $wineStyleId: Int
-  $wineProductionMethodId: Int
-  $seasonId: Int
-  $tasteId: Int
-  $foodId: Int
-  $countryId: Int
-  $order: AllWinesOrderField
+    $year: String
+    $wineClassId: Int
+    $winePricePointId: Int
+    $wineTypeId: Int
+    $wineBodyId: Int
+    $wineSweetnessId: Int
+    $wineTanninId: Int
+    $wineStyleId: Int
+    $wineProductionMethodId: Int
+    $seasonId: Int
+    $tasteId: Int
+    $foodId: Int
+    $countryId: Int
+    $order: AllWinesOrderField
   ) {
     allWines (
       year: $year
+      winePricePointId: $winePricePointId
       wineClassId: $wineClassId
       wineTypeId: $wineTypeId
       wineBodyId: $wineBodyId

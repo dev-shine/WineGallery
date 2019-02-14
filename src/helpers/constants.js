@@ -19,6 +19,8 @@ const WINE_SORTER = {
   WINE_BODY_DESC: 'Body: High to low',
   WINE_TYPE_ASC: 'Grape Name: A to Z',
   WINE_TYPE_DESC: 'Grape Name: Z to A',
+  WINE_PRICE_POINT_ASC: 'Price: low to high',
+  WINE_PRICE_POINT_DESC: 'Price: high to low',
 };
 
 const AU_STATES = new Map([
