@@ -13,6 +13,7 @@ const Wines = React.lazy(() => import('./pages/Wines/Wines'));
 const WineDetails = React.lazy(() => import('./pages/WineDetails/WineDetails'));
 const Login = React.lazy(() => import('./pages/Login/Login'));
 const MyAccount = React.lazy(() => import('./pages/MyAccount/MyAccount'));
+const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'));
 const Checkout = React.lazy(() => import('./pages/Checkout/Checkout'));
 
 /**
@@ -77,6 +78,7 @@ class Routes extends Component {
         />
 
         <PrivateRoute path={urlPatterns.MY_ACCOUNT} component={MyAccount} />
+        <PrivateRoute path={urlPatterns.DASHBOARD} component={Dashboard} />
 
         <Route path="" exact component={Home} />
       </Switch>

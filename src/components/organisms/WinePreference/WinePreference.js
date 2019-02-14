@@ -166,7 +166,9 @@ class WinePreference extends Component {
             }
           </tbody>
           <tfoot>
-            {this.getTotalAmount()}
+            <tr>
+              <td>{this.getTotalAmount()}</td>
+            </tr>
           </tfoot>
         </table>
       </div>

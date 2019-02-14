@@ -42,6 +42,12 @@ export const GET_MEMBER = gql`
         monthFrequency
         holdUntilDate
         billingDay
+        pastMonthStatus
+        pastMonthMonthLabel
+        canPastMonthWinesBeChanged
+        nextMonthStatus
+        nextMonthMonthLabel
+        canNextMonthWinesBeChanged
         subscriptionStatus {
           id
           name

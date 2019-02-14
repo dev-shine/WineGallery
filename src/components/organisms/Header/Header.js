@@ -84,6 +84,13 @@ class Header extends Component {
               {
                 isLoggedIn() && (
                   <li>
+                    <NavLink to={urlPatterns.DASHBOARD}>Dashboard</NavLink>
+                  </li>
+                )
+              }
+              {
+                isLoggedIn() && (
+                  <li>
                     <NavLink to={urlPatterns.MY_ACCOUNT}>My Account</NavLink>
                   </li>
                 )
