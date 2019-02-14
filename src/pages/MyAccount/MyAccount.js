@@ -162,7 +162,7 @@ class MyAccount extends Component {
                               <h1 className="MyAccount--forms__title">My Account</h1>
                               <div className="MyAccount--forms__wine-preferences">
                                 <WinePreference
-                                  winePreference={data.me}
+                                  wineQuantity={data.me}
                                   memberId={data.me.id}
                                 />
                               </div>

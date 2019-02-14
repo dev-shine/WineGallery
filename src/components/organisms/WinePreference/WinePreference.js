@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { GET_MEMBER } from '../../../graphql/queries';
+import { compose, graphql } from 'react-apollo';
+
+import { GET_MEMBER, GET_WINE_COLOURS, GET_WINE_PRICE_POINTS } from '../../../graphql/queries';
 import { UPDATE_WINE_PREFERENCE } from '../../../graphql/mutations';
 import { ButtonMutation } from '../..';
 
 import './WinePreference.scss';
-
-const INITIAL_BOTTLES = {
-  redBottles: 2,
-  whiteBottles: 1,
-  roseBottles: 0,
-  sparklingBottles: 0,
-};
 
 /**
  * Renders WinePreference component.
@@ -20,11 +15,14 @@ const INITIAL_BOTTLES = {
  * */
 class WinePreference extends Component {
   static propTypes = {
-    winePreference: PropTypes.shape({}),
+    wineQuantity: PropTypes.shape({}),
+    winePricePointsQuery: PropTypes.shape({}).isRequired,
+    wineClassesQuery: PropTypes.shape({}).isRequired,
+    memberId: PropTypes.number.isRequired,
   };
 
   static defaultProps = {
-    winePreference: null,
+    wineQuantity: null,
   };
 
   state = {
@@ -32,174 +30,161 @@ class WinePreference extends Component {
   };
 
   /**
-   * Decreases the quantity of bottles
-   * @param value
-   * @return {number}
+   * Sets errors from mutations.
    * */
-  handleDecreaseBottle = value => {
-    let newValue = value || 0;
-    if (newValue !== 0) {
-      newValue = value - 1;
-    }
-    return newValue;
-  };
-
   handleSetErrors = error => {
     this.setState({ errorMessage: error });
   };
 
+  /**
+   * Calculate the total amount the user will spend in the subscription.
+   * @return {Number} wineTotalAmount
+   * */
+  getTotalAmount = () => {
+    const { wineQuantity } = this.props;
+    if (!wineQuantity) return <div>Loading...</div>;
+    const wineQuantities = wineQuantity.winequantitySet;
+
+    // Reduces the object array to only the sum of totalBottles * winePricePoint.sellingPrice
+    const wineTotalValue = wineQuantities.length && wineQuantities
+      .map(item => (
+        parseInt(item.numberOfBottles, 10) * parseInt(item.winePricePoint.sellingPrice, 10)
+      ))
+      .reduce((total, currentValue) => parseInt(total, 10) + currentValue);
+
+    return wineTotalValue || 0;
+  };
+
+  /**
+   * Calculates the total number of bottle per wineClass and pricePoint.
+   * @param wineClassId
+   * @param winePricePointId
+   * @return {Number} numberOfBottles by wineClass and pricePoint
+   * */
+  getBottleQuantity = (wineClassId, winePricePointId) => {
+    const { wineQuantity } = this.props;
+    if (!wineQuantity) return <div>Loading...</div>;
+    const wineQuantities = wineQuantity.winequantitySet;
+
+    const wineQuantityItem = wineQuantities.length && wineQuantities.filter(item => (
+      item.wineClass.id === wineClassId && item.winePricePoint.id === winePricePointId
+    ));
+
+    return wineQuantityItem[0] ? wineQuantityItem[0].numberOfBottles : 0;
+  };
+
   render() {
     const { errorMessage } = this.state;
-    const { winePreference } = this.props;
-    const { __typename, id, ...cleanWinePreference } = winePreference.winepreference || { __typename: null };
-    const winePreferenceDefault = cleanWinePreference.redBottles ? cleanWinePreference : INITIAL_BOTTLES;
-    const memberId = winePreference.id;
+    const {
+      winePricePointsQuery,
+      wineClassesQuery,
+      memberId,
+    } = this.props;
 
-    const totalBottles = (
-      winePreferenceDefault.redBottles + winePreferenceDefault.roseBottles
-      + winePreferenceDefault.whiteBottles + winePreferenceDefault.sparklingBottles
+    // Sorting the arrays we ensure the columns and rows are always matching for table headers
+    const winePricePointArray = (
+      winePricePointsQuery && winePricePointsQuery.allWinePricePoints
+      && winePricePointsQuery.allWinePricePoints.sort((a, b) => a.id > b.id)
+    );
+    const wineClassesArray = (
+      wineClassesQuery && wineClassesQuery.allWineClasses
+      && wineClassesQuery.allWineClasses.sort((a, b) => a.id > b.id)
     );
 
+    // Ensures when component is rendered it has pricePoint and wineClass queried
+    if (!wineClassesArray || !winePricePointArray) return <div>Loading...</div>;
     return (
       <div className="WinePreference">
         <h2>Wine Preferences</h2>
-        { errorMessage && errorMessage }
-        <div className="WinePreference--container">
-          <div className="WinePreference--bottle">
-            <h3>Red Bottles</h3>
-            <div className="WinePreference--bottle--counter">
-              <ButtonMutation
-                label="-"
-                disabled={winePreferenceDefault.redBottles < 1}
-                mutationProp={UPDATE_WINE_PREFERENCE}
-                input={{
-                  ...winePreferenceDefault,
-                  memberId,
-                  redBottles: this.handleDecreaseBottle(winePreferenceDefault.redBottles),
-                }}
-                reFetchQueriesProp={[{ query: GET_MEMBER }]}
-                mutationPayloadName="updateMemberWinePreference"
-                handleShowErrors={this.handleSetErrors}
-                onClick={() => this.setState({ errorMessage: null })}
-              />
-              <div>{winePreferenceDefault.redBottles}</div>
-              <ButtonMutation
-                label="+"
-                mutationProp={UPDATE_WINE_PREFERENCE}
-                input={{
-                  ...winePreferenceDefault,
-                  memberId,
-                  redBottles: (parseInt(winePreferenceDefault.redBottles, 10) + 1),
-                }}
-                reFetchQueriesProp={[{ query: GET_MEMBER }]}
-                onClick={() => this.setState({ errorMessage: null })}
-              />
-            </div>
-          </div>
+        {errorMessage && errorMessage}
+        <table className="table-wine-quantity" border="2">
+          <tbody>
+            <tr>
+              <th>
+              </th>
+              {
+                winePricePointArray.map(pricePointHeader => (
+                  <th key={pricePointHeader.id}>{pricePointHeader.name}</th>
+                ))
+              }
+            </tr>
+            {
+              wineClassesArray.map(wineClass => (
+                <tr key={wineClass.id}>
+                  <td>
+                    {wineClass.name}
+                  </td>
+                  {
+                    winePricePointArray.map(pricePoint => {
 
-          <div className="WinePreference--bottle">
-            <h3>White Bottles</h3>
-            <div className="WinePreference--bottle--counter">
-              <ButtonMutation
-                label="-"
-                disabled={winePreferenceDefault.whiteBottles < 1}
-                mutationProp={UPDATE_WINE_PREFERENCE}
-                input={{
-                  ...winePreferenceDefault,
-                  memberId,
-                  whiteBottles: this.handleDecreaseBottle(winePreferenceDefault.whiteBottles),
-                }}
-                reFetchQueriesProp={[{ query: GET_MEMBER }]}
-                mutationPayloadName="updateMemberWinePreference"
-                handleShowErrors={this.handleSetErrors}
-                onClick={() => this.setState({ errorMessage: null })}
-              />
-              <div>{winePreferenceDefault.whiteBottles}</div>
-              <ButtonMutation
-                label="+"
-                mutationProp={UPDATE_WINE_PREFERENCE}
-                input={{
-                  ...winePreferenceDefault,
-                  memberId,
-                  whiteBottles: winePreferenceDefault.whiteBottles + 1,
-                }}
-                reFetchQueriesProp={[{ query: GET_MEMBER }]}
-                onClick={() => this.setState({ errorMessage: null })}
-              />
-            </div>
-          </div>
+                      // Gets the number of bottles the user
+                      const numberOfBottles = this.getBottleQuantity(wineClass.id, pricePoint.id);
+                      return (
+                        <td key={pricePoint.id}>
+                          <div className="WinePreference--bottle">
+                            <div className="WinePreference--bottle--counter">
 
-          <div className="WinePreference--bottle">
-            <h3>Rose Bottles</h3>
-            <div className="WinePreference--bottle--counter">
-              <ButtonMutation
-                label="-"
-                disabled={winePreferenceDefault.redBottles < 1}
-                mutationProp={UPDATE_WINE_PREFERENCE}
-                input={{
-                  ...winePreferenceDefault,
-                  memberId,
-                  roseBottles: this.handleDecreaseBottle(winePreferenceDefault.roseBottles),
-                }}
-                reFetchQueriesProp={[{ query: GET_MEMBER }]}
-                mutationPayloadName="updateMemberWinePreference"
-                handleShowErrors={this.handleSetErrors}
-                onClick={() => this.setState({ errorMessage: null })}
-              />
-              <div>{winePreferenceDefault.roseBottles}</div>
-              <ButtonMutation
-                label="+"
-                mutationProp={UPDATE_WINE_PREFERENCE}
-                input={{
-                  ...winePreferenceDefault,
-                  memberId,
-                  roseBottles: winePreferenceDefault.roseBottles + 1,
-                }}
-                reFetchQueriesProp={[{ query: GET_MEMBER }]}
-                onClick={() => this.setState({ errorMessage: null })}
-              />
-            </div>
-          </div>
+                              {/* Decreases number of bottles for that wineClass in the princePoint */}
+                              <ButtonMutation
+                                label="-"
+                                disabled={numberOfBottles < 1}
+                                mutationProp={UPDATE_WINE_PREFERENCE}
+                                input={{
+                                  memberId,
+                                  wineClassId: wineClass.id,
+                                  winePricePointId: pricePoint.id,
+                                  numberOfBottles: numberOfBottles - 1 >= 1 ? numberOfBottles - 1 : 0,
+                                }}
+                                reFetchQueriesProp={[{ query: GET_MEMBER }]}
+                                mutationPayloadName="updateMemberWinePreference"
+                                handleShowErrors={this.handleSetErrors}
+                                onClick={() => this.setState({ errorMessage: null })}
+                              />
+                              {numberOfBottles}
 
-          <div className="WinePreference--bottle">
-            <h3>Sparkling Bottles</h3>
-            <div className="WinePreference--bottle--counter">
-              <ButtonMutation
-                label="-"
-                mutationProp={UPDATE_WINE_PREFERENCE}
-                disabled={winePreferenceDefault.sparklingBottles < 1}
-                input={{
-                  ...winePreferenceDefault,
-                  memberId,
-                  sparklingBottles: this.handleDecreaseBottle(winePreferenceDefault.sparklingBottles),
-                }}
-                reFetchQueriesProp={[{ query: GET_MEMBER }]}
-                mutationPayloadName="updateMemberWinePreference"
-                handleShowErrors={this.handleSetErrors}
-                onClick={() => this.setState({ errorMessage: null })}
-              />
-              <div>{winePreferenceDefault.sparklingBottles}</div>
-              <ButtonMutation
-                label="+"
-                mutationProp={UPDATE_WINE_PREFERENCE}
-                input={{
-                  ...winePreferenceDefault,
-                  memberId,
-                  sparklingBottles: winePreferenceDefault.sparklingBottles + 1,
-                }}
-                reFetchQueriesProp={[{ query: GET_MEMBER }]}
-                onClick={() => this.setState({ errorMessage: null })}
-              />
-            </div>
-          </div>
-          <div className="WinePreference--bottle">
-            <h3>Total Bottles</h3>
-            {totalBottles}
-          </div>
-        </div>
+                              {/* Increases number of bottles for that wineClass in the princePoint */}
+                              <ButtonMutation
+                                label="+"
+                                mutationProp={UPDATE_WINE_PREFERENCE}
+                                input={{
+                                  memberId,
+                                  wineClassId: wineClass.id,
+                                  winePricePointId: pricePoint.id,
+                                  numberOfBottles: numberOfBottles + 1,
+                                }}
+                                reFetchQueriesProp={[{ query: GET_MEMBER }]}
+                                onClick={() => this.setState({ errorMessage: null })}
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      );
+                    })
+                  }
+                </tr>
+              ))
+            }
+          </tbody>
+          <tfoot>
+            {this.getTotalAmount()}
+          </tfoot>
+        </table>
       </div>
     );
   }
 }
 
-export default WinePreference;
+export default compose(
+  graphql(GET_WINE_PRICE_POINTS, {
+    name: 'winePricePointsQuery',
+    options: {
+      fetchPolicy: 'network-only',
+    },
+  }),
+  graphql(GET_WINE_COLOURS, {
+    name: 'wineClassesQuery',
+    options: {
+      fetchPolicy: 'network-only',
+    },
+  }),
+)(WinePreference);

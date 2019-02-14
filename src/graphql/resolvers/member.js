@@ -154,6 +154,20 @@ export const GET_MEMBER = gql`
           }
         }
       }
+      winequantitySet {
+        numberOfBottles
+        wineClass {
+          id
+          name
+        }
+        winePricePoint {
+          id
+          isEnabled
+          name
+          sellingPrice
+          sortOrder
+        }
+      }
     }
   }
 `;
@@ -331,13 +345,16 @@ export const UPDATE_MEMBER_ACCOUNT_DETAILS = gql`
 `;
 
 export const UPDATE_WINE_PREFERENCE = gql`
-  mutation UpdateMemberWinePreference($input: UpdateMemberWinePreferenceInput!) {
-    updateMemberWinePreference (input: $input){
-      winePreference{
-        redBottles
-        whiteBottles
-        roseBottles
-        sparklingBottles
+  mutation UpdateMemberWineQuantity($input: UpdateMemberWineQuantityInput!) {
+    updateMemberWineQuantity (input: $input){
+      wineQuantity {
+        wineClass {
+          id
+        }
+        winePricePoint {
+          id
+        }
+        numberOfBottles
       }
       errors {
         field
