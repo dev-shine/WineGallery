@@ -154,13 +154,6 @@ export const GET_MEMBER = gql`
           }
         }
       }
-      winepreference {
-        id
-        redBottles
-        whiteBottles
-        roseBottles
-        sparklingBottles
-      }
     }
   }
 `;

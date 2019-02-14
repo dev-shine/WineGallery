@@ -66,6 +66,7 @@ class WineItems extends Component {
           |
           {wine.year}
         </Link>
+        <div>{`$${wine.product.sellingPrice}`}</div>
         {
 
           // Renders different buttons depending on the page the user is visiting
