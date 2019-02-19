@@ -79,14 +79,6 @@ class CheckoutShippingAddressForm extends Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
-    const { me } = this.props;
-
-    if (prevProps.me !== me) {
-      this.handleQueryUpdate(me);
-    }
-  }
-
   /**
    * Assigns new values to 'this.state.form' properties
    * @param {*} value
