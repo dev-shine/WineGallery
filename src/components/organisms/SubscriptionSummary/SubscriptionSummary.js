@@ -45,7 +45,7 @@ const SubscriptionSummary = props => {
               }
             </div>
           ) : (
-            <div>Not Subscribed YetÒ</div>
+            <div>Not Subscribed Yet</div>
           )}
         </div>
         <div>

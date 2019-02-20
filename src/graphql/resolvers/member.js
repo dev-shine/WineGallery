@@ -15,6 +15,7 @@ export const GET_MEMBER = gql`
       firstName
       lastName
       hasUpdatedPassword
+      points
       shippingAddress {
         id
         firstName
@@ -173,6 +174,33 @@ export const GET_MEMBER = gql`
           sellingPrice
           sortOrder
         }
+      }
+      currentBadge {
+        id
+        name
+        imageSmallUrl
+        level
+      }
+      nextBadge {
+        id
+        name
+        imageSmallUrl
+        level
+        badgerulesSet {
+          quantity
+        }
+      }
+      latestBadge {
+        id
+        imageSmallUrl
+        name
+        shortDescription
+      }
+      lockedBadges {
+        id
+        name
+        imageSmallUrl
+        points
       }
     }
   }
