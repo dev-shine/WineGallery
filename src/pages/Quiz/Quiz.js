@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Query,
-  Mutation,
-  compose,
-  graphql,
-} from 'react-apollo';
-import { GET_QUIZ_QUESTIONS } from '../../graphql/queries';
+import { Query, compose, graphql } from 'react-apollo';
+import { GET_MEMBER, GET_QUIZ_QUESTIONS } from '../../graphql/queries';
 import { SET_MEMBER_AUTH } from '../../graphql/resolvers/auth';
 import { SUBMIT_QUIZ } from '../../graphql/mutations';
 import { checkEmail } from '../../helpers/validations';
@@ -25,6 +20,7 @@ import './Quiz.scss';
 class Quiz extends Component {
   static propTypes = {
     setMemberAuth: PropTypes.func.isRequired,
+    submitQuiz: PropTypes.func.isRequired,
   };
 
   state = {
@@ -37,8 +33,8 @@ class Quiz extends Component {
     this.setState({ selectedAnswers: { ...selectedAnswers, [questionID]: selectedAnswersIDs } });
   };
 
-  handleSubmitQuiz = submitQuiz => {
-    const { setMemberAuth } = this.props;
+  handleSubmitQuiz = () => {
+    const { setMemberAuth, submitQuiz } = this.props;
     const { selectedAnswers, email } = this.state;
     const selectedAnswersAsArray = Object.values(selectedAnswers).flat();
 
@@ -94,61 +90,45 @@ class Quiz extends Component {
               );
 
               return (
-                <Mutation mutation={SUBMIT_QUIZ}>
-                  {(submitQuiz, response) => {
-                    let errorValidation = null;
-                    if (response && response.error) {
-                      response.error.graphQLErrors.map(
-                        message => console.log('Non-friendly error message', message)
-                      );
-                      errorValidation = 'Sorry you cannot update your quiz answers yet.';
-                    }
-                    return (
-                      <div className="Quiz--form">
-                        {data.quizQuestions.map(quizQuestion => (
-                          <QuizQuestion
-                            key={quizQuestion.id}
-                            question={quizQuestion.description}
-                            answers={quizQuestion.quizanswerSet}
-                            maxAnswers={quizQuestion.maxAnswers}
-                            selectedAnswers={selectedAnswers[quizQuestion.id] || []}
-                            handleAnswerSelectParent={this.handleAnswerSelect}
-                            questionId={quizQuestion.id}
+                <div className="Quiz--form">
+                  {data.quizQuestions.map(quizQuestion => (
+                    <QuizQuestion
+                      key={quizQuestion.id}
+                      question={quizQuestion.description}
+                      answers={quizQuestion.quizanswerSet}
+                      maxAnswers={quizQuestion.maxAnswers}
+                      selectedAnswers={selectedAnswers[quizQuestion.id] || []}
+                      handleAnswerSelectParent={this.handleAnswerSelect}
+                      questionId={quizQuestion.id}
+                    />
+                  ))}
+
+                  {
+                    isLoggedIn() // Renders email input for new users only
+                      ? null
+                      : (
+                        <div className="Quiz--form-input">
+                          <InputField
+                            label="Email"
+                            placeholder="Email"
+                            name="email"
+                            id="email"
+                            type="email"
+                            onChange={(field, value) => this.setState({ [field]: value })}
+                            validations={[checkEmail]}
                           />
-                        ))}
+                        </div>
+                      )
+                  }
 
-                        {
-                          isLoggedIn() // Renders email input for new users only
-                            ? null
-                            : (
-                              <div className="Quiz--form-input">
-                                <InputField
-                                  label="Email"
-                                  placeholder="Email"
-                                  name="email"
-                                  id="email"
-                                  type="email"
-                                  onChange={(field, value) => this.setState({ [field]: value })}
-                                  validations={[checkEmail]}
-                                />
-                              </div>
-                            )
-                        }
-
-                        <button
-                          onClick={() => this.handleSubmitQuiz(submitQuiz)}
-                          type="button"
-                          disabled={!isQuizValid}
-                        >
-                          submit
-                        </button>
-
-                        {/* Renders validation errors */}
-                        { errorValidation && <span>{errorValidation}</span> }
-                      </div>
-                    );
-                  }}
-                </Mutation>
+                  <button
+                    onClick={() => this.handleSubmitQuiz()}
+                    type="button"
+                    disabled={!isQuizValid}
+                  >
+                    submit
+                  </button>
+                </div>
               );
             }}
           </Query>
@@ -160,4 +140,10 @@ class Quiz extends Component {
 
 export default compose(
   graphql(SET_MEMBER_AUTH, { name: 'setMemberAuth' }),
+  graphql(SUBMIT_QUIZ, {
+    name: 'submitQuiz',
+    options: {
+      refetchQueries: () => [{ query: GET_MEMBER, fetchPolicy: 'network-only' }],
+    },
+  }),
 )(Quiz);

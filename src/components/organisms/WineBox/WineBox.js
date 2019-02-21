@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { compose, graphql, withApollo } from 'react-apollo';
 
@@ -21,15 +21,13 @@ class WineBox extends Component {
     data: PropTypes.shape({}).isRequired,
     isEditing: PropTypes.bool,
     client: PropTypes.shape({}).isRequired,
-    history: PropTypes.shape({}),
-    location: PropTypes.shape({}),
+    history: PropTypes.shape({}).isRequired,
+    location: PropTypes.shape({}).isRequired,
     authQuery: PropTypes.shape({}).isRequired,
   };
 
   static defaultProps = {
     isEditing: false,
-    history: null,
-    location: null,
   };
 
   componentDidMount() {
@@ -38,10 +36,11 @@ class WineBox extends Component {
     // Prevents the user to land on wine box page without having answered the quiz
     client.query({
       query: GET_MEMBER,
+      fetchPolicy: 'network-only',
     }).then(response => {
 
       // Redirects user to quiz in case no subscription
-      if (!response.data.me.subscription) {
+      if (response.data.me.subscription === null) {
         history.push(urlPatterns.QUIZ);
       }
     });
@@ -130,5 +129,6 @@ class WineBox extends Component {
 
 export default compose(
   withApollo,
+  withRouter,
   graphql(GET_AUTH, { name: 'authQuery' }),
 )(WineBox);
