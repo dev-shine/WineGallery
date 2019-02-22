@@ -77,7 +77,7 @@ class MyAccount extends Component {
     // Checks if user has added items to local storage shopping cart
     if (shoppingCart) {
 
-      const shoppingCartItemsId = shoppingCartSet.length && shoppingCartSet
+      const shoppingCartItemsId = shoppingCartSet && shoppingCartSet.length && shoppingCartSet
         .map(item => item.product.id);
 
       // Creates shopping cart in database with local storage item
@@ -85,7 +85,9 @@ class MyAccount extends Component {
       && shoppingCart.items.forEach(item => {
 
         // Skips if the wine is already on the DB shopping cart
-        if (shoppingCartItemsId.length && shoppingCartItemsId.includes(item.product.id)) {
+        if (
+          shoppingCartItemsId && shoppingCartItemsId.length && shoppingCartItemsId.includes(item.product.id)
+        ) {
           updateShoppingCart({
             variables:
               {

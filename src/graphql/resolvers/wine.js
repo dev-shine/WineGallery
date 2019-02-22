@@ -120,6 +120,9 @@ export const GET_WINE = gql`
       product {
         id
         name
+        productType{
+          id
+        }
         sellingPrice
         skuCode
         coverPhotoLarge
@@ -244,6 +247,9 @@ export const GET_WINES = gql`
         name
         slug
         sellingPrice
+        productType{
+          id
+        }
         productPhotos {
           id
           photoWineListing
