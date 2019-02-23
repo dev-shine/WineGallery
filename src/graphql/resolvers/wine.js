@@ -216,6 +216,7 @@ export const GET_WINES = gql`
     $foodId: Int
     $countryId: Int
     $order: AllWinesOrderField
+    $memberId: Int
   ) {
     allWines (
       year: $year
@@ -232,8 +233,10 @@ export const GET_WINES = gql`
       foodId: $foodId
       countryId: $countryId
       order: $order
+      memberId: $memberId
     ) {
       id
+      memberLikelihood
       year
       country {
         id

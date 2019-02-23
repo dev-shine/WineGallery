@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Query } from 'react-apollo';
+import { compose, graphql, Query } from 'react-apollo';
 
 import {
   ErrorBoundary,
@@ -10,7 +10,7 @@ import {
   WineSorters,
   WineBox,
 } from '../../components';
-import { GET_SHOPPING_CART } from '../../graphql/queries';
+import { GET_MEMBER, GET_SHOPPING_CART } from '../../graphql/queries';
 
 import './Wines.scss';
 
@@ -44,9 +44,6 @@ class Wines extends Component {
     },
   };
 
-  componentDidMount() {
-  }
-
   handleFilters = filtersValue => {
     this.setState(prevState => (
       {
@@ -60,8 +57,14 @@ class Wines extends Component {
 
   render() {
     const { props, state } = this;
-    const { isWineSubscriptionBox } = props;
-    const { filters } = state;
+    const { isWineSubscriptionBox, meQuery } = props;
+    let { filters } = state;
+
+    // Specifies memberId to retrieve Member's predictions
+    const memberId = meQuery.me && meQuery.me.id;
+    if (memberId) {
+      filters = { ...filters, memberId };
+    }
 
     return (
       <div className="Wines">
@@ -106,4 +109,6 @@ class Wines extends Component {
   }
 }
 
-export default Wines;
+export default compose(
+  graphql(GET_MEMBER, { name: 'meQuery' }),
+)(Wines);

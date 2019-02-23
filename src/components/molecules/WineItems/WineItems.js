@@ -47,6 +47,10 @@ class WineItems extends Component {
       ? wine.product.productPhotos[0].photoWineListing
       : DEFAULT_BOTTLE_URL;
 
+    const memberLikelihood = wine.memberLikelihood
+      ? `${((wine.memberLikelihood) * 100)}%`
+      : '-';
+
     return (
       <div
         key={wine.id}
@@ -67,6 +71,7 @@ class WineItems extends Component {
           {wine.year}
         </Link>
         <div>{`$${wine.product.sellingPrice}`}</div>
+        <div>{memberLikelihood}</div>
         {
 
           // Renders different buttons depending on the page the user is visiting
