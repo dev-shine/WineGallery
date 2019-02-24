@@ -66,16 +66,19 @@ class SignUp extends Component {
    * */
   handleSubmit = async (signUp, addShoppingCart) => {
     const { state, props } = this;
-    const isQuiz = props.location.state && props.location.state.quiz;
     const id = props.location.state && props.location.state.memberId;
     const shoppingCart = shoppingCartLocalStorage();
+
+    // Properties used to verify if user will be redirected to checkout page
+    const isQuiz = props.location.state && props.location.state.quiz;
+    const isShoppingCart = props.location.state && props.location.state.isShoppingCart;
 
     // Creates an array (signUpInput) removing unnecessary info
     const { confirmPassword, ...signUpInput } = state.form;
 
     // Builds input depending on which page the user is accessing
     let input = null;
-    if (!isQuiz) {
+    if (!isQuiz && !isShoppingCart) {
       input = { ...signUpInput };
     } else {
       input = { ...signUpInput, id, hasUpdatedPassword: true };
@@ -83,7 +86,7 @@ class SignUp extends Component {
 
     if (confirmPassword === signUpInput.password) {
 
-      // Saves new member (signup)
+      // Saves new member (signUp)
       await signUp({ variables: { input } })
         .then(member => {
 
@@ -118,9 +121,14 @@ class SignUp extends Component {
             executeLogInRequest(state.form.email, state.form.password)
               .then(() => {
 
-                // Redirects to my account page
-                // TODO DEV-203 change this to this.props.history.push() when added local state from Apollo
-                window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.MY_ACCOUNT}`;
+                // In case the user is coming from shopping cart
+                if (isShoppingCart) {
+                  window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.CHECKOUT}`;
+                } else {
+
+                  // Redirects to my account page
+                  window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.MY_ACCOUNT}`;
+                }
               })
 
               // Catches error from server (if login unsuccessful) and show message in the form

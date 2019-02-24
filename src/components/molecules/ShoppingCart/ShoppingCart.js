@@ -7,6 +7,7 @@ import { Query } from 'react-apollo';
 import { DELETE_SHOPPING_CART_ITEM, UPDATE_SHOPPING_CART_ITEM } from '../../../graphql/mutations';
 import { GET_MEMBER, GET_SHOPPING_CART } from '../../../graphql/queries';
 import { isLoggedIn } from '../../../helpers/auth';
+import { PRODUCT_TYPE_IDS } from '../../../helpers/constants';
 import { formatNumber, saveCartItemToLocalStorage, shoppingCartLocalStorage } from '../../../helpers/tools';
 import urlPatterns from '../../../urls';
 import { ButtonMutation } from '../..';
@@ -104,18 +105,34 @@ class ShoppingCart extends Component {
           );
           const shippingFee = (
             data && data.me && data.me.shoppingCart && data.me.shoppingCart.totalShippingFee
-          ) || 9;
+          );
 
           // TODO: Possibly change sorting to back end to improve FE performance
           // Result without sorting: https://www.useloom.com/share/781edb12b9b84d899b656e6d5bc0c30a
           let productsCartArray = null;
+          let hasShippingFee = true;
 
           if (hasShoppingCartSet) {
             productsCartArray = data.me.shoppingCart.shoppingcartitemSet
               .sort((a, b) => a.product.id - b.product.id);
-
           } else if (hasShoppingLocalStorage) {
             productsCartArray = shoppingCartLocal.items.sort((a, b) => a.product.id - b.product.id);
+          }
+
+          // Verifies what type of products we have in the shopping cart
+          if (productsCartArray) {
+            const productTypes = productsCartArray
+              .map(item => item.product.productType.id);
+
+            // TODO [DEV-187] Validate this logic
+            hasShippingFee = (
+              !productTypes.includes(PRODUCT_TYPE_IDS.DB_ID_PRODUCT_TYPE_SPECIAL_PACK)
+              || (
+                !productTypes.includes(PRODUCT_TYPE_IDS.DB_ID_PRODUCT_TYPE_SPECIAL_PACK)
+                || productTypes.includes(PRODUCT_TYPE_IDS.DB_ID_PRODUCT_TYPE_SUBSCRIPTION)
+                || productTypes.includes(PRODUCT_TYPE_IDS.DB_ID_PRODUCT_TYPE_WINE)
+              )
+            );
           }
 
           return (
@@ -246,7 +263,7 @@ class ShoppingCart extends Component {
                                 .reduce((a, b) => a + b)
                             )}`
                           }
-                          {`(+ ${formatNumber(shippingFee)} SHIPPING)`}
+                          {hasShippingFee && `(+ ${formatNumber(shippingFee)} SHIPPING)`}
                         </p>
                       )
                     }
@@ -261,7 +278,11 @@ class ShoppingCart extends Component {
                     </button>
                     <Link
                       className="cta-modal"
-                      to={isLoggedIn() ? urlPatterns.CHECKOUT : urlPatterns.SIGN_UP}
+                      to={
+                        isLoggedIn()
+                          ? urlPatterns.CHECKOUT
+                          : { pathname: urlPatterns.SIGN_UP, state: { isShoppingCart: true } }
+                      }
                       onClick={() => this.setState({ showModal: !showModal })}
                     >
                       Confirm and Proceed

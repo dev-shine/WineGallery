@@ -58,7 +58,8 @@ const SubscriptionSummary = props => {
               <Link to={urlPatterns.WINES_BOX}>change wines</Link>
             ) : (
 
-              // TODO [DEV-216] Change this link to the order page
+              // TODO [DEV-216] Change this link to the order page and hide the button in case MEMBER NEVER
+              //  HAD a subscription
               <Link to={urlPatterns.WINES_BOX}>view</Link>
             )
           }

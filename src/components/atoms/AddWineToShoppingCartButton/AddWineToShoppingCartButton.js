@@ -71,6 +71,9 @@ class AddWineToShoppingCartButton extends Component {
           id: wine.product.id,
           name: wine.product.name,
           sellingPrice: wine.product.sellingPrice,
+          productType: {
+            id: wine.product.productType.id,
+          },
         },
       };
       await saveCartItemToLocalStorage(shoppingCartItem, true, false, false).then(() => {

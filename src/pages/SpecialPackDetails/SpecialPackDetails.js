@@ -15,6 +15,7 @@ import {
 } from '../../graphql/queries';
 import { ADD_SPECIAL_PACK_INTEREST, ADD_SHOPPING_CART_ITEM } from '../../graphql/mutations';
 import { GET_AUTH } from '../../graphql/resolvers/auth';
+import { PRODUCT_TYPE_IDS } from '../../helpers/constants';
 import { saveCartItemToLocalStorage } from '../../helpers/tools';
 import urlPatterns from '../../urls';
 import { isLoggedIn } from '../../helpers/auth';
@@ -116,6 +117,7 @@ class SpecialPackDetails extends Component {
         specialPackOptionsAsObject[specialPackOption.product.id] = {
           name: specialPackOption.product.name,
           sellingPrice: specialPackOption.product.sellingPrice,
+          productType: specialPackOption.product.productType.id,
         };
       });
 
@@ -127,6 +129,9 @@ class SpecialPackDetails extends Component {
             id: productId,
             name: specialPackOptionsAsObject[productId].name,
             sellingPrice: specialPackOptionsAsObject[productId].sellingPrice,
+            productType: {
+              id: PRODUCT_TYPE_IDS.DB_ID_PRODUCT_TYPE_SPECIAL_PACK,
+            },
           },
         };
         return saveCartItemToLocalStorage(shoppingCartItem, true, false, false);
