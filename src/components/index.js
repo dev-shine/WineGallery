@@ -32,6 +32,7 @@ import QuizQuestion from './organisms/QuizQuestion/QuizQuestion';
 import WinePreference from './organisms/WinePreference/WinePreference';
 import WineBox from './organisms/WineBox/WineBox';
 import SubscriptionSummary from './organisms/SubscriptionSummary/SubscriptionSummary';
+import WineOrderedCountries from './organisms/WineOrderedCountries/WineOrderedCountries';
 
 export {
 
@@ -69,4 +70,5 @@ export {
   QuizQuestion,
   WineBox,
   SubscriptionSummary,
+  WineOrderedCountries,
 };

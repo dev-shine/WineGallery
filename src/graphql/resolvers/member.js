@@ -16,6 +16,11 @@ export const GET_MEMBER = gql`
       lastName
       hasUpdatedPassword
       points
+      orderedWineCountries {
+        id
+        name
+        code
+      }   
       shippingAddress {
         id
         firstName
