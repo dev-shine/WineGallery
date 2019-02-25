@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 
 import { compose, graphql } from 'react-apollo';
 
-import { MemberBadges, MemberProgress, SubscriptionSummary } from '../../components';
+import {
+  MemberBadges,
+  MemberProgress,
+  SubscriptionSummary,
+  WineOrderedCountries,
+} from '../../components';
 import { GET_MEMBER } from '../../graphql/queries';
 
 import './Dashboard.scss';
@@ -28,6 +33,11 @@ const Dashboard = props => {
           </div>
           <div className="Dashboard--stats--badges">
             <MemberBadges me={meQuery.me} />
+          </div>
+        </div>
+        <div className="Dashboard--forms">
+          <div className="Dashboard--forms--passport">
+            <WineOrderedCountries data={meQuery} />
           </div>
         </div>
       </div>
