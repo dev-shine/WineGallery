@@ -21,34 +21,42 @@ const Dashboard = props => {
   const { meQuery } = props;
   return (
     <div className="Dashboard">
-      <div className="Dashboard--container">
-        <div className="Dashboard--sections">
-          <h1 className="Dashboard--sections__title">Your Subscription</h1>
-          <div className="Dashboard--sections__subscription-summary">
-            <SubscriptionSummary data={meQuery} />
-          </div>
-        </div>
-        <div className="Dashboard--sections">
-          <div className="Dashboard--sections--stats">
-            <div className="Dashboard--sections--stats__progress">
-              <MemberProgress me={meQuery.me} />
+      {
+        meQuery ? (
+          <div className="Dashboard--container">
+            <div className="Dashboard--sections">
+              <h1 className="Dashboard--sections__title">Your Subscription</h1>
+              <div className="Dashboard--sections__subscription-summary">
+                <SubscriptionSummary data={meQuery} />
+              </div>
             </div>
-            <div className="Dashboard--sections--stats__badges">
-              <MemberBadges me={meQuery.me} />
+            <div className="Dashboard--sections">
+              <div className="Dashboard--sections--stats">
+                <div className="Dashboard--sections--stats__progress">
+                  <MemberProgress me={meQuery.me} />
+                </div>
+                <div className="Dashboard--sections--stats__badges">
+                  <MemberBadges me={meQuery.me} />
+                </div>
+              </div>
+            </div>
+            <div className="Dashboard--sections">
+              <div className="Dashboard--sections--leaderboard">
+                <PointsBoard />
+              </div>
+            </div>
+            <div className="Dashboard--sections">
+              <div className="Dashboard--sections--passport">
+                <WineOrderedCountries data={meQuery} />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="Dashboard--sections">
-          <div className="Dashboard--sections--leaderboard">
-            <PointsBoard />
+        ) : (
+          <div className="Dashboard--container">
+            <div>Ooops, this is embarrassing... Something went wrong, try to reload your page.</div>
           </div>
-        </div>
-        <div className="Dashboard--sections">
-          <div className="Dashboard--sections--passport">
-            <WineOrderedCountries data={meQuery} />
-          </div>
-        </div>
-      </div>
+        )
+      }
     </div>
   );
 };

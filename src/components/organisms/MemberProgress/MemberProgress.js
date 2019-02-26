@@ -33,7 +33,7 @@ const MemberProgress = props => {
         </div>
         <div className="MemberProgress--next-level">
           <p>Next level:</p>
-          <img src={me.nextBadge.imageSmallUrl} alt={me.nextBadge.name} />
+          <img src={process.env.REACT_APP_STATIC_URL + me.nextBadge.imageSmallUrl} alt={me.nextBadge.name} />
           <p>{me.nextBadge.name}</p>
         </div>
         <div>

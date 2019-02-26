@@ -4,6 +4,7 @@ import InputField from './atoms/InputField/InputField';
 import CheckBox from './atoms/CheckBox/CheckBox';
 import ButtonMutation from './atoms/ButtonMutation/ButtonMutation';
 import AddWineToShoppingCartButton from './atoms/AddWineToShoppingCartButton/AddWineToShoppingCartButton';
+import StarRating from './atoms/StarRating/StarRating';
 
 // Molecules
 import SimpleListItem from './molecules/SimpleListItem/SimpleListItem';
@@ -11,6 +12,7 @@ import WineItems from './molecules/WineItems/WineItems';
 import ErrorBoundary from './molecules/ErrorBoundary/ErrorBoundary';
 import NewPaymentMethod from './molecules/NewPaymentMethod/NewPaymentMethod';
 import ShoppingCart from './molecules/ShoppingCart/ShoppingCart';
+import WineRatingItem from './molecules/WineRatingItem/WineRatingItem';
 
 // Organisms
 import Header from './organisms/Header/Header';
@@ -33,6 +35,7 @@ import WinePreference from './organisms/WinePreference/WinePreference';
 import WineBox from './organisms/WineBox/WineBox';
 import SubscriptionSummary from './organisms/SubscriptionSummary/SubscriptionSummary';
 import WineOrderedCountries from './organisms/WineOrderedCountries/WineOrderedCountries';
+import WineRatingList from './organisms/WineRatingList/WineRatingList';
 import PointsBoard from './organisms/PointsBoard/PointsBoard';
 
 export {
@@ -43,6 +46,7 @@ export {
   CheckBox,
   ButtonMutation,
   AddWineToShoppingCartButton,
+  StarRating,
 
   // Molecules
   SimpleListItem,
@@ -50,6 +54,7 @@ export {
   WineItems,
   NewPaymentMethod,
   ShoppingCart,
+  WineRatingItem,
 
   // Organisms
   Header,
@@ -72,5 +77,6 @@ export {
   WineBox,
   SubscriptionSummary,
   WineOrderedCountries,
+  WineRatingList,
   PointsBoard,
 };

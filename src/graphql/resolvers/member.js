@@ -20,7 +20,42 @@ export const GET_MEMBER = gql`
         id
         name
         code
-      }   
+      }
+      orderItemsWithRatings {
+        id
+        createdDate
+        order {
+          id
+          subscriptionMonth
+        }
+        product {
+          id
+          name
+          productPhotos{
+            id
+            photoLarge
+          }
+          wine {
+            id
+            year
+            wineRegion {
+              id
+              name
+            }
+            country {
+              id
+              name
+            }
+            wineratingSet {
+              id
+              score
+              note
+              liked
+              totalDownvotes
+            }
+          }
+        }
+      }  
       shippingAddress {
         id
         firstName
@@ -401,6 +436,21 @@ export const UPDATE_WINE_PREFERENCE = gql`
       }
     }
   }
+`;
+
+export const UPDATE_WINE_RATING = gql`
+mutation UpdateWineRating ($input: WineRatingInput!) {
+  updateWineRating(input: $input) {
+    wineRating {
+      id
+      liked
+      totalUpvotes
+      totalDownvotes
+      note
+      score
+    }
+  }
+}
 `;
 
 export const GET_TOP_MEMBERS = gql`
