@@ -403,3 +403,21 @@ export const UPDATE_WINE_PREFERENCE = gql`
   }
 `;
 
+export const GET_TOP_MEMBERS = gql`
+  query TopMembers (
+    $limit: Int
+    $offset: Int
+  ) {
+    topMembers (
+      limit: $limit
+      offset: $offset
+    ) {
+      id
+      firstName
+      lastName
+      points
+      avatarThumbnail
+      slug
+    }
+  }
+`;

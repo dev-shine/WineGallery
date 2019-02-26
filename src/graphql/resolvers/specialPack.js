@@ -6,8 +6,8 @@ import gql from 'graphql-tag';
 
 export const GET_ALL_SPECIAL_PACKS = gql`
   query AllSpecialPackEditions (
-  $limit: Int
-  $offset: Int
+    $limit: Int
+    $offset: Int
   ) {
     allSpecialPackEditions (
       limit: $limit

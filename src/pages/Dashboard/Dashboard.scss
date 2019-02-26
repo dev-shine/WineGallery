@@ -26,7 +26,7 @@
     @extend %--fw_container;
   }
 
-  &--forms {
+  &--sections {
     display: flex;
     align-self: center;
     flex-direction: column;
@@ -47,21 +47,21 @@
     &__subscription-summary {
       width: 100%;
     }
-  }
 
-  &--stats {
-    display: flex;
-    width: 100%;
-    margin-top: 40px;
+    &--stats {
+      display: flex;
+      width: 100%;
+      margin-top: 40px;
 
-    &--progress {
-      width: 50%;
-      display: inline-flex;
-    }
+      &__progress {
+        width: 50%;
+        display: inline-flex;
+      }
 
-    &--badges {
-      width: 50%;
-      display: inline-flex;
+      &__badges {
+        width: 50%;
+        display: inline-flex;
+      }
     }
   }
 }
