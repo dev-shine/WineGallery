@@ -47,9 +47,9 @@ const WineOrderedCountries = props => {
           borderWidth: 1,
           color: '#ffe4e9',
         }}
-        zoomMax="1"
-        zoomMin="1"
-        zoomOnScroll="false"
+        zoomMax={1}
+        zoomMin={1}
+        zoomOnScroll={false}
         containerClassName="map"
         selectedRegions={countries}
         enableZoom="false"
