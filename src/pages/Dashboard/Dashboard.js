@@ -8,6 +8,7 @@ import {
   MemberProgress,
   SubscriptionSummary,
   WineOrderedCountries,
+  PointsBoard,
 } from '../../components';
 import { GET_MEMBER } from '../../graphql/queries';
 
@@ -21,22 +22,29 @@ const Dashboard = props => {
   return (
     <div className="Dashboard">
       <div className="Dashboard--container">
-        <div className="Dashboard--forms">
-          <h1 className="Dashboard--forms__title">Your Subscription</h1>
-          <div className="Dashboard--forms__subscription-summary">
+        <div className="Dashboard--sections">
+          <h1 className="Dashboard--sections__title">Your Subscription</h1>
+          <div className="Dashboard--sections__subscription-summary">
             <SubscriptionSummary data={meQuery} />
           </div>
         </div>
-        <div className="Dashboard--stats">
-          <div className="Dashboard--stats--progress">
-            <MemberProgress me={meQuery.me} />
-          </div>
-          <div className="Dashboard--stats--badges">
-            <MemberBadges me={meQuery.me} />
+        <div className="Dashboard--sections">
+          <div className="Dashboard--sections--stats">
+            <div className="Dashboard--sections--stats__progress">
+              <MemberProgress me={meQuery.me} />
+            </div>
+            <div className="Dashboard--sections--stats__badges">
+              <MemberBadges me={meQuery.me} />
+            </div>
           </div>
         </div>
-        <div className="Dashboard--forms">
-          <div className="Dashboard--forms--passport">
+        <div className="Dashboard--sections">
+          <div className="Dashboard--sections--leaderboard">
+            <PointsBoard />
+          </div>
+        </div>
+        <div className="Dashboard--sections">
+          <div className="Dashboard--sections--passport">
             <WineOrderedCountries data={meQuery} />
           </div>
         </div>

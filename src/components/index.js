@@ -33,6 +33,7 @@ import WinePreference from './organisms/WinePreference/WinePreference';
 import WineBox from './organisms/WineBox/WineBox';
 import SubscriptionSummary from './organisms/SubscriptionSummary/SubscriptionSummary';
 import WineOrderedCountries from './organisms/WineOrderedCountries/WineOrderedCountries';
+import PointsBoard from './organisms/PointsBoard/PointsBoard';
 
 export {
 
@@ -71,4 +72,5 @@ export {
   WineBox,
   SubscriptionSummary,
   WineOrderedCountries,
+  PointsBoard,
 };
