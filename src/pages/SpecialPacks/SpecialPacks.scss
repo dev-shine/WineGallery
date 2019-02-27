@@ -66,21 +66,6 @@
       text-align: left;
       display: flex;
       flex-direction: column;
-
-      .link-button {
-        background-color: #fff;
-        border: 3px solid $brand-danger;
-        border-radius: 5px;
-        font-weight: bold;
-        font-size: 1rem;
-        margin: 15px 5px;
-        padding: 10px;
-        text-transform: uppercase;
-        text-decoration: none;
-        width: 300px;
-        text-align: center;
-        color: $brand-danger;
-      }
     }
   }
 }

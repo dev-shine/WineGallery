@@ -116,7 +116,7 @@ class InputField extends Component {
             id={id}
             name={name}
             type={type}
-            value={type === 'email' ? inputValue.toLowerCase() : inputValue || ''}
+            value={type === 'email' ? inputValue && inputValue.toLowerCase() : inputValue || ''}
             onKeyPress={onKeyPress}
             placeholder={placeholder}
             onChange={this.handleChange}

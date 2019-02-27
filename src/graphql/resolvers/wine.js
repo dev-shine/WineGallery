@@ -68,6 +68,7 @@ export const GET_WINE_PRICE_POINTS = gql`
     allWinePricePoints {
       id
       name
+      sellingPrice
     }
   }
 `;

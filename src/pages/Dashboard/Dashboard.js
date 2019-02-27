@@ -66,5 +66,11 @@ Dashboard.propTypes = {
 };
 
 export default compose(
-  graphql(GET_MEMBER, { name: 'meQuery' })
+  graphql(GET_MEMBER, {
+    name: 'meQuery',
+    options: {
+      partialRefetch: true,
+      fetchPolicy: 'cache-and-network',
+    },
+  }),
 )(Dashboard);

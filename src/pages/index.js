@@ -14,6 +14,7 @@ import ThankYou from './ThankYou/ThankYou';
 import WineDetails from './WineDetails/WineDetails';
 import SpecialPackDetails from './SpecialPackDetails/SpecialPackDetails';
 import SpecialPacks from './SpecialPacks/SpecialPacks';
+import Gifts from './Gifts/Gifts';
 import WineRatings from './WineRatings/WineRatings';
 
 export {
@@ -38,6 +39,7 @@ export {
   WineDetails,
   SpecialPacks,
   SpecialPackDetails,
+  Gifts,
 
   // Checkout
   Checkout,

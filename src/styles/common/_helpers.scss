@@ -166,3 +166,43 @@
     border-color: $brand-success;
   }
 }
+
+.link-button {
+  background-color: #fff;
+  border: 3px solid $brand-danger;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 15px 5px;
+  padding: 10px;
+  text-transform: uppercase;
+  text-decoration: none;
+  width: 300px;
+  text-align: center;
+  color: $brand-danger;
+
+  &:disabled {
+    cursor: not-allowed;
+    border-color: $humility;
+    color: $humility;
+
+    &:hover {
+      background-color: #fff;
+      color: $humility;
+    }
+  }
+}
+
+.button-link {
+  background-color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-weight: normal;
+  font-size: 1rem;
+  margin: 15px 0;
+  padding: 10px;
+  text-decoration: underline;
+  width: 100%;
+  text-align: left;
+  color: #000;
+}
