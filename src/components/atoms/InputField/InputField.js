@@ -21,6 +21,7 @@ class InputField extends Component {
     reference: PropTypes.func,
     validations: PropTypes.arrayOf(PropTypes.func),
     serverValidation: PropTypes.arrayOf(PropTypes.string),
+    minWidth: PropTypes.number,
   };
 
   static defaultProps = {
@@ -33,6 +34,7 @@ class InputField extends Component {
     validations: [],
     serverValidation: [],
     placeholder: '',
+    minWidth: null,
   };
 
   state = { errorText: [], inputValue: '' };
@@ -103,6 +105,7 @@ class InputField extends Component {
       name,
       id,
       serverValidation,
+      minWidth,
     } = this.props;
 
     return (
@@ -119,6 +122,7 @@ class InputField extends Component {
             onChange={this.handleChange}
             onBlur={this.handleValidation}
             ref={node => this.handleRef(node)}
+            style={{ minWidth }}
           />
         </label>
         <div className="hint">{hint}</div>

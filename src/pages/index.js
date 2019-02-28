@@ -13,6 +13,7 @@ import ThankYou from './ThankYou/ThankYou';
 import WineDetails from './WineDetails/WineDetails';
 import SpecialPackDetails from './SpecialPackDetails/SpecialPackDetails';
 import SpecialPacks from './SpecialPacks/SpecialPacks';
+import WineRatings from './WineRatings/WineRatings';
 
 export {
   Home,
@@ -26,6 +27,7 @@ export {
   // Member area
   MyAccount,
   Dashboard,
+  WineRatings,
 
   // Product
   Quiz,

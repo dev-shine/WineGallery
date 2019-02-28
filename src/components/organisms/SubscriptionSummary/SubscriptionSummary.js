@@ -13,8 +13,8 @@ import './SubscriptionSummary.scss';
  * */
 const SubscriptionSummary = props => {
   const { data } = props;
+  if (data.loading || !data.me) return (<div>Loading...</div>);
   const { subscription } = data.me;
-  if (data.loading) return (<div>Loading...</div>);
 
   return (
     <div className="SubscriptionSummary">
