@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 import { compose, graphql } from 'react-apollo';
 
@@ -11,6 +12,7 @@ import {
   PointsBoard,
 } from '../../components';
 import { GET_MEMBER } from '../../graphql/queries';
+import urlPatterns from '../../urls';
 
 import './Dashboard.scss';
 
@@ -24,6 +26,9 @@ const Dashboard = props => {
       {
         meQuery ? (
           <div className="Dashboard--container">
+            <div className="Dashboard--links">
+              <NavLink to={urlPatterns.MY_ORDERS}>My orders</NavLink>
+            </div>
             <div className="Dashboard--sections">
               <h1 className="Dashboard--sections__title">Your Subscription</h1>
               <div className="Dashboard--sections__subscription-summary">

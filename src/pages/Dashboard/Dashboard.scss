@@ -15,6 +15,10 @@
   width: $width-box;
   z-index: 50;
 
+  &--links {
+    margin-top: 20px;
+  }
+
   &--container {
     align-items: flex-start;
     display: flex;
