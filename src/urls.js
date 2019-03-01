@@ -1,7 +1,7 @@
 const URL_PATTERNS = {
   BASE: '/',
   CHECKOUT: '/checkout',
-  DASHBOARD_BADGES: '/', // TODO: [DEV-220] implement "My Badges"
+  DASHBOARD_BADGES: '/dashboard/badges',
   HOME: '/home',
   LOGIN: '/login',
   MY_ACCOUNT: '/my-account',

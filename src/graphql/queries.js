@@ -28,10 +28,14 @@ import { GET_QUIZ_QUESTIONS } from './resolvers/quiz';
 // Special Pack
 import { GET_ALL_SPECIAL_PACKS, GET_SPECIAL_PACK_DETAILS } from './resolvers/specialPack';
 
+// Badge
+import { GET_MEMBER_BADGES_BY_CATEGORY } from './resolvers/badge';
+
 export {
   GET_ALL_SPECIAL_PACKS,
   GET_FOODS,
   GET_MEMBER,
+  GET_MEMBER_BADGES_BY_CATEGORY,
   GET_QUIZ_QUESTIONS,
   GET_SEASONS,
   GET_SHOPPING_CART,

@@ -18,12 +18,10 @@ class SpecialPacks extends Component {
   static contextTypes = {};
 
   render() {
-    const limit = 10;
-    const offset = 0;
 
     return (
       <div className="SpecialPacks">
-        <Query query={GET_ALL_SPECIAL_PACKS} variables={{ limit, offset }}>
+        <Query query={GET_ALL_SPECIAL_PACKS}>
           {({ loading, error, data }) => {
             if (loading) return 'Loading...';
             if (error) console.error(`Shopping cart error! ${error.message}`);

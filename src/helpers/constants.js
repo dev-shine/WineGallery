@@ -110,10 +110,19 @@ const WINE_PRICE_POINTS_IDS = {
   DB_ID_WINE_PRICE_POINT_4: 4,
 };
 
+const BADGE_CATEGORY_ID = {
+  1: 'Special Badges',
+  2: 'Wine Passport',
+  3: 'Wine Type Checklist',
+  4: 'Wine Region Checklist',
+  5: 'Wine Production Method Checklist',
+};
+
 const AUSTRALIA_CODE = 117;
 
 export {
   AU_STATES,
+  BADGE_CATEGORY_ID,
   DEFAULT_BOTTLE_URL,
   HTTP_METHODS,
   CONTACT_TYPE_ID_TO_ENUM,
