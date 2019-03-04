@@ -136,7 +136,7 @@ class WinePreference extends Component {
                                   numberOfBottles: numberOfBottles - 1 >= 1 ? numberOfBottles - 1 : 0,
                                 }}
                                 reFetchQueriesProp={[{ query: GET_MEMBER }]}
-                                mutationPayloadName="updateMemberWinePreference"
+                                mutationPayloadName="updateMemberWineQuantity"
                                 handleShowErrors={this.handleSetErrors}
                                 onClick={() => this.setState({ errorMessage: null })}
                               />
@@ -154,6 +154,8 @@ class WinePreference extends Component {
                                 }}
                                 reFetchQueriesProp={[{ query: GET_MEMBER }]}
                                 onClick={() => this.setState({ errorMessage: null })}
+                                handleShowErrors={this.handleSetErrors}
+                                mutationPayloadName="updateMemberWineQuantity"
                               />
                             </div>
                           </div>
