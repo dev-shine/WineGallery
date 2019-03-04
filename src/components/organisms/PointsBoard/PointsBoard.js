@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { Query } from 'react-apollo';
 
 import { GET_TOP_MEMBERS } from '../../../graphql/resolvers/member';
-import { DEFAULT_AVATAR_URL } from '../../../helpers/constants';
 
 import './PointsBoard.scss';
 
@@ -33,7 +32,7 @@ const PointsBoard = () => {
                       <div className="PointsBoard--item" key={member.id}>
                         <div className="PointsBoard--item--image">
                           <img
-                            src={member.avatarThumbnail ? member.avatarThumbnail : DEFAULT_AVATAR_URL}
+                            src={member.avatarThumbnailUrl}
                             alt={member.slug}
                           />
                         </div>

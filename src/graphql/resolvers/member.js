@@ -483,7 +483,7 @@ export const GET_TOP_MEMBERS = gql`
       firstName
       lastName
       points
-      avatarThumbnail
+      avatarThumbnailUrl
       slug
     }
   }
