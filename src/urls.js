@@ -5,6 +5,7 @@ const URL_PATTERNS = {
   HOME: '/home',
   LOGIN: '/login',
   MY_ACCOUNT: '/my-account',
+  MY_ORDERS: '/dashboard/orders',
   DASHBOARD: '/dashboard',
   PASSWORD_RESET: '/password-reset',
   QUIZ: '/quiz',

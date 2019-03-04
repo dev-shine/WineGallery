@@ -242,6 +242,23 @@ export const GET_MEMBER = gql`
         imageSmallUrl
         points
       }
+      chargedOrders {
+        id
+        chargeDate
+        description
+        orderStatus {
+          id
+          name
+        }
+        orderCategory {
+          id
+          name
+        }
+        delivery {
+          trackingCode
+          trackingUrl
+        }
+      }
     }
   }
 `;

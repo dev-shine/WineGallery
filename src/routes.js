@@ -14,6 +14,7 @@ const Wines = React.lazy(() => import('./pages/Wines/Wines'));
 const WineDetails = React.lazy(() => import('./pages/WineDetails/WineDetails'));
 const Login = React.lazy(() => import('./pages/Login/Login'));
 const MyAccount = React.lazy(() => import('./pages/MyAccount/MyAccount'));
+const MyOrders = React.lazy(() => import('./pages/MyOrders/MyOrders'));
 const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'));
 const DashboardBadges = React.lazy(() => import('./pages/DashboardBadges/DashboardBadges'));
 const Checkout = React.lazy(() => import('./pages/Checkout/Checkout'));
@@ -81,6 +82,7 @@ class Routes extends Component {
 
         <PrivateRoute path={urlPatterns.MY_ACCOUNT} component={MyAccount} />
         <PrivateRoute path={urlPatterns.DASHBOARD_BADGES} component={DashboardBadges} />
+        <PrivateRoute path={urlPatterns.MY_ORDERS} component={MyOrders} />
         <PrivateRoute path={urlPatterns.DASHBOARD} component={Dashboard} />
         <PrivateRoute path={urlPatterns.RATINGS} component={WineRatings} />
 
