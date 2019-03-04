@@ -71,10 +71,6 @@ const DEFAULT_BOTTLE_URL = (
   `${process.env.REACT_APP_STATIC_URL}/site/img/default-bottle-photo.png`
 );
 
-const DEFAULT_AVATAR_URL = (
-  `${process.env.REACT_APP_STATIC_URL}/site/img/avatar-default.png`
-);
-
 const ADDRESS_UNAVAILABLE_IDS = new Map([
   [1, 'If not home, deliver to local Post Office'],
   [2, 'Authority to leave - under shelter in the shade'],
@@ -137,5 +133,4 @@ export {
   PRODUCT_TYPE_IDS,
   WINE_CLASS_IDS,
   WINE_PRICE_POINTS_IDS,
-  DEFAULT_AVATAR_URL,
 };
