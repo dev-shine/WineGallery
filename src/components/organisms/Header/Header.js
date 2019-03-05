@@ -67,6 +67,9 @@ class Header extends Component {
               <li>
                 <NavLink to={urlPatterns.SPECIAL_PACKS}>Special Boxes</NavLink>
               </li>
+              <li>
+                <NavLink to={urlPatterns.GIFTS}>Gifts</NavLink>
+              </li>
               {
                 !isLoggedIn() && (
                   <li>

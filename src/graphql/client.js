@@ -11,6 +11,7 @@ import { getLocalStorageToken } from '../helpers/auth';
 
 // Apollo GraphQL Resolvers
 import { resolverAuth } from './resolvers/auth';
+import { resolverGiftFlow } from './resolvers/gift';
 
 /**
  * Creates instance of Apollo client and Persistence and make it available across the application.
@@ -36,6 +37,7 @@ const generateApolloClient = () => {
   const stateLink = withClientState({
     ...merge(
       resolverAuth,
+      resolverGiftFlow,
     ),
     cache,
   });

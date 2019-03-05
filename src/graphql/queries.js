@@ -31,6 +31,14 @@ import { GET_ALL_SPECIAL_PACKS, GET_SPECIAL_PACK_DETAILS } from './resolvers/spe
 // Badge
 import { GET_MEMBER_BADGES_BY_CATEGORY } from './resolvers/badge';
 
+// Gifts
+import {
+  GET_ALL_GIFT_DELIVERIES,
+  GET_ALL_GIFT_PLANS,
+  GET_ALL_GIFT_TEMPLATES,
+  GET_GIFT_PLAN,
+} from './resolvers/gift';
+
 export {
   GET_ALL_SPECIAL_PACKS,
   GET_FOODS,
@@ -51,4 +59,8 @@ export {
   GET_WINE_SWEETNESSES,
   GET_WINE_TANNINS,
   GET_WINE_TYPES,
+  GET_ALL_GIFT_DELIVERIES,
+  GET_ALL_GIFT_PLANS,
+  GET_ALL_GIFT_TEMPLATES,
+  GET_GIFT_PLAN,
 };

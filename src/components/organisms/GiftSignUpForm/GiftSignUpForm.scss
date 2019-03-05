@@ -1,19 +1,12 @@
-@import "../../styles/common/shared";
-@import "../../styles/layout/shared";
+@import "../../../styles/common/shared";
+@import "../../../styles/layout/shared";
 
-.SignUp {
+.GiftSignUpForm {
   align-items: center;
   display: flex;
   flex-direction: column;
-  margin: {
-    top: $header-height;
-    right: auto;
-    left: auto;
-  }
-
   position: relative;
   width: $width-box;
-  z-index: 50;
 
   &--container {
     align-items: flex-start;
@@ -37,17 +30,13 @@
     &__title {
       width: 100%;
       text-align: start;
-      margin: {
-        top: 40px;
-        bottom: 40px;
-      }
     }
 
     &__form {
       height: 450px;
       display: flex;
       flex-direction: column;
-      width: 45%;
+      width: 100%;
       align-items: flex-start;
       justify-items: center;
 
@@ -68,13 +57,6 @@
           color: white;
         }
       }
-    }
-
-    &__social {
-      display: flex;
-      flex-direction: column;
-      width: 45%;
-      align-items: flex-end;
     }
   }
 }
