@@ -39,9 +39,16 @@ const QuizResults = props => {
                 });
             }
 
+            const discountValue = data.me && data.me.shoppingCart && data.me.shoppingCart.discount;
+            const discountMessage = discountValue && `(you have $${discountValue} discount!)`;
+
             return (
               <div className="QuizResults--recommendation-list">
                 {data.me && <WineBox data={data} />}
+                <div>
+                  Starting at $69 per month for 3 bottles&nbsp;
+                  {discountMessage && <p className="QuizResults--discount-message">{discountMessage}</p>}
+                </div>
                 <div>
                   <button
                     type="button"

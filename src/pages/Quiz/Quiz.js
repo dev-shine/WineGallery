@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { Query, compose, graphql } from 'react-apollo';
-import { GET_MEMBER, GET_QUIZ_QUESTIONS } from '../../graphql/queries';
+import { GET_MEMBER, GET_QUIZ_QUESTIONS, GET_REFERRAL_DISCOUNT } from '../../graphql/queries';
 import { SET_MEMBER_AUTH } from '../../graphql/resolvers/auth';
 import { SUBMIT_QUIZ } from '../../graphql/mutations';
 import { checkEmail } from '../../helpers/validations';
 import { isLoggedIn, setLocalStorageToken } from '../../helpers/auth';
 import urlPatterns from '../../urls';
+import { SET_REFERRAL_DISCOUNT } from '../../graphql/resolvers/member';
 
 import { InputField, QuizQuestion } from '../../components';
 
@@ -21,6 +22,8 @@ class Quiz extends Component {
   static propTypes = {
     setMemberAuth: PropTypes.func.isRequired,
     submitQuiz: PropTypes.func.isRequired,
+    referralDiscountQuery: PropTypes.shape({}).isRequired,
+    setReferralDiscount: PropTypes.func.isRequired,
   };
 
   state = {
@@ -34,7 +37,12 @@ class Quiz extends Component {
   };
 
   handleSubmitQuiz = () => {
-    const { setMemberAuth, submitQuiz } = this.props;
+    const {
+      setMemberAuth,
+      submitQuiz,
+      referralDiscountQuery,
+      setReferralDiscount,
+    } = this.props;
     const { selectedAnswers, email } = this.state;
     const selectedAnswersAsArray = Object.values(selectedAnswers).flat();
 
@@ -44,13 +52,31 @@ class Quiz extends Component {
       clientSecret: `${process.env.REACT_APP_CLIENT_SECRET}`,
     };
 
+    // Gets referral and giveaway codes from apollo-link-state
+    const { referralCode, giveawayCode } = referralDiscountQuery.referralDiscount;
+
     submitQuiz(
-      { variables: { input: { answersIds: selectedAnswersAsArray, email, ...authData } } }
+      {
+        variables: {
+          input: {
+            answersIds: selectedAnswersAsArray, email, ...authData, referralCode, giveawayCode,
+          },
+        },
+      }
     ).then(
-      ({ data }) => {
+      async ({ data }) => {
         if (data && data.submitQuiz.isSuccessful && data.submitQuiz.accessToken) {
 
-          setMemberAuth({
+          // Removes referral discount from the apollo-link-state as it's been saved in the database
+          // by the submitQuiz mutation
+          await setReferralDiscount({
+            variables: {
+              referralCode: null,
+              giveawayCode: null,
+            },
+          });
+
+          await setMemberAuth({
             variables: {
               memberId: data.submitQuiz.memberId,
               token: localStorage.getItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE),
@@ -60,7 +86,7 @@ class Quiz extends Component {
               console.error(errorMutation);
             });
 
-          setLocalStorageToken(
+          await setLocalStorageToken(
             data.submitQuiz.accessToken, data.submitQuiz.refreshToken, email,
           );
         }
@@ -146,4 +172,6 @@ export default compose(
       refetchQueries: () => [{ query: GET_MEMBER, fetchPolicy: 'network-only' }],
     },
   }),
+  graphql(GET_REFERRAL_DISCOUNT, { name: 'referralDiscountQuery' }),
+  graphql(SET_REFERRAL_DISCOUNT, { name: 'setReferralDiscount' }),
 )(Quiz);

@@ -1,7 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import { Mutation, withApollo } from 'react-apollo';
+import {
+  Mutation,
+  withApollo,
+  compose,
+  graphql,
+} from 'react-apollo';
 
 import { ADD_SHOPPING_CART_ITEM, SIGN_UP, UPDATE_MEMBER_ACCOUNT_DETAILS } from '../../graphql/mutations';
 import urlPatterns from '../../urls';
@@ -14,6 +19,7 @@ import {
 } from '../../helpers/validations';
 import { shoppingCartLocalStorage } from '../../helpers/tools';
 import InputField from '../../components/atoms/InputField/InputField';
+import { GET_REFERRAL_DISCOUNT, SET_REFERRAL_DISCOUNT } from '../../graphql/resolvers/member';
 
 import './SignUp.scss';
 
@@ -66,6 +72,7 @@ class SignUp extends Component {
    * */
   handleSubmit = async (signUp, addShoppingCart) => {
     const { state, props } = this;
+    const { setReferralDiscount } = props;
     const id = props.location.state && props.location.state.memberId;
     const shoppingCart = shoppingCartLocalStorage();
 
@@ -86,9 +93,22 @@ class SignUp extends Component {
 
     if (confirmPassword === signUpInput.password) {
 
+      // Adds referral and giveaway codes to the input
+      const { referralCode, giveawayCode } = props.referralDiscountQuery.referralDiscount;
+      input = { ...input, referralCode, giveawayCode };
+
       // Saves new member (signUp)
       await signUp({ variables: { input } })
-        .then(member => {
+        .then(async member => {
+
+          // Removes referral discount from the apollo-link-state as it's been saved in the database
+          // by the signUp mutation
+          await setReferralDiscount({
+            variables: {
+              referralCode: null,
+              giveawayCode: null,
+            },
+          });
 
           // Checks if user has added items to local storage shopping cart
           if (shoppingCart) {
@@ -287,4 +307,8 @@ class SignUp extends Component {
   }
 }
 
-export default withApollo(SignUp);
+export default compose(
+  withApollo,
+  graphql(GET_REFERRAL_DISCOUNT, { name: 'referralDiscountQuery' }),
+  graphql(SET_REFERRAL_DISCOUNT, { name: 'setReferralDiscount' }),
+)(SignUp);

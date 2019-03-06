@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withApollo } from 'react-apollo';
 import { Link, NavLink } from 'react-router-dom';
 
-import { ShoppingCart } from '../..';
+import { ShoppingCart, HeaderDiscountMessage } from '../..';
 import { isLoggedIn } from '../../../helpers/auth';
 import urlPatterns from '../../../urls';
 
@@ -53,6 +53,7 @@ class Header extends Component {
               <img src={logo} className="Header--brand__logo" alt="The Wine Gallery" />
             </Link>
           </section>
+          <HeaderDiscountMessage />
           <nav className="Header--main-navigation">
             <ul className="Header--main-navigation--list">
               <li>

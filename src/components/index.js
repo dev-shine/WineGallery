@@ -5,6 +5,7 @@ import CheckBox from './atoms/CheckBox/CheckBox';
 import ButtonMutation from './atoms/ButtonMutation/ButtonMutation';
 import AddWineToShoppingCartButton from './atoms/AddWineToShoppingCartButton/AddWineToShoppingCartButton';
 import StarRating from './atoms/StarRating/StarRating';
+import HeaderDiscountMessage from './atoms/HeaderDiscountMessage/HeaderDiscountMessage';
 
 // Molecules
 import SimpleListItem from './molecules/SimpleListItem/SimpleListItem';
@@ -50,6 +51,7 @@ export {
   ButtonMutation,
   AddWineToShoppingCartButton,
   StarRating,
+  HeaderDiscountMessage,
 
   // Molecules
   SimpleListItem,

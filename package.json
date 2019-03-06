@@ -24,6 +24,7 @@
     "lodash.merge": "~4.6.1",
     "node-sass": "^4.10.0",
     "prop-types": "^15.6.2",
+    "query-string": "^6.3.0",
     "react": "^16.6.3",
     "react-apollo": "^2.4.1",
     "react-dom": "^16.6.3",
