@@ -151,6 +151,9 @@ export const GET_MEMBER = gql`
         id
         discount
         discountCode
+        discountType {
+          id
+        }
         total
         totalShippingFee
         shoppingcartitemSet {
@@ -264,6 +267,15 @@ export const GET_MEMBER = gql`
 `;
 
 export const GET_SHOPPING_CART = GET_MEMBER;
+
+export const GET_REFERRAL_DISCOUNT = gql`
+  query ReferralDiscount {
+    referralDiscount @client{
+      referralCode
+      giveawayCode
+    }
+  }
+`;
 
 /**
  * MUTATIONS
@@ -456,18 +468,18 @@ export const UPDATE_WINE_PREFERENCE = gql`
 `;
 
 export const UPDATE_WINE_RATING = gql`
-mutation UpdateWineRating ($input: WineRatingInput!) {
-  updateWineRating(input: $input) {
-    wineRating {
-      id
-      liked
-      totalUpvotes
-      totalDownvotes
-      note
-      score
+  mutation UpdateWineRating ($input: WineRatingInput!) {
+    updateWineRating(input: $input) {
+      wineRating {
+        id
+        liked
+        totalUpvotes
+        totalDownvotes
+        note
+        score
+      }
     }
   }
-}
 `;
 
 export const GET_TOP_MEMBERS = gql`
@@ -488,3 +500,73 @@ export const GET_TOP_MEMBERS = gql`
     }
   }
 `;
+
+export const VALIDATE_REFERRAL_CODE = gql`
+  mutation ValidateReferralCode ($input: ValidateReferralCodeInput!) {
+    validateReferralCode(input: $input) {
+      isValid
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
+export const VALIDATE_GIVEAWAY_CODE = gql`
+  mutation validateGiveawayCode ($input: ValidateGiveawayCodeInput!) {
+    validateGiveawayCode(input: $input) {
+      isValid
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
+export const SET_REFERRAL_DISCOUNT = gql`
+  mutation SetReferralDiscount(
+    $referralCode: String,
+    $giveawayCode: String,
+  ) {
+    setReferralDiscount(
+      referralCode: $referralCode,
+      giveawayCode: $giveawayCode,
+    ) @client {
+      referralDiscount @client {
+        referralCode
+        giveawayCode
+      }
+    }
+  }
+`;
+
+/**
+ * Resolvers, Defaults & Type definitions
+ * https://www.apollographql.com/docs/link/links/state
+ * */
+export const resolverReferralDiscount = {
+  defaults: {
+    referralDiscount: {
+      referralCode: null,
+      giveawayCode: null,
+      __typename: 'ReferralDiscountObjectStore',
+    },
+  },
+  resolvers: {
+    Mutation: {
+      setReferralDiscount: async (obj, args, { cache }) => {
+        const data = {
+          __typename: 'Store',
+          referralDiscount: {
+            __typename: 'ReferralDiscountObjectStore',
+            ...args,
+          },
+        };
+        await cache.writeData({ data });
+        return data;
+      },
+    },
+  },
+};

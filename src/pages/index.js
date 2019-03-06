@@ -17,6 +17,7 @@ import SpecialPackDetails from './SpecialPackDetails/SpecialPackDetails';
 import SpecialPacks from './SpecialPacks/SpecialPacks';
 import Gifts from './Gifts/Gifts';
 import WineRatings from './WineRatings/WineRatings';
+import Referral from './Referral/Referral';
 
 export {
   Home,
@@ -33,6 +34,7 @@ export {
   DashboardBadges,
   MyOrders,
   WineRatings,
+  Referral,
 
   // Product
   Quiz,

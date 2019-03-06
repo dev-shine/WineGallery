@@ -13,6 +13,7 @@ import { isLoggedIn } from './helpers/auth';
 const Wines = React.lazy(() => import('./pages/Wines/Wines'));
 const WineDetails = React.lazy(() => import('./pages/WineDetails/WineDetails'));
 const Login = React.lazy(() => import('./pages/Login/Login'));
+const Referral = React.lazy(() => import('./pages/Referral/Referral'));
 const MyAccount = React.lazy(() => import('./pages/MyAccount/MyAccount'));
 const MyOrders = React.lazy(() => import('./pages/MyOrders/MyOrders'));
 const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'));
@@ -54,7 +55,7 @@ class Routes extends Component {
       <Switch>
 
         {/* Renders components once application is loaded first time */}
-        <Route path={urlPatterns.HOME} exact component={Home} />
+        <Route path={urlPatterns.BASE} exact component={Home} />
         <Route path={urlPatterns.HOME} exact component={Home} />
         <Route path={urlPatterns.SIGN_UP} component={SignUp} />
         <Route path={urlPatterns.PASSWORD_RESET} component={PasswordReset} />
@@ -65,6 +66,7 @@ class Routes extends Component {
 
         {/* Renders lazily loaded components --> https://reactjs.org/docs/code-splitting.html#reactlazy */}
         <Route path={urlPatterns.LOGIN} render={props => <Login {...props} />} />
+        <Route path={urlPatterns.REFERRAL()} render={props => <Referral {...props} />} />
         <Route path={urlPatterns.WINES} exact render={props => <Wines {...props} />} />
         <Route
           path={urlPatterns.WINES_BOX}

@@ -19,8 +19,12 @@ import {
   GET_WINES,
 } from './resolvers/wine';
 
-// Shopping cart
-import { GET_MEMBER, GET_SHOPPING_CART } from './resolvers/member';
+// Member
+import {
+  GET_MEMBER,
+  GET_SHOPPING_CART,
+  GET_REFERRAL_DISCOUNT,
+} from './resolvers/member';
 
 // Quiz
 import { GET_QUIZ_QUESTIONS } from './resolvers/quiz';
@@ -45,6 +49,7 @@ export {
   GET_MEMBER,
   GET_MEMBER_BADGES_BY_CATEGORY,
   GET_QUIZ_QUESTIONS,
+  GET_REFERRAL_DISCOUNT,
   GET_SEASONS,
   GET_SHOPPING_CART,
   GET_SPECIAL_PACK_DETAILS,

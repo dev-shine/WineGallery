@@ -12,6 +12,7 @@ import { getLocalStorageToken } from '../helpers/auth';
 // Apollo GraphQL Resolvers
 import { resolverAuth } from './resolvers/auth';
 import { resolverGiftFlow } from './resolvers/gift';
+import { resolverReferralDiscount } from './resolvers/member';
 
 /**
  * Creates instance of Apollo client and Persistence and make it available across the application.
@@ -38,6 +39,7 @@ const generateApolloClient = () => {
     ...merge(
       resolverAuth,
       resolverGiftFlow,
+      resolverReferralDiscount,
     ),
     cache,
   });
@@ -48,6 +50,7 @@ const generateApolloClient = () => {
     maxSize: false, // set to unlimited (default is 1MB https://github.com/apollographql/apollo-cache-persist)
     debug: true, // enables console logging
     key: process.env.REACT_APP_STORE_LOCAL_STORAGE,
+    debounce: 0, // writes changes to the local storage immediately
   });
 
   // Instantiates Apollo Client object for GraphQL

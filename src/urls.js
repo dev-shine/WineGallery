@@ -10,6 +10,7 @@ const URL_PATTERNS = {
   PASSWORD_RESET: '/password-reset',
   QUIZ: '/quiz',
   QUIZ_RESULTS: '/quiz/results',
+  REFERRAL: (referralCode = ':referralCode') => `/invite/${referralCode}`,
   SET_NEW_PASSWORD: '/set-new-password/:uid/:token',
   SIGN_UP: '/signup',
   SPECIAL_PACKS: '/special-packs',

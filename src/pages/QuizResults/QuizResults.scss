@@ -31,6 +31,12 @@
     @extend %--fw_container;
   }
 
+  &--discount-message {
+    color: $brand-danger;
+    font-weight: bold;
+    display: inline-block;
+  }
+
   button {
     background-color: #fff;
     border: 3px solid;
