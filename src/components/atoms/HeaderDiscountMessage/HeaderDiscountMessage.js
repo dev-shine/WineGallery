@@ -4,7 +4,11 @@ import { compose, graphql } from 'react-apollo';
 
 import { isLoggedIn } from '../../../helpers/auth';
 import { GET_MEMBER, GET_REFERRAL_DISCOUNT } from '../../../graphql/queries';
-import { DISCOUNT_TYPES_IDS, DISCOUNT_TYPES_VALUES } from '../../../helpers/constants';
+import {
+  DISCOUNT_TYPES_IDS,
+  DISCOUNT_TYPES_VALUES,
+  FETCH_POLICY_CACHE_ONLY,
+} from '../../../helpers/constants';
 
 import './HeaderDiscountMessage.scss';
 
@@ -105,6 +109,11 @@ class HeaderDiscountMessage extends Component {
 }
 
 export default compose(
-  graphql(GET_REFERRAL_DISCOUNT, { name: 'referralDiscountQuery' }),
+  graphql(
+    GET_REFERRAL_DISCOUNT, {
+      name: 'referralDiscountQuery',
+      options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY },
+    }
+  ),
   graphql(GET_MEMBER, { name: 'meQuery' }),
 )(HeaderDiscountMessage);

@@ -3,6 +3,7 @@ import { compose, graphql } from 'react-apollo';
 
 import { InputField } from '../..';
 import { GET_GIFT_FLOW_INFO, SET_GIFT_FLOW_INFO } from '../../../graphql/resolvers/gift';
+import { FETCH_POLICY_CACHE_ONLY } from '../../../helpers/constants';
 import { checkEmail, checkName, checkServerValidation } from '../../../helpers/validations';
 
 import './GiftMemberForm.scss';
@@ -158,5 +159,10 @@ class GiftMemberForm extends Component {
 
 export default compose(
   graphql(SET_GIFT_FLOW_INFO, { name: 'setGiftFlowInfo' }),
-  graphql(GET_GIFT_FLOW_INFO, { name: 'giftFlowQuery' }),
+  graphql(
+    GET_GIFT_FLOW_INFO, {
+      name: 'giftFlowQuery',
+      options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY },
+    }
+  ),
 )(GiftMemberForm);

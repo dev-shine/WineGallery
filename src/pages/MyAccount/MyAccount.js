@@ -21,6 +21,7 @@ import {
   WinePreference,
 } from '../../components';
 import { identifyUser } from '../../helpers/Analytics';
+import { FETCH_POLICY_CACHE_ONLY } from '../../helpers/constants';
 import { shoppingCartLocalStorage } from '../../helpers/tools';
 
 import './MyAccount.scss';
@@ -213,6 +214,11 @@ class MyAccount extends Component {
 
 export default compose(
   graphql(SET_MEMBER_AUTH, { name: 'setMemberAuth' }),
-  graphql(GET_AUTH, { name: 'authQuery' }),
+  graphql(
+    GET_AUTH, {
+      name: 'authQuery',
+      options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY },
+    }
+  ),
 )(MyAccount);
 
