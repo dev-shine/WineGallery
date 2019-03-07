@@ -15,6 +15,7 @@ import {
   AccountDetailsForm,
   ContactPreferencesForm,
   ShippingAddressForm,
+  SubscriptionBillingDay,
   SubscriptionStatus,
   PaymentMethod,
   WinePreference,
@@ -172,7 +173,7 @@ class MyAccount extends Component {
                                 <PaymentMethod me={data.me} />
                               </div>
                               <div className="MyAccount--forms__billing-day">
-                                <h3>Billing day place holder.</h3>
+                                <SubscriptionBillingDay me={data.me} />
                               </div>
                               <div className="MyAccount--forms__subscription">
                                 <SubscriptionStatus me={data.me} />
