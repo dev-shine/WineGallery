@@ -30,6 +30,7 @@ import WineFilters from './organisms/WineFilters/WineFilters';
 import WineList from './organisms/WineList/WineList';
 import WineSorters from './organisms/WineSorters/WineSorters';
 import ContactPreferencesForm from './organisms/ContactPreferencesForm/ContactPreferencesForm';
+import SubscriptionBillingDay from './organisms/SubscriptionBillingDay/SubscriptionBillingDay';
 import SubscriptionStatus from './organisms/SubscriptionStatus/SubscriptionStatus';
 import PaymentMethod from './organisms/PaymentMethod/PaymentMethod';
 import QuizQuestion from './organisms/QuizQuestion/QuizQuestion';
@@ -72,6 +73,7 @@ export {
   MemberProgress,
   OrderSummary,
   AccountDetailsForm,
+  SubscriptionBillingDay,
   SubscriptionStatus,
   WinePreference,
   WineFilters,
