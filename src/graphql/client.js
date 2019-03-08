@@ -7,11 +7,26 @@ import { CachePersistor } from 'apollo-cache-persist';
 import merge from 'lodash.merge';
 
 import { getLocalStorageToken } from '../helpers/auth';
+import { FETCH_POLICY_NETWORK_ONLY } from '../helpers/constants';
 
 // Apollo GraphQL Resolvers
 import { resolverAuth } from './resolvers/auth';
 import { resolverGiftFlow } from './resolvers/gift';
 import { resolverReferralDiscount } from './resolvers/member';
+
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: FETCH_POLICY_NETWORK_ONLY,
+    errorPolicy: 'ignore',
+  },
+  query: {
+    fetchPolicy: FETCH_POLICY_NETWORK_ONLY,
+    errorPolicy: 'all',
+  },
+  mutate: {
+    errorPolicy: 'all',
+  },
+};
 
 /**
  * Creates instance of Apollo client and Persistence and make it available across the application.
@@ -34,6 +49,7 @@ const generateApolloClient = () => {
   })).concat(httpLink);
 
   const cache = new InMemoryCache();
+
   const persistent = new CachePersistor({
     cache,
     storage: window.localStorage,
@@ -61,6 +77,7 @@ const generateApolloClient = () => {
 
   // Instantiates Apollo Client object for GraphQL
   const client = new ApolloClient({
+    defaultOptions,
     cache,
     link: authLink,
     resolvers,
