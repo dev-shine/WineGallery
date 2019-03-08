@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import urlPatterns from '../../../urls';
-import { SUBSCRIPTION_STATUS, SUBSCRIPTION_STATUS_ID } from '../../../helpers/constants';
+import {
+  SUBSCRIPTION_STATUS_ID_TO_NAME,
+  SUBSCRIPTION_STATUS_NAME_TO_ID,
+} from '../../../helpers/constants';
 
 import './SubscriptionSummary.scss';
 
@@ -26,15 +29,15 @@ const SubscriptionSummary = props => {
               <h3
                 className={
                   `SubscriptionStatus--status ${subscription.subscriptionStatus.id
-                  && SUBSCRIPTION_STATUS_ID[subscription.subscriptionStatus.id].toLowerCase()}`
+                  && SUBSCRIPTION_STATUS_ID_TO_NAME[subscription.subscriptionStatus.id].toLowerCase()}`
                 }
               >
                 {subscription.subscriptionStatus.name}
               </h3>
               {
-                subscription.subscriptionStatus.name === SUBSCRIPTION_STATUS.PAUSE
+                subscription.subscriptionStatus.id === SUBSCRIPTION_STATUS_NAME_TO_ID.PAUSE
                 && (
-                  <span>{`Until ${subscription.holdUntilDate}`}</span>
+                  <span>{`Until ${new Date(subscription.holdUntilDate).toLocaleDateString()}`}</span>
                 )
               }
               {

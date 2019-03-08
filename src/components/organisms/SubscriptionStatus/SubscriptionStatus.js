@@ -7,7 +7,7 @@ import Dropdown from 'react-dropdown';
 
 import { UPDATE_SUBSCRIPTION } from '../../../graphql/mutations';
 import { GET_MEMBER } from '../../../graphql/queries';
-import { SUBSCRIPTION_STATUS, MONTH_NAMES, SUBSCRIPTION_STATUS_ID } from '../../../helpers/constants';
+import { SUBSCRIPTION_STATUS, MONTH_NAMES, SUBSCRIPTION_STATUS_ID_TO_NAME } from '../../../helpers/constants';
 
 import './SubscriptionStatus.scss';
 
@@ -313,7 +313,7 @@ class SubscriptionStatus extends Component {
     const { subscription } = props.me;
     const hasSubscription = !!subscription;
     const statusId = hasSubscription && subscription.subscriptionStatus.id;
-    const statusUpperCase = statusId && SUBSCRIPTION_STATUS_ID[statusId];
+    const statusUpperCase = statusId && SUBSCRIPTION_STATUS_ID_TO_NAME[statusId];
     const statusName = hasSubscription && subscription.subscriptionStatus.name;
     const monthFrequency = hasSubscription && subscription.monthFrequency;
     let holdUntilDay;
@@ -343,7 +343,7 @@ class SubscriptionStatus extends Component {
                   <h3
                     className={
                       `SubscriptionStatus--status
-                      ${statusId && SUBSCRIPTION_STATUS_ID[statusId].toLowerCase()}`
+                      ${statusId && SUBSCRIPTION_STATUS_ID_TO_NAME[statusId].toLowerCase()}`
                     }
                   >
                     {statusName}
