@@ -20,6 +20,8 @@ class ButtonMutation extends Component {
     mutationPayloadName: PropTypes.string,
     handleShowErrors: PropTypes.func,
     onClick: PropTypes.func,
+    handleResponse: PropTypes.func,
+
   };
 
   static defaultProps = {
@@ -28,6 +30,7 @@ class ButtonMutation extends Component {
     mutationPayloadName: null,
     handleShowErrors: null,
     onClick: null,
+    handleResponse: null,
   };
 
   /**
@@ -41,6 +44,7 @@ class ButtonMutation extends Component {
       mutationPayloadName,
       handleShowErrors,
       onClick,
+      handleResponse,
     } = this.props;
     mutationMethod({ variables: { input } }).then(data => {
 
@@ -49,6 +53,9 @@ class ButtonMutation extends Component {
         && data.data[mutationPayloadName].errors && data.data[mutationPayloadName].errors.length) {
         handleShowErrors(data.data[mutationPayloadName].errors[0].messages[0]);
       }
+
+      // Sends response back to parent component independent of success or failure
+      handleResponse && handleResponse(data);
     });
 
     // Triggers event when for when user clicks the button good to simulates button clicked

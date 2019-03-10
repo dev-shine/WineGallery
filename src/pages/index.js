@@ -18,6 +18,7 @@ import SpecialPacks from './SpecialPacks/SpecialPacks';
 import Gifts from './Gifts/Gifts';
 import WineRatings from './WineRatings/WineRatings';
 import Referral from './Referral/Referral';
+import InviteFriend from './InviteFriend/InviteFriend';
 
 export {
   Home,
@@ -35,6 +36,7 @@ export {
   MyOrders,
   WineRatings,
   Referral,
+  InviteFriend,
 
   // Product
   Quiz,

@@ -21,6 +21,7 @@ const URL_PATTERNS = {
   RATINGS: '/ratings',
   WINE_DETAILS: (slug = ':slug') => `/wines/details/${slug}`,
   GIFTS: '/gifts',
+  INVITE_FRIEND: '/dashboard/invite',
 };
 
 export default URL_PATTERNS;

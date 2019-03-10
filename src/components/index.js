@@ -6,6 +6,8 @@ import ButtonMutation from './atoms/ButtonMutation/ButtonMutation';
 import AddWineToShoppingCartButton from './atoms/AddWineToShoppingCartButton/AddWineToShoppingCartButton';
 import StarRating from './atoms/StarRating/StarRating';
 import HeaderDiscountMessage from './atoms/HeaderDiscountMessage/HeaderDiscountMessage';
+import InputFieldCopyClipboard from './atoms/InputFieldCopyClipboard/InputFieldCopyClipboard';
+import SocialShare from './atoms/SocialShare/SocialShare';
 
 // Molecules
 import SimpleListItem from './molecules/SimpleListItem/SimpleListItem';
@@ -53,6 +55,8 @@ export {
   AddWineToShoppingCartButton,
   StarRating,
   HeaderDiscountMessage,
+  InputFieldCopyClipboard,
+  SocialShare,
 
   // Molecules
   SimpleListItem,

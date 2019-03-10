@@ -30,7 +30,7 @@ const Dashboard = props => {
               <NavLink to={urlPatterns.MY_ORDERS}>My orders</NavLink>
             </div>
             <div className="Dashboard--sections">
-              <h1 className="Dashboard--sections__title">Your Subscription</h1>
+              <h2 className="Dashboard--sections__title">Your Subscription</h2>
               <div className="Dashboard--sections__subscription-summary">
                 <SubscriptionSummary data={meQuery} />
               </div>

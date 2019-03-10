@@ -81,6 +81,13 @@ class Header extends Component {
               {
                 isLoggedIn() && (
                   <li>
+                    <NavLink to={urlPatterns.INVITE_FRIEND}>Invite Friends</NavLink>
+                  </li>
+                )
+              }
+              {
+                isLoggedIn() && (
+                  <li>
                     <NavLink to={urlPatterns.WINES_BOX}>My Wine Box</NavLink>
                   </li>
                 )
