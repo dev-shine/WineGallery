@@ -75,7 +75,6 @@ export default compose(
     name: 'meQuery',
     options: {
       partialRefetch: true,
-      fetchPolicy: 'cache-and-network',
     },
   }),
 )(Dashboard);

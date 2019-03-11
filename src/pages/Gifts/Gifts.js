@@ -19,6 +19,7 @@ import {
   SET_GIFT_FLOW_INFO,
 } from '../../graphql/resolvers/gift';
 import { executeSignUpRequest } from '../../helpers/auth';
+import { FETCH_POLICY_CACHE_AND_NETWORK, FETCH_POLICY_CACHE_ONLY } from '../../helpers/constants';
 import urlPatterns from '../../urls';
 
 import './Gifts.scss';
@@ -586,31 +587,47 @@ class Gifts extends Component {
 }
 
 export default compose(
-  graphql(GET_AUTH, { name: 'authQuery' }),
   graphql(GET_MEMBER, {
     name: 'meQuery',
     options: {
       partialRefetch: true,
-      fetchPolicy: 'cache-and-network',
     },
   }),
   graphql(ADD_SHOPPING_CART_ITEM, { name: 'addShoppingCart' }),
   graphql(SIGN_UP, { name: 'signUp' }),
-  graphql(GET_GIFT_FLOW_INFO, { name: 'giftFlowQuery' }),
   graphql(GET_ALL_GIFT_DELIVERIES, { name: 'allGiftDeliveriesQuery' }),
   graphql(GET_ALL_GIFT_PLANS, { name: 'allGiftPlansQuery' }),
   graphql(GET_ALL_GIFT_TEMPLATES, { name: 'allGiftTemplatesQuery' }),
-  graphql(SET_GIFT_FLOW_INFO, { name: 'setGiftFlowInfo' }),
   graphql(ADD_SHOPPING_CART_ITEM, { name: 'addShoppingCartItem' }),
-  graphql(GET_GIFT_FLOW_SIGN_UP_FORM_INFO, { name: 'giftFlowSignUpFormInfoQuery' }),
   graphql(GET_GIFT_PLAN, {
     name: 'giftPlanQuery',
     options: props => ({
-      fetchPolicy: 'network-only',
+      fetchPolicy: FETCH_POLICY_CACHE_AND_NETWORK,
       variables: {
-        winePricePointId: props.giftFlowQuery.giftFlow.winePricePointId || DEFAULT_WINE_PRICE_POINT,
-        months: props.giftFlowQuery.giftFlow.months || DEFAULT_MONTHS,
+        winePricePointId: (
+          (props.giftFlowQuery && props.giftFlowQuery.giftFlow.winePricePointId) || DEFAULT_WINE_PRICE_POINT
+        ),
+        months: (props.giftFlowQuery && props.giftFlowQuery.giftFlow.months) || DEFAULT_MONTHS,
       },
     }),
   }),
+  graphql(SET_GIFT_FLOW_INFO, { name: 'setGiftFlowInfo' }),
+  graphql(
+    GET_AUTH, {
+      name: 'authQuery',
+      options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY },
+    }
+  ),
+  graphql(
+    GET_GIFT_FLOW_SIGN_UP_FORM_INFO, {
+      name: 'giftFlowSignUpFormInfoQuery',
+      options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY },
+    }
+  ),
+  graphql(
+    GET_GIFT_FLOW_INFO, {
+      name: 'giftFlowQuery',
+      options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY },
+    }
+  ),
 )(Gifts);

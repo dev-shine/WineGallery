@@ -10,6 +10,8 @@ import './MemberProgress.scss';
 const MemberProgress = props => {
 
   const { me } = props;
+  if (!me) return <div>Loading</div>;
+
   const pointsToNextLevel = me.nextBadge.badgerulesSet[0].quantity - me.points;
 
   return (

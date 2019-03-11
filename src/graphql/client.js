@@ -2,9 +2,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-client/ApolloClient';
 import { setContext } from 'apollo-link-context';
 import { createHttpLink } from 'apollo-link-http';
-import { withClientState } from 'apollo-link-state';
-import { ApolloLink } from 'apollo-link';
 import { CachePersistor } from 'apollo-cache-persist';
+
 import merge from 'lodash.merge';
 
 import { getLocalStorageToken } from '../helpers/auth';
@@ -35,15 +34,6 @@ const generateApolloClient = () => {
   })).concat(httpLink);
 
   const cache = new InMemoryCache();
-  const stateLink = withClientState({
-    ...merge(
-      resolverAuth,
-      resolverGiftFlow,
-      resolverReferralDiscount,
-    ),
-    cache,
-  });
-
   const persistent = new CachePersistor({
     cache,
     storage: window.localStorage,
@@ -53,17 +43,49 @@ const generateApolloClient = () => {
     debounce: 0, // writes changes to the local storage immediately
   });
 
+  const resolvers = {
+    ...merge(
+      resolverAuth.resolvers,
+      resolverGiftFlow.resolvers,
+      resolverReferralDiscount.resolvers,
+    ),
+  };
+
+  const typeDefs = {
+    ...merge(
+      resolverAuth.typeDefs,
+      resolverGiftFlow.typeDefs,
+      resolverReferralDiscount.typeDefs,
+    ),
+  };
+
   // Instantiates Apollo Client object for GraphQL
   const client = new ApolloClient({
-    link: ApolloLink.from([
-      stateLink,
-      authLink,
-    ]),
     cache,
-    connectToDevTools: process.env.NODE_ENV === 'development',
+    link: authLink,
+    resolvers,
+    typeDefs,
   });
 
-  return { client, persistent };
+  const data = {
+    ...merge(
+      resolverAuth.defaults,
+      resolverGiftFlow.defaults,
+      resolverReferralDiscount.defaults,
+    ),
+  };
+
+  // Creates default cache when user lands in the app for the first time
+  if (!localStorage.getItem(process.env.REACT_APP_STORE_LOCAL_STORAGE)) {
+    cache.writeData({ data });
+  }
+
+  // Cleans cache with default data once user logs out and logs back in
+  client.onResetStore(() => {
+    cache.writeData({ data });
+  });
+
+  return { client, persistent, cache };
 };
 
 const { client, persistent } = generateApolloClient();

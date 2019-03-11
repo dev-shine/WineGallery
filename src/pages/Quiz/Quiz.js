@@ -5,6 +5,7 @@ import { Query, compose, graphql } from 'react-apollo';
 import { GET_MEMBER, GET_QUIZ_QUESTIONS, GET_REFERRAL_DISCOUNT } from '../../graphql/queries';
 import { SET_MEMBER_AUTH } from '../../graphql/resolvers/auth';
 import { SUBMIT_QUIZ } from '../../graphql/mutations';
+import { FETCH_POLICY_CACHE_ONLY } from '../../helpers/constants';
 import { checkEmail } from '../../helpers/validations';
 import { isLoggedIn, setLocalStorageToken } from '../../helpers/auth';
 import urlPatterns from '../../urls';
@@ -165,13 +166,16 @@ class Quiz extends Component {
 }
 
 export default compose(
-  graphql(SET_MEMBER_AUTH, { name: 'setMemberAuth' }),
   graphql(SUBMIT_QUIZ, {
     name: 'submitQuiz',
-    options: {
-      refetchQueries: () => [{ query: GET_MEMBER, fetchPolicy: 'network-only' }],
-    },
+    options: { refetchQueries: () => [{ query: GET_MEMBER }] },
   }),
-  graphql(GET_REFERRAL_DISCOUNT, { name: 'referralDiscountQuery' }),
+  graphql(
+    GET_REFERRAL_DISCOUNT, {
+      name: 'referralDiscountQuery',
+      options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY },
+    }
+  ),
+  graphql(SET_MEMBER_AUTH, { name: 'setMemberAuth' }),
   graphql(SET_REFERRAL_DISCOUNT, { name: 'setReferralDiscount' }),
 )(Quiz);

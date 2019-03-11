@@ -12,6 +12,7 @@ import './MemberBadges.scss';
 const MemberBadges = props => {
 
   const { me, history } = props;
+  if (!me) return <div>Loading</div>;
 
   return (
     <div className="MemberBadges">

@@ -9,6 +9,7 @@ import {
 } from 'react-apollo';
 
 import { ADD_SHOPPING_CART_ITEM, SIGN_UP, UPDATE_MEMBER_ACCOUNT_DETAILS } from '../../graphql/mutations';
+import { FETCH_POLICY_CACHE_ONLY } from '../../helpers/constants';
 import urlPatterns from '../../urls';
 import { executeLogInRequest } from '../../helpers/auth';
 import {
@@ -309,6 +310,11 @@ class SignUp extends Component {
 
 export default compose(
   withApollo,
-  graphql(GET_REFERRAL_DISCOUNT, { name: 'referralDiscountQuery' }),
+  graphql(
+    GET_REFERRAL_DISCOUNT, {
+      name: 'referralDiscountQuery',
+      options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY },
+    }
+  ),
   graphql(SET_REFERRAL_DISCOUNT, { name: 'setReferralDiscount' }),
 )(SignUp);
