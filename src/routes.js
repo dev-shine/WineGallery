@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import {
   Home, PasswordReset, SetNewPassword, SignUp, Quiz, QuizResults, SpecialPacks, SpecialPackDetails, Gifts,
-  WineRatings,
+  WineRatings, InviteFriend,
 } from './pages';
 import ThankYou from './pages/ThankYou/ThankYou';
 import urlPatterns from './urls';
@@ -83,11 +83,12 @@ class Routes extends Component {
           exact
         />
 
-        <PrivateRoute path={urlPatterns.MY_ACCOUNT} component={MyAccount} />
-        <PrivateRoute path={urlPatterns.DASHBOARD_BADGES} component={DashboardBadges} />
-        <PrivateRoute path={urlPatterns.MY_ORDERS} component={MyOrders} />
-        <PrivateRoute path={urlPatterns.DASHBOARD} component={Dashboard} />
-        <PrivateRoute path={urlPatterns.RATINGS} component={WineRatings} />
+        <PrivateRoute path={urlPatterns.MY_ACCOUNT} component={MyAccount} exact />
+        <PrivateRoute path={urlPatterns.DASHBOARD_BADGES} component={DashboardBadges} exact />
+        <PrivateRoute path={urlPatterns.MY_ORDERS} component={MyOrders} exact />
+        <PrivateRoute path={urlPatterns.DASHBOARD} component={Dashboard} exact />
+        <PrivateRoute path={urlPatterns.RATINGS} component={WineRatings} exact />
+        <PrivateRoute path={urlPatterns.INVITE_FRIEND} component={InviteFriend} exact />
 
         <Route path="" exact component={Home} />
       </Switch>

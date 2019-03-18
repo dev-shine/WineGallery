@@ -135,6 +135,12 @@ const BADGE_CATEGORY_ID = {
 
 const AUSTRALIA_CODE = 117;
 
+const SOCIAL_MEDIA_SITES = {
+  FACEBOOK: 'facebook',
+  TWITTER: 'twitter',
+  FACEBOOK_MESSENGER: 'facebook-messager',
+};
+
 const FETCH_POLICY_NO_CACHE = 'no-cache';
 const FETCH_POLICY_NETWORK_ONLY = 'network-only';
 const FETCH_POLICY_CACHE_AND_NETWORK = 'cache-and-network';
@@ -164,4 +170,5 @@ export {
   FETCH_POLICY_NETWORK_ONLY,
   FETCH_POLICY_NO_CACHE,
   FETCH_POLICY_CACHE_ONLY,
+  SOCIAL_MEDIA_SITES,
 };

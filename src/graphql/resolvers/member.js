@@ -16,6 +16,7 @@ export const GET_MEMBER = gql`
       lastName
       hasUpdatedPassword
       points
+      referralCode
       orderedWineCountries {
         id
         name
@@ -517,6 +518,18 @@ export const VALIDATE_GIVEAWAY_CODE = gql`
   mutation validateGiveawayCode ($input: ValidateGiveawayCodeInput!) {
     validateGiveawayCode(input: $input) {
       isValid
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
+export const INVITE_FRIEND = gql`
+  mutation InviteFriend($input: InviteFriendInput!) {
+    inviteFriend(input: $input) {
+      isSuccessful
       errors {
         field
         messages
