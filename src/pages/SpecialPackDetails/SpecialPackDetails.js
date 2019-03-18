@@ -115,7 +115,7 @@ class SpecialPackDetails extends Component {
       const specialPackOptionsAsObject = {};
       specialPackOptions.forEach(specialPackOption => {
         specialPackOptionsAsObject[specialPackOption.product.id] = {
-          name: specialPackOption.product.name,
+          name: specialPackOption.displayName,
           sellingPrice: specialPackOption.product.sellingPrice,
           productType: specialPackOption.product.productType.id,
         };
@@ -262,7 +262,7 @@ class SpecialPackDetails extends Component {
                                 {this.renderOptions(specialPackOption)}
                               </select>
                               <p className="SpecialPackDetails--content__option-name">
-                                {specialPackOption.product.name}
+                                {specialPackOption.displayName}
                               </p>
                             </div>
                           )

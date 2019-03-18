@@ -21,9 +21,9 @@ export const UPDATE_SUBSCRIPTION = gql`
   }
 `;
 
-export const DELETE_WINE_FROM_SUBSCRIPTION = gql`
-  mutation DeleteRecommendedWine($input: SwitchRecommendedWineInput!) {
-    deleteRecommendedWine(input: $input) {
+export const DELETE_WINE_FROM_QUIZ_BOX = gql`
+  mutation DeleteWineFromQuizBox($input: GenericSubscriptionWineInput!) {
+    deleteWineFromQuizBox(input: $input) {
       isSuccessful
       errors {
         field
@@ -33,9 +33,9 @@ export const DELETE_WINE_FROM_SUBSCRIPTION = gql`
   }
 `;
 
-export const ADD_WINE_TO_SUBSCRIPTION = gql`
-  mutation AddRecommendedWine($input: SwitchRecommendedWineInput!) {
-    addRecommendedWine(input: $input) {
+export const ADD_WINE_TO_QUIZ_BOX = gql`
+  mutation AddWineToQuizBox($input: GenericSubscriptionWineInput!) {
+    addWineToQuizBox(input: $input) {
       errors {
         field
         messages

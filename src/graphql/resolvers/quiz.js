@@ -5,15 +5,21 @@ import gql from 'graphql-tag';
  * */
 
 export const GET_QUIZ_QUESTIONS = gql`
-  query QuizQuestions {
-    quizQuestions {
+  query AllQuizQuestions {
+    allQuizQuestions {
       id
       description
       maxAnswers
+      quizVersion {
+        id
+      }
       quizanswerSet {
         id
         description
-        photoUrl
+        graphicalIdentifier
+        quizAnswerCategory {
+          id
+        }
       }
     }
   }
