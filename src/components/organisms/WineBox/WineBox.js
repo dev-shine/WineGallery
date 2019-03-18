@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 
 import { compose, graphql, withApollo } from 'react-apollo';
 
-import { DELETE_WINE_FROM_SUBSCRIPTION } from '../../../graphql/mutations';
+import { DELETE_WINE_FROM_QUIZ_BOX } from '../../../graphql/mutations';
 import { GET_MEMBER, GET_SHOPPING_CART } from '../../../graphql/queries';
 import { GET_AUTH } from '../../../graphql/resolvers/auth';
 import { DEFAULT_BOTTLE_URL } from '../../../helpers/constants';
@@ -56,7 +56,7 @@ class WineBox extends Component {
     const input = { wineId, memberId };
 
     client.mutate({
-      mutation: DELETE_WINE_FROM_SUBSCRIPTION,
+      mutation: DELETE_WINE_FROM_QUIZ_BOX,
       refetchQueries: () => [{ query: GET_SHOPPING_CART }],
       variables: { input },
     });

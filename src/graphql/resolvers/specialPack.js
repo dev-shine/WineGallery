@@ -14,6 +14,7 @@ export const GET_ALL_SPECIAL_PACKS = gql`
       offset: $offset
     ) {
       id
+      name
       heroTopImageLargeUrl
       section1Title
       section1Text
@@ -34,6 +35,8 @@ export const GET_SPECIAL_PACK_DETAILS = gql`
       slug: $slug
     ) {
       id
+      name
+      slug
       heroTopImageLargeUrl
       buyButtonText
       heroTopTitle
@@ -60,9 +63,12 @@ export const GET_SPECIAL_PACK_DETAILS = gql`
       isAvailable
       specialpackoptionSet {
         id
+        displayName
+        sortOrder
         product {
           id
           name
+          isEnabled
           productType {
             id
             isEnabled

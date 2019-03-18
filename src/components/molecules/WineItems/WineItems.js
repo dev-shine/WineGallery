@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
 import { Link } from 'react-router-dom';
 
-import { ADD_WINE_TO_SUBSCRIPTION } from '../../../graphql/mutations';
+import { ADD_WINE_TO_QUIZ_BOX } from '../../../graphql/mutations';
 import { GET_SHOPPING_CART } from '../../../graphql/queries';
 import { GET_AUTH } from '../../../graphql/resolvers/auth';
 import urlPatterns from '../../../urls';
@@ -81,7 +81,7 @@ class WineItems extends Component {
               // Adds the wine to subscription
               <ButtonMutation
                 label="Add"
-                mutationProp={ADD_WINE_TO_SUBSCRIPTION}
+                mutationProp={ADD_WINE_TO_QUIZ_BOX}
                 reFetchQueriesProp={[{ query: GET_SHOPPING_CART }]}
                 input={{ wineId: wine.id, memberId }}
               />)
