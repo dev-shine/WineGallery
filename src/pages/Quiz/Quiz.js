@@ -113,12 +113,12 @@ class Quiz extends Component {
               // Quiz is valid if every question has at least one answer
               const isQuizValid = (
                 Object.values(selectedAnswers).every(selected => selected.length > 0)
-                && Object.keys(selectedAnswers).length === data.quizQuestions.length
+                && Object.keys(selectedAnswers).length === data.allQuizQuestions.length
               );
 
               return (
                 <div className="Quiz--form">
-                  {data.quizQuestions.map(quizQuestion => (
+                  {data.allQuizQuestions.map(quizQuestion => (
                     <QuizQuestion
                       key={quizQuestion.id}
                       question={quizQuestion.description}

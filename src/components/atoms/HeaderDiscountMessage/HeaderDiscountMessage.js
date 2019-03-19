@@ -5,8 +5,8 @@ import { compose, graphql } from 'react-apollo';
 import { isLoggedIn } from '../../../helpers/auth';
 import { GET_MEMBER, GET_REFERRAL_DISCOUNT } from '../../../graphql/queries';
 import {
-  DISCOUNT_TYPES_IDS,
-  DISCOUNT_TYPES_VALUES,
+  DISCOUNT_TYPE_IDS,
+  DISCOUNT_TYPE_VALUES,
   FETCH_POLICY_CACHE_ONLY,
 } from '../../../helpers/constants';
 
@@ -73,10 +73,10 @@ class HeaderDiscountMessage extends Component {
       // For logged users gets discount from the shopping cart
       const discountType = meQuery.me && meQuery.me.shoppingCart && meQuery.me.shoppingCart.discountType;
       hasReferralDiscount = (
-        discountType && discountType.id === DISCOUNT_TYPES_IDS.DB_ID_DISCOUNT_TYPE_REFERRAL
+        discountType && discountType.id === DISCOUNT_TYPE_IDS.DB_ID_DISCOUNT_TYPE_REFERRAL
       );
       hasGiveawayDiscount = (
-        discountType && discountType.id === DISCOUNT_TYPES_IDS.DB_ID_DISCOUNT_TYPE_GIVEAWAY
+        discountType && discountType.id === DISCOUNT_TYPE_IDS.DB_ID_DISCOUNT_TYPE_GIVEAWAY
       );
     } else {
 
@@ -88,9 +88,9 @@ class HeaderDiscountMessage extends Component {
 
     let discountValue = 0;
     if (hasGiveawayDiscount) {
-      discountValue = DISCOUNT_TYPES_VALUES.DB_ID_DISCOUNT_TYPE_GIVEAWAY;
+      discountValue = DISCOUNT_TYPE_VALUES.DB_ID_DISCOUNT_TYPE_GIVEAWAY;
     } else if (hasReferralDiscount) {
-      discountValue = DISCOUNT_TYPES_VALUES.DB_ID_DISCOUNT_TYPE_REFERRAL;
+      discountValue = DISCOUNT_TYPE_VALUES.DB_ID_DISCOUNT_TYPE_REFERRAL;
     }
 
     if (discountValue) return `You have $${discountValue} discount`;

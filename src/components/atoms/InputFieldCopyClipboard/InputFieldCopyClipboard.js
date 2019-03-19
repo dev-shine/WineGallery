@@ -46,8 +46,8 @@ class InputFieldCopyClipboard extends Component {
         />
 
         <CopyToClipboard text={text} onCopy={this.handleCopy}>
-          <button type="button" className="fa fa-link" disabled={text === '' || copied}>
-            <span>{copied ? ' Copied...' : 'Copy'}</span>
+          <button type="button" disabled={text === '' || copied}>
+            <span>{copied ? ' Copied' : 'Copy'}</span>
           </button>
         </CopyToClipboard>
       </div>
