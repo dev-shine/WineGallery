@@ -14,7 +14,10 @@ import './DashboardBadges.scss';
 const DashboardBadges = props => {
 
   const { meQuery } = props;
-  const memberId = meQuery.me.id;
+  const { loading } = meQuery;
+  const memberId = meQuery.me && meQuery.me.id;
+
+  if (loading) return 'Loading...';
 
   return (
     <div className="DashboardBadges">

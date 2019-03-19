@@ -9,6 +9,7 @@ import {
   VALIDATE_REFERRAL_CODE,
   VALIDATE_GIVEAWAY_CODE,
 } from '../../graphql/resolvers/member';
+import { FETCH_POLICY_CACHE_AND_NETWORK } from '../../helpers/constants';
 import urlPatterns from '../../urls';
 
 import './Referral.scss';
@@ -106,5 +107,10 @@ class Referral extends Component {
 export default compose(
   graphql(VALIDATE_REFERRAL_CODE, { name: 'validateReferralCode' }),
   graphql(VALIDATE_GIVEAWAY_CODE, { name: 'validateGiveawayCode' }),
-  graphql(SET_REFERRAL_DISCOUNT, { name: 'setReferralDiscount' }),
+  graphql(
+    SET_REFERRAL_DISCOUNT, {
+      name: 'setReferralDiscount',
+      options: { fetchPolicy: FETCH_POLICY_CACHE_AND_NETWORK },
+    }
+  ),
 )(Referral);

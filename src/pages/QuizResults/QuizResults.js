@@ -6,6 +6,7 @@ import { compose, graphql, Query } from 'react-apollo';
 import { WineBox } from '../../components';
 import { GET_SHOPPING_CART } from '../../graphql/queries';
 import { SET_MEMBER_AUTH } from '../../graphql/resolvers/auth';
+import { FETCH_POLICY_CACHE_ONLY } from '../../helpers/constants';
 import urlPatterns from '../../urls';
 
 import './QuizResults.scss';
@@ -81,5 +82,10 @@ QuizResults.propTypes = {
 QuizResults.defaultProps = {};
 
 export default compose(
-  graphql(SET_MEMBER_AUTH, { name: 'setMemberAuth' }),
+  graphql(
+    SET_MEMBER_AUTH, {
+      name: 'setMemberAuth',
+      options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY },
+    }
+  ),
 )(QuizResults);
