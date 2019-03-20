@@ -36,9 +36,6 @@ export const UPDATE_SHOPPING_CART_ITEM = gql`
       shoppingCart {
         total
         totalShippingFee
-        member {
-          id
-        }
         discount
         shoppingcartitemSet {
           id
