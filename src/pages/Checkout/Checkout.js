@@ -77,8 +77,10 @@ class Checkout extends Component {
       refetchQueries: () => [{ query: GET_MEMBER }],
       variables: {
         input: {
+          shippingAddress: {
+            ...inputShipping,
+          },
           ...inputCheckout,
-          ...inputShipping,
           ...inputPaymentMethod,
         },
       },
