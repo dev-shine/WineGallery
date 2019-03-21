@@ -18,6 +18,7 @@ import {
   SubscriptionBillingDay,
   SubscriptionStatus,
   PaymentMethod,
+  WineBlacklist,
   WinePreference,
 } from '../../components';
 import { identifyUser } from '../../helpers/Analytics';
@@ -169,6 +170,7 @@ class MyAccount extends Component {
                                   wineQuantity={data.me}
                                   memberId={data.me.id}
                                 />
+                                <WineBlacklist me={data.me} />
                               </div>
                               <div className="MyAccount--forms__payment-method">
                                 <PaymentMethod me={data.me} />
