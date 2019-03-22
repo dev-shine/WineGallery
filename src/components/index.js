@@ -16,6 +16,7 @@ import ErrorBoundary from './molecules/ErrorBoundary/ErrorBoundary';
 import NewPaymentMethod from './molecules/NewPaymentMethod/NewPaymentMethod';
 import ShoppingCart from './molecules/ShoppingCart/ShoppingCart';
 import WineRatingItem from './molecules/WineRatingItem/WineRatingItem';
+import WineBlacklistRule from './molecules/WineBlacklistRule/WineBlacklistRule';
 
 // Organisms
 import Header from './organisms/Header/Header';
@@ -36,6 +37,7 @@ import SubscriptionBillingDay from './organisms/SubscriptionBillingDay/Subscript
 import SubscriptionStatus from './organisms/SubscriptionStatus/SubscriptionStatus';
 import PaymentMethod from './organisms/PaymentMethod/PaymentMethod';
 import QuizQuestion from './organisms/QuizQuestion/QuizQuestion';
+import WineBlacklist from './organisms/WineBlacklist/WineBlacklist';
 import WinePreference from './organisms/WinePreference/WinePreference';
 import WineBox from './organisms/WineBox/WineBox';
 import SubscriptionSummary from './organisms/SubscriptionSummary/SubscriptionSummary';
@@ -65,6 +67,7 @@ export {
   NewPaymentMethod,
   ShoppingCart,
   WineRatingItem,
+  WineBlacklistRule,
 
   // Organisms
   Header,
@@ -79,6 +82,7 @@ export {
   AccountDetailsForm,
   SubscriptionBillingDay,
   SubscriptionStatus,
+  WineBlacklist,
   WinePreference,
   WineFilters,
   WineSorters,

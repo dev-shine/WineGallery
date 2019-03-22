@@ -263,6 +263,13 @@ export const GET_MEMBER = gql`
           trackingUrl
         }
       }
+      wineblacklistSet {
+        wineBlacklistType {
+          id
+          name
+        }
+        objectId
+      }
     }
   }
 `;
@@ -274,6 +281,19 @@ export const GET_REFERRAL_DISCOUNT = gql`
     referralDiscount @client{
       referralCode
       giveawayCode
+    }
+  }
+`;
+
+export const GET_ALL_WINE_BLACKLIST_TYPES = gql`
+  query AllWineBlacklistTypes {
+    allWineBlacklistTypes {
+      id
+      name
+      choices {
+        id
+        name
+      }
     }
   }
 `;
@@ -550,6 +570,32 @@ export const SET_REFERRAL_DISCOUNT = gql`
       referralDiscount @client {
         referralCode
         giveawayCode
+      }
+    }
+  }
+`;
+
+export const CREATE_WINE_BLACKLIST_RULE = gql`
+  mutation CreateWineBlacklistRule($input: WineBlacklistRuleInput!) {
+    createWineBlacklistRule(input: $input) {
+      wineBlacklist {
+        id
+      }
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
+export const DELETE_WINE_BLACKLIST_RULE = gql`
+  mutation DeleteWineBlacklistRule($input: WineBlacklistRuleInput!) {
+    deleteWineBlacklistRule(input: $input) {
+      isDeleted
+      errors {
+        field
+        messages
       }
     }
   }
