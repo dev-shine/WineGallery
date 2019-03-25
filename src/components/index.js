@@ -46,6 +46,7 @@ import WineRatingList from './organisms/WineRatingList/WineRatingList';
 import PointsBoard from './organisms/PointsBoard/PointsBoard';
 import GiftSignUpForm from './organisms/GiftSignUpForm/GiftSignUpForm';
 import GiftMemberForm from './organisms/GiftMemberForm/GiftMemberForm';
+import GiveFreeTrialForm from './organisms/GiveFreeTrialForm/GiveFreeTrialForm';
 
 export {
 
@@ -97,4 +98,6 @@ export {
   PointsBoard,
   GiftSignUpForm,
   GiftMemberForm,
+  GiveFreeTrialForm,
+
 };

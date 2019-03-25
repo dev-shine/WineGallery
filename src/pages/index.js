@@ -19,6 +19,7 @@ import Gifts from './Gifts/Gifts';
 import WineRatings from './WineRatings/WineRatings';
 import Referral from './Referral/Referral';
 import InviteFriend from './InviteFriend/InviteFriend';
+import GiveFreeTrial from './GiveFreeTrial/GiveFreeTrial';
 
 export {
   Home,
@@ -37,6 +38,7 @@ export {
   WineRatings,
   Referral,
   InviteFriend,
+  GiveFreeTrial,
 
   // Product
   Quiz,

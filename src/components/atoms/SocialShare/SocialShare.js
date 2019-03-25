@@ -38,8 +38,7 @@ class SocialShare extends Component {
     const { socialMedia, url } = this.props;
     const facebookAppId = process.env.REACT_APP_FACEBOOK_APP_ID;
     const twitterBaseUrl = (
-      `https://twitter.com/intent/tweet?text=Get%20a%20free%20bottle%20to%20start%20your%20own%20wine%20advent
-      ure.%20Everybody%20win(e)s!&url=`
+      'https://twitter.com/intent/tweet?text=Check%20this%20out&url='
     );
     const facebookMessengerBaseUrl = (
       `fb-messenger://share?app_id=${encodeURIComponent(facebookAppId)}&link=`
