@@ -34,6 +34,7 @@ class SubscriptionBillingDay extends Component {
       variables: {
         input: {
           id: subscriptionId,
+          memberId: me.id,
           billingDay,
         },
       },
