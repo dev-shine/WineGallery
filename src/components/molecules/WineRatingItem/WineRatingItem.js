@@ -31,9 +31,9 @@ class WineRatingItem extends Component {
     const { orderItem } = this.props;
 
     // Populates notes as soon as it is mounted
-    if (orderItem.product.wine.wineratingSet.length) {
+    if (orderItem.product.wine.memberWineRatings.length) {
       this.setState({
-        note: orderItem.product.wine.wineratingSet[0].note,
+        note: orderItem.product.wine.memberWineRatings[0].note,
       });
     }
   }
@@ -90,11 +90,11 @@ class WineRatingItem extends Component {
 
   /**
    * Renders thumbs up and down for wine ratings
-   * @param {boolean} wineRatingSet
+   * @param {boolean} memberWineRatings
    * @return {React.Component}
    * */
-  renderThumbsUpAndDown = wineRatingSet => {
-    const liked = wineRatingSet.length && wineRatingSet[0].liked;
+  renderThumbsUpAndDown = memberWineRatings => {
+    const liked = memberWineRatings.length && memberWineRatings[0].liked;
     return (
       <div>
         <button
@@ -132,7 +132,7 @@ class WineRatingItem extends Component {
         <div>{orderItem.product.wine.country.name}</div>
         <div>{orderItem.product.wine.wineRegion.name}</div>
         <div>
-          {this.renderThumbsUpAndDown(orderItem.product.wine.wineratingSet)}
+          {this.renderThumbsUpAndDown(orderItem.product.wine.memberWineRatings)}
         </div>
         {
           showNotes && (
@@ -140,8 +140,8 @@ class WineRatingItem extends Component {
               <div>
                 <StarRating
                   score={
-                    orderItem.product.wine.wineratingSet.length
-                      ? orderItem.product.wine.wineratingSet[0].score
+                    orderItem.product.wine.memberWineRatings.length
+                      ? orderItem.product.wine.memberWineRatings[0].score
                       : 0
                   }
                   onClick={newScore => this.handleUpdateWineRating('score', newScore)}

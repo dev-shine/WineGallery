@@ -74,6 +74,7 @@ class SubscriptionStatus extends Component {
       variables: {
         input: {
           id: me.subscription.id,
+          memberId: me.id,
           ...inputObj,
         },
       },

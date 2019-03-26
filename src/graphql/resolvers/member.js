@@ -47,7 +47,7 @@ export const GET_MEMBER = gql`
               id
               name
             }
-            wineratingSet {
+            memberWineRatings {
               id
               score
               note
