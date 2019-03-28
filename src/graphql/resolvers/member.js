@@ -270,6 +270,10 @@ export const GET_MEMBER = gql`
         }
         objectId
       }
+      availableSubscriptionGiveaways {
+        code
+        url
+      }
     }
   }
 `;
@@ -593,6 +597,18 @@ export const DELETE_WINE_BLACKLIST_RULE = gql`
   mutation DeleteWineBlacklistRule($input: WineBlacklistRuleInput!) {
     deleteWineBlacklistRule(input: $input) {
       isDeleted
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
+export const SEND_GIVEAWAY_INVITE = gql`
+  mutation SendGiveawayInvite($input: SendGiveawayInviteInput!) {
+    sendGiveawayInvite(input: $input) {
+      isSuccessful
       errors {
         field
         messages

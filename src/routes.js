@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import {
   Home, PasswordReset, SetNewPassword, SignUp, Quiz, QuizResults, SpecialPacks, SpecialPackDetails, Gifts,
-  WineRatings, InviteFriend,
+  WineRatings, InviteFriend, GiveFreeTrial,
 } from './pages';
 import ThankYou from './pages/ThankYou/ThankYou';
 import urlPatterns from './urls';
@@ -89,6 +89,7 @@ class Routes extends Component {
         <PrivateRoute path={urlPatterns.DASHBOARD} component={Dashboard} exact />
         <PrivateRoute path={urlPatterns.RATINGS} component={WineRatings} exact />
         <PrivateRoute path={urlPatterns.INVITE_FRIEND} component={InviteFriend} exact />
+        <PrivateRoute path={urlPatterns.GIVE_FREE_TRIAL} component={GiveFreeTrial} exact />
 
         <Route path="" exact component={Home} />
       </Switch>
