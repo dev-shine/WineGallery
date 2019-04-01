@@ -13,6 +13,7 @@ import QuizResults from './QuizResults/QuizResults';
 import Checkout from './Checkout/Checkout';
 import ThankYou from './ThankYou/ThankYou';
 import WineDetails from './WineDetails/WineDetails';
+import WineDetailsById from './WineDetailsById/WineDetailsById';
 import SpecialPackDetails from './SpecialPackDetails/SpecialPackDetails';
 import SpecialPacks from './SpecialPacks/SpecialPacks';
 import Gifts from './Gifts/Gifts';
@@ -45,6 +46,7 @@ export {
   QuizResults,
   Wines,
   WineDetails,
+  WineDetailsById,
   SpecialPacks,
   SpecialPackDetails,
   Gifts,

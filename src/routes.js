@@ -12,6 +12,7 @@ import { isLoggedIn } from './helpers/auth';
 // Declares lazily loaded components --> https://reactjs.org/docs/code-splitting.html#reactlazy
 const Wines = React.lazy(() => import('./pages/Wines/Wines'));
 const WineDetails = React.lazy(() => import('./pages/WineDetails/WineDetails'));
+const WineDetailsById = React.lazy(() => import('./pages/WineDetailsById/WineDetailsById'));
 const Login = React.lazy(() => import('./pages/Login/Login'));
 const Referral = React.lazy(() => import('./pages/Referral/Referral'));
 const MyAccount = React.lazy(() => import('./pages/MyAccount/MyAccount'));
@@ -74,6 +75,7 @@ class Routes extends Component {
           render={props => <Wines {...props} isWineSubscriptionBox />}
         />
         <Route path={urlPatterns.WINE_DETAILS()} render={props => <WineDetails {...props} />} />
+        <Route path={urlPatterns.WINE_DETAILS_BY_ID()} render={props => <WineDetailsById {...props} />} />
         <Route path={urlPatterns.CHECKOUT} render={props => <Checkout {...props} />} />
         <Route path={urlPatterns.THANK_YOU} render={props => <ThankYou {...props} />} />
         <Route path={urlPatterns.SPECIAL_PACKS} exact render={props => <SpecialPacks {...props} />} />
