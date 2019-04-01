@@ -56,7 +56,11 @@ class WineDetails extends Component {
                   <h2>{`${wine.wineRegion.name}-${wine.country.name}`}</h2>
                 </div>
 
-                <AddWineToShoppingCartButton wine={wine} />
+                {
+                  wine.hasStock
+                    ? <AddWineToShoppingCartButton wine={wine} />
+                    : <div>(no stock available)</div>
+                }
                 <div>
                   $
                   {formatNumber(wine.product.sellingPrice)}

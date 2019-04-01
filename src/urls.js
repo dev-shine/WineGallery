@@ -20,6 +20,7 @@ const URL_PATTERNS = {
   WINES_BOX: '/my-wine-box',
   RATINGS: '/ratings',
   WINE_DETAILS: (slug = ':slug') => `/wines/details/${slug}`,
+  WINE_DETAILS_BY_ID: (id = ':id') => `/wines/details_by_id/${id}`,
   GIFTS: '/gifts',
   INVITE_FRIEND: '/dashboard/invite',
   GIVE_FREE_TRIAL: '/dashboard/give',

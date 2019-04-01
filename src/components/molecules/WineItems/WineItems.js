@@ -56,7 +56,7 @@ class WineItems extends Component {
         key={wine.id}
       >
         {showNotification && this.renderNotification()}
-        <Link to={urlPatterns.WINE_DETAILS(wine.product.slug)}>
+        <Link rel="canonical" to={urlPatterns.WINE_DETAILS(wine.product.slug)}>
           <div className="WineItems--image">
             <img src={photoUrl} alt="" />
           </div>

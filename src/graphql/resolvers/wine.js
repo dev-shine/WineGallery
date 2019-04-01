@@ -100,6 +100,20 @@ export const GET_WINE_SWEETNESSES = gql`
   }
 `;
 
+export const GET_WINE_SLUG = gql`
+  query GetWineById (
+    $id: Int!
+  ) {
+    wine (
+      id: $id
+    ) {
+      product {
+        slug
+      }
+    }
+  }
+`;
+
 export const GET_WINE = gql`
   query GetWine (
     $slug: String!
@@ -110,6 +124,7 @@ export const GET_WINE = gql`
       memberId: $memberId
     ) {
       id
+      hasStock
       memberLikelihood
       fullDescription
       sommelierNotes
