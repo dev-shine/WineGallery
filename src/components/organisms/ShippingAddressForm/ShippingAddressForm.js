@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { Mutation } from 'react-apollo';
@@ -16,227 +16,248 @@ import { InputField } from '../..';
 import './ShippingAddressForm.scss';
 
 /**
- * Renders MyAccountForm in a stateless component
- * Stateless Components (Function Components):
- * https://reactjs.org/docs/components-and-props.html#function-and-class-components
+ * Renders ShippingAddressForm that allows modifying Shipping Address details.
  * */
-const ShippingAddressForm = props => {
-  const { me } = props;
+class ShippingAddressForm extends Component {
 
-  // Initiates variables that will hold the value to pass into the mutation
-  let city;
-  let line1;
-  let line2;
-  let country;
-  let company;
-  let postcode;
-  let lastName;
-  let firstName;
-  let contactNumber;
-  let stateTerritory;
-  let addressUnavailableInstruction;
-
-  // Verifies if member has shipping address
-  const hasShippingAddress = !!me.shippingAddress;
-
-  return (
-    <Mutation mutation={UPDATE_MEMBER_SHIPPING_ADDRESS} refetchQueries={() => [{ query: GET_MEMBER }]}>
-      {(updateShippingAddress, { data, error }) => {
-        if (error) {
-          error.graphQLErrors.map(message => console.log('Non-friendly error message', message.message));
-        }
-        return (
-          <div className="ShippingAddressForm">
-            <div className="ShippingAddressForm--form">
-              <h2>My Shipping Address</h2>
-              <form onSubmit={e => {
-                e.preventDefault();
-                updateShippingAddress({
-                  variables:
-                    {
-                      input: {
-                        firstName: firstName.value,
-                        lastName: lastName.value,
-                        line1: line1.value,
-                        line2: line2.value,
-                        city: city.value,
-                        postcode: postcode.value,
-                        contactNumber: contactNumber.value,
-                        countryId: parseInt(country.value, 10),
-                        state: stateTerritory.value,
-                        company: company.value,
-                        addressUnavailableInstructionId: addressUnavailableInstruction.value,
-                        memberId: me.id,
-                      },
-                    },
-                });
-              }}
-              >
-                <InputField
-                  type="text"
-                  label="First Name"
-                  name="firstName"
-                  id="firstName"
-                  validations={[checkName]}
-                  value={hasShippingAddress ? me.shippingAddress.firstName : ''}
-                  reference={node => {
-                    firstName = node;
-                  }}
-                />
-                <InputField
-                  type="text"
-                  label="Last Name"
-                  name="lastName"
-                  id="lastName"
-                  value={hasShippingAddress ? me.shippingAddress.lastName : ''}
-                  validations={[checkName]}
-                  reference={node => {
-                    lastName = node;
-                  }}
-                />
-                <InputField
-                  type="text"
-                  label="Address line 1"
-                  name="addressLine1"
-                  id="addressLine1"
-                  value={hasShippingAddress ? me.shippingAddress.line1 : ''}
-                  validations={[checkAddress]}
-                  reference={node => {
-                    line1 = node;
-                  }}
-                />
-                <InputField
-                  type="text"
-                  label="Address line 2"
-                  name="addressLine2"
-                  id="addressLine2"
-                  value={hasShippingAddress && me.shippingAddress.line2 ? me.shippingAddress.line2 : ''}
-                  reference={node => {
-                    line2 = node;
-                  }}
-                />
-                <InputField
-                  type="text"
-                  label="State"
-                  name="stateTerritory"
-                  id="stateTerritory"
-                  validations={[checkState]}
-                  value={hasShippingAddress ? me.shippingAddress.state : ''}
-                  reference={node => {
-                    stateTerritory = node;
-                  }}
-                />
-                <InputField
-                  type="number"
-                  label="Contact number"
-                  name="contactNumber"
-                  id="contactNumber"
-                  value={hasShippingAddress ? me.shippingAddress.contactNumber : ''}
-                  reference={node => {
-                    contactNumber = node;
-                  }}
-                  serverValidation={
-                    data && checkServerValidation(data, 'updateMemberShippingAddress', 'contact_number')
-                  }
-                />
-                <InputField
-                  type="number"
-                  label="Post code"
-                  name="postCode"
-                  id="postCode"
-                  value={hasShippingAddress ? me.shippingAddress.postcode : ''}
-                  reference={node => {
-                    postcode = node;
-                  }}
-                />
-                <InputField
-                  type="number"
-                  label="Country"
-                  name="country"
-                  id="country"
-                  value={hasShippingAddress ? me.shippingAddress.country.id : ''}
-                  reference={node => {
-                    country = node;
-                  }}
-                  serverValidation={
-                    data && checkServerValidation(data, 'updateMemberShippingAddress', 'countryId')
-                  }
-                />
-                <InputField
-                  type="text"
-                  label="City"
-                  name="city"
-                  id="city"
-                  value={hasShippingAddress ? me.shippingAddress.city : ''}
-                  reference={node => {
-                    city = node;
-                  }}
-                  serverValidation={
-                    data && checkServerValidation(data, 'updateMemberShippingAddress', 'city')
-                  }
-                />
-                <InputField
-                  type="text"
-                  label="Company"
-                  name="company"
-                  id="company"
-                  value={hasShippingAddress ? me.shippingAddress.company : ''}
-                  reference={node => {
-                    company = node;
-                  }}
-                />
-                <InputField
-                  type="number"
-                  label="Select Delivery Instructions"
-                  name="deliveryInstructions"
-                  id="deliveryInstructions"
-                  value={
-                    hasShippingAddress ? me.shippingAddress.addressUnavailableInstruction.id : ''
-                  }
-                  reference={node => {
-                    addressUnavailableInstruction = node;
-                  }}
-                />
-                <button type="submit">Update Shipping Address</button>
-              </form>
-            </div>
-          </div>);
-      }}
-    </Mutation>
-  );
-};
-
-// Declares type for props coming from parent component
-ShippingAddressForm.propTypes = {
-  me: PropTypes.shape({
-    shippingAddress: PropTypes.shape({
-      firstName: PropTypes.string,
-      lastName: PropTypes.string,
-      line1: PropTypes.string,
-      line2: PropTypes.string,
-      city: PropTypes.string,
-      state: PropTypes.string,
-      postcode: PropTypes.string,
-      company: PropTypes.string,
-      contactNumber: PropTypes.string,
-      country: PropTypes.shape({
+  static propTypes = {
+    me: PropTypes.shape({
+      shippingAddress: PropTypes.shape({
         id: PropTypes.number,
-        name: PropTypes.string,
-        code: PropTypes.bool,
+        firstName: PropTypes.string,
+        lastName: PropTypes.string,
+        line1: PropTypes.string,
+        line2: PropTypes.string,
+        city: PropTypes.string,
+        state: PropTypes.string,
+        postcode: PropTypes.string,
+        company: PropTypes.string,
+        contactNumber: PropTypes.string,
+        country: PropTypes.shape({
+          id: PropTypes.number,
+          name: PropTypes.string,
+          code: PropTypes.bool,
+        }),
+        addressUnavailableInstruction: PropTypes.shape({
+          id: PropTypes.number,
+          nameShort: PropTypes.string,
+          authorityToLeave: PropTypes.bool,
+        }),
       }),
-      addressUnavailableInstruction: PropTypes.shape({
-        id: PropTypes.number,
-        nameShort: PropTypes.string,
-        authorityToLeave: PropTypes.bool,
-      }),
+      id: PropTypes.number,
     }),
-    email: PropTypes.string,
-    id: PropTypes.number,
-  }),
-};
+  };
 
-ShippingAddressForm.defaultProps = {
-  me: [{}],
-};
+  static defaultProps = {
+    me: [{}],
+  };
+
+  state = {
+    shippingAddressId: null,
+    firstName: null,
+    lastName: null,
+    line1: null,
+    line2: null,
+    city: null,
+    postCode: null,
+    company: null,
+    contactNumber: null,
+    stateTerritory: null,
+    countryId: null,
+    addressUnavailableInstructionId: null,
+  };
+
+  componentDidMount() {
+    const { props } = this;
+    if (props.me.shippingAddress) this.handleQueryUpdate(props.me);
+  }
+
+  /**
+   * Fills the state with values coming from props.
+   *
+   * @param {Object} query
+   * */
+  handleQueryUpdate = query => {
+    const { state } = this;
+
+    const initialShippingAddress = {
+      shippingAddressId: query.shippingAddress.id || null,
+      firstName: query.shippingAddress.firstName || null,
+      lastName: query.shippingAddress.lastName || null,
+      line1: query.shippingAddress.line1 || null,
+      line2: query.shippingAddress.line2 || null,
+      city: query.shippingAddress.city || null,
+      stateTerritory: query.shippingAddress.state || null,
+      postCode: query.shippingAddress.postcode || null,
+      company: query.shippingAddress.company || null,
+      contactNumber: query.shippingAddress.contactNumber || null,
+      countryId: query.shippingAddress.country.id || null,
+      addressUnavailableInstructionId: parseInt(
+        query.shippingAddress.addressUnavailableInstruction.id, 10
+      ) || null,
+    };
+
+    this.setState({ ...state, ...initialShippingAddress });
+  };
+
+  /**
+   * Handles changes from an input.
+   *
+   * @param {string} field
+   * @param {*} value
+   */
+  handleChange = async (field, value) => {
+    const { state } = this;
+    this.setState({ ...state, [field]: value });
+  };
+
+  render() {
+    const { state, props } = this;
+    const { me } = props;
+
+    return (
+      <Mutation mutation={UPDATE_MEMBER_SHIPPING_ADDRESS} refetchQueries={() => [{ query: GET_MEMBER }]}>
+        {(updateShippingAddress, { data, error }) => {
+          if (error) {
+            error.graphQLErrors.map(message => console.error('Non-friendly error message', message.message));
+          }
+          return (
+            <div className="ShippingAddressForm">
+              <div className="ShippingAddressForm--form">
+                <h2>My Shipping Address</h2>
+                <form onSubmit={e => {
+                  e.preventDefault();
+                  updateShippingAddress({
+                    variables:
+                      {
+                        input: {
+                          id: state.shippingAddressId,
+                          memberId: me.id,
+                          firstName: state.firstName,
+                          lastName: state.lastName,
+                          line1: state.line1,
+                          line2: state.line2,
+                          city: state.city,
+                          postcode: state.postCode,
+                          contactNumber: state.contactNumber,
+                          countryId: parseInt(state.countryId, 10),
+                          state: state.stateTerritory,
+                          company: state.company,
+                          addressUnavailableInstructionId: state.addressUnavailableInstructionId,
+                        },
+                      },
+                  });
+                }}
+                >
+                  <InputField
+                    type="text"
+                    label="First Name"
+                    name="firstName"
+                    id="firstName"
+                    validations={[checkName]}
+                    value={state.firstName}
+                    onChange={this.handleChange}
+                  />
+                  <InputField
+                    type="text"
+                    label="Last Name"
+                    name="lastName"
+                    id="lastName"
+                    value={state.lastName}
+                    validations={[checkName]}
+                    onChange={this.handleChange}
+                  />
+                  <InputField
+                    type="text"
+                    label="Address line 1"
+                    name="line1"
+                    id="line1"
+                    value={state.line1}
+                    validations={[checkAddress]}
+                    onChange={this.handleChange}
+                  />
+                  <InputField
+                    type="text"
+                    label="Address line 2"
+                    name="line2"
+                    id="line2"
+                    value={state.line2}
+                    onChange={this.handleChange}
+                  />
+                  <InputField
+                    type="text"
+                    label="State"
+                    name="stateTerritory"
+                    id="stateTerritory"
+                    validations={[checkState]}
+                    value={state.stateTerritory}
+                    onChange={this.handleChange}
+                  />
+                  <InputField
+                    type="number"
+                    label="Contact number"
+                    name="contactNumber"
+                    id="contactNumber"
+                    value={state.contactNumber}
+                    onChange={this.handleChange}
+                    serverValidation={
+                      data && checkServerValidation(data, 'updateMemberShippingAddress', 'contact_number')
+                    }
+                  />
+                  <InputField
+                    type="number"
+                    label="Post code"
+                    name="postCode"
+                    id="postCode"
+                    value={state.postCode}
+                    onChange={this.handleChange}
+                  />
+                  <InputField
+                    type="number"
+                    label="Country"
+                    name="countryId"
+                    id="countryId"
+                    value={state.countryId}
+                    onChange={this.handleChange}
+                    serverValidation={
+                      data && checkServerValidation(data, 'updateMemberShippingAddress', 'countryId')
+                    }
+                  />
+                  <InputField
+                    type="text"
+                    label="City"
+                    name="city"
+                    id="city"
+                    value={state.city}
+                    onChange={this.handleChange}
+                    serverValidation={
+                      data && checkServerValidation(data, 'updateMemberShippingAddress', 'city')
+                    }
+                  />
+                  <InputField
+                    type="text"
+                    label="Company"
+                    name="company"
+                    id="company"
+                    value={state.company}
+                    onChange={this.handleChange}
+                  />
+                  <InputField
+                    type="number"
+                    label="Select Delivery Instructions"
+                    name="addressUnavailableInstructionId"
+                    id="addressUnavailableInstructionId"
+                    value={state.addressUnavailableInstructionId}
+                    onChange={this.handleChange}
+                  />
+                  <button type="submit">Update Shipping Address</button>
+                </form>
+              </div>
+            </div>);
+        }}
+      </Mutation>
+    );
+  }
+}
 
 export default ShippingAddressForm;
