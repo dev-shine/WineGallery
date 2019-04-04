@@ -46,6 +46,15 @@ class InputField extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { state } = this;
+
+    // Updates value if it has been updated in props
+    if (nextProps.value !== state.inputValue) {
+      this.setState({ inputValue: nextProps.value });
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { props } = this;
 
