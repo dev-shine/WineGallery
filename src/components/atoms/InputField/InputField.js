@@ -27,7 +27,7 @@ class InputField extends Component {
   static defaultProps = {
     hint: '',
     type: 'text',
-    value: '',
+    value: null,
     onChange: null,
     reference: null,
     onKeyPress: null,
@@ -42,17 +42,17 @@ class InputField extends Component {
   componentDidMount() {
     const { value } = this.props;
     this.setState({
-      inputValue: value,
+      inputValue: value || '',
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { state } = this;
+  static getDerivedStateFromProps(nextProps, prevState) {
 
-    // Updates value if it has been updated in props
-    if (nextProps.value !== state.inputValue) {
-      this.setState({ inputValue: nextProps.value });
+    // Updates state with props only if the value in props has been changed
+    if (nextProps.value !== null && nextProps.value !== prevState.inputValue) {
+      return { inputValue: nextProps.value };
     }
+    return null;
   }
 
   componentDidUpdate(prevProps) {
@@ -77,7 +77,7 @@ class InputField extends Component {
   handleChange = event => {
     const { onChange, name } = this.props;
     const { value } = event.target;
-    this.setState({ inputValue: event.target.value });
+    this.setState({ inputValue: value });
     onChange && onChange(name, value);
   };
 

@@ -18,6 +18,7 @@ it('renders without crashing', () => {
       question="White or Red?"
       selectedAnswers={[]}
       handleAnswerSelectParent={() => null}
+      sortOrder={1}
     />
   );
 });
