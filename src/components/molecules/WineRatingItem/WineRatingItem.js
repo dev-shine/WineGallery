@@ -7,7 +7,7 @@ import { InputField, StarRating } from '../..';
 import { GET_MEMBER } from '../../../graphql/queries';
 import { GET_AUTH } from '../../../graphql/resolvers/auth';
 import { UPDATE_WINE_RATING } from '../../../graphql/mutations';
-import { DEFAULT_BOTTLE_URL } from '../../../helpers/constants';
+import { DEFAULT_BOTTLE_URL, FETCH_POLICY_NETWORK_ONLY } from '../../../helpers/constants';
 
 import './WineRatingItem.scss';
 
@@ -77,7 +77,7 @@ class WineRatingItem extends Component {
     const wineId = orderItem.product.wine.id;
 
     updateWineRating({
-      refetchQueries: () => [{ query: GET_MEMBER, fetchPolicy: 'network-only' }],
+      refetchQueries: () => [{ query: GET_MEMBER, fetchPolicy: FETCH_POLICY_NETWORK_ONLY }],
       variables: {
         input: {
           memberId,

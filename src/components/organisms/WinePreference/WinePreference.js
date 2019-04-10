@@ -8,6 +8,7 @@ import { UPDATE_WINE_PREFERENCE } from '../../../graphql/mutations';
 import { ButtonMutation } from '../..';
 
 import './WinePreference.scss';
+import { FETCH_POLICY_NETWORK_ONLY } from '../../../helpers/constants';
 
 /**
  * Renders WinePreference component.
@@ -182,13 +183,13 @@ export default compose(
   graphql(GET_WINE_PRICE_POINTS, {
     name: 'winePricePointsQuery',
     options: {
-      fetchPolicy: 'network-only',
+      fetchPolicy: FETCH_POLICY_NETWORK_ONLY,
     },
   }),
   graphql(GET_WINE_COLOURS, {
     name: 'wineClassesQuery',
     options: {
-      fetchPolicy: 'network-only',
+      fetchPolicy: FETCH_POLICY_NETWORK_ONLY,
     },
   }),
 )(WinePreference);

@@ -7,7 +7,7 @@ import { compose, graphql, withApollo } from 'react-apollo';
 import { DELETE_WINE_FROM_QUIZ_BOX } from '../../../graphql/mutations';
 import { GET_MEMBER, GET_SHOPPING_CART } from '../../../graphql/queries';
 import { GET_AUTH } from '../../../graphql/resolvers/auth';
-import { DEFAULT_BOTTLE_URL } from '../../../helpers/constants';
+import { DEFAULT_BOTTLE_URL, FETCH_POLICY_NETWORK_ONLY } from '../../../helpers/constants';
 import urlPatterns from '../../../urls';
 
 import './WineBox.scss';
@@ -36,7 +36,7 @@ class WineBox extends Component {
     // Prevents the user to land on wine box page without having answered the quiz
     client.query({
       query: GET_MEMBER,
-      fetchPolicy: 'network-only',
+      fetchPolicy: FETCH_POLICY_NETWORK_ONLY,
     }).then(response => {
 
       // Redirects user to quiz in case no subscription

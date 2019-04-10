@@ -14,6 +14,7 @@ import SimpleListItem from './molecules/SimpleListItem/SimpleListItem';
 import WineItems from './molecules/WineItems/WineItems';
 import ErrorBoundary from './molecules/ErrorBoundary/ErrorBoundary';
 import NewPaymentMethod from './molecules/NewPaymentMethod/NewPaymentMethod';
+import QuizAnswer from './molecules/QuizAnswer/QuizAnswer';
 import ShoppingCart from './molecules/ShoppingCart/ShoppingCart';
 import WineRatingItem from './molecules/WineRatingItem/WineRatingItem';
 import WineBlacklistRule from './molecules/WineBlacklistRule/WineBlacklistRule';
@@ -37,6 +38,7 @@ import SubscriptionBillingDay from './organisms/SubscriptionBillingDay/Subscript
 import SubscriptionStatus from './organisms/SubscriptionStatus/SubscriptionStatus';
 import PaymentMethod from './organisms/PaymentMethod/PaymentMethod';
 import QuizQuestion from './organisms/QuizQuestion/QuizQuestion';
+import WineQuantityQuizQuestion from './organisms/WineQuantityQuizQuestion/WineQuantityQuizQuestion';
 import WineBlacklist from './organisms/WineBlacklist/WineBlacklist';
 import WinePreference from './organisms/WinePreference/WinePreference';
 import WineBox from './organisms/WineBox/WineBox';
@@ -90,7 +92,9 @@ export {
   WineList,
   ContactPreferencesForm,
   PaymentMethod,
+  QuizAnswer,
   QuizQuestion,
+  WineQuantityQuizQuestion,
   WineBox,
   SubscriptionSummary,
   WineOrderedCountries,

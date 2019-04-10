@@ -19,7 +19,11 @@ import {
   SET_GIFT_FLOW_INFO,
 } from '../../graphql/resolvers/gift';
 import { executeSignUpRequest } from '../../helpers/auth';
-import { FETCH_POLICY_CACHE_AND_NETWORK, FETCH_POLICY_CACHE_ONLY } from '../../helpers/constants';
+import {
+  FETCH_POLICY_CACHE_AND_NETWORK,
+  FETCH_POLICY_CACHE_ONLY,
+  FETCH_POLICY_NETWORK_ONLY,
+} from '../../helpers/constants';
 import urlPatterns from '../../urls';
 
 import './Gifts.scss';
@@ -134,7 +138,7 @@ class Gifts extends Component {
           months: giftFlowQuery.giftFlow.months || DEFAULT_MONTHS,
         },
         options: {
-          fetchPolicy: 'network-only',
+          fetchPolicy: FETCH_POLICY_NETWORK_ONLY,
         },
       }],
     });

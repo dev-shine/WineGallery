@@ -80,8 +80,8 @@ const generateApolloClient = () => {
     defaultOptions,
     cache,
     link: authLink,
-    resolvers,
     typeDefs,
+    resolvers,
   });
 
   const data = {

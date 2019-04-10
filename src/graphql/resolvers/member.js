@@ -274,6 +274,12 @@ export const GET_MEMBER = gql`
         code
         url
       }
+      quizAnswers {
+        id
+        quizQuestion {
+          id
+        }
+      }
     }
   }
 `;

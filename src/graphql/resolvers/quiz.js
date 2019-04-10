@@ -8,8 +8,10 @@ export const GET_QUIZ_QUESTIONS = gql`
   query AllQuizQuestions {
     allQuizQuestions {
       id
-      description
+      isEnabled
       maxAnswers
+      description
+      sortOrder
       quizVersion {
         id
       }
@@ -17,6 +19,7 @@ export const GET_QUIZ_QUESTIONS = gql`
         id
         description
         graphicalIdentifier
+        sortOrder
         quizAnswerCategory {
           id
         }
