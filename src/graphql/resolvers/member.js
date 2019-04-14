@@ -280,6 +280,15 @@ export const GET_MEMBER = gql`
           id
         }
       }
+      winelistSet {
+        id
+        name
+        sortOrder
+        isPublic
+        wineListType {
+          id
+        }
+      }
     }
   }
 `;
@@ -615,6 +624,51 @@ export const SEND_GIVEAWAY_INVITE = gql`
   mutation SendGiveawayInvite($input: SendGiveawayInviteInput!) {
     sendGiveawayInvite(input: $input) {
       isSuccessful
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
+export const ADD_WINE_TO_WINE_LIST = gql`
+  mutation AddWineToWineList($input: UpdateWineInWineListInput!) {
+    addWineToWineList(input: $input) {
+      wineList {
+        id
+        name
+      }
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
+export const REMOVE_WINE_FROM_WINE_LIST = gql`
+  mutation RemoveWineFromWineList($input: UpdateWineInWineListInput!) {
+    removeWineFromWineList(input: $input) {
+      wineList {
+        id
+        name
+      }
+      errors {
+        field
+        messages
+      }
+    }
+  }
+`;
+
+export const UPDATE_OR_CREATE_WINE_LIST = gql`
+  mutation UpdateOrCreateWineList($input: WineListInput!) {
+    updateOrCreateWineList(input: $input) {
+      wineList {
+        id
+        name
+      }
       errors {
         field
         messages
