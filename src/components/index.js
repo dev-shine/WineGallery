@@ -3,7 +3,10 @@ import SimpleItem from './atoms/SimpleItem/SimpleItem';
 import InputField from './atoms/InputField/InputField';
 import CheckBox from './atoms/CheckBox/CheckBox';
 import ButtonMutation from './atoms/ButtonMutation/ButtonMutation';
-import AddWineToShoppingCartButton from './atoms/AddWineToShoppingCartButton/AddWineToShoppingCartButton';
+import AddProductToShoppingCartButton from
+  './atoms/AddProductToShoppingCartButton/AddProductToShoppingCartButton';
+import DeleteProductFromShoppingCartButton from
+  './atoms/DeleteProductFromShoppingCartButton/DeleteProductFromShoppingCartButton';
 import StarRating from './atoms/StarRating/StarRating';
 import HeaderDiscountMessage from './atoms/HeaderDiscountMessage/HeaderDiscountMessage';
 import InputFieldCopyClipboard from './atoms/InputFieldCopyClipboard/InputFieldCopyClipboard';
@@ -49,6 +52,8 @@ import PointsBoard from './organisms/PointsBoard/PointsBoard';
 import GiftSignUpForm from './organisms/GiftSignUpForm/GiftSignUpForm';
 import GiftMemberForm from './organisms/GiftMemberForm/GiftMemberForm';
 import GiveFreeTrialForm from './organisms/GiveFreeTrialForm/GiveFreeTrialForm';
+import FreeShipping from './organisms/FreeShipping/FreeShipping';
+import ShippingPrePaidPlans from './organisms/ShippingPrePaidPlans/ShippingPrePaidPlans';
 
 export {
 
@@ -57,7 +62,8 @@ export {
   InputField,
   CheckBox,
   ButtonMutation,
-  AddWineToShoppingCartButton,
+  AddProductToShoppingCartButton,
+  DeleteProductFromShoppingCartButton,
   StarRating,
   HeaderDiscountMessage,
   InputFieldCopyClipboard,
@@ -103,5 +109,7 @@ export {
   GiftSignUpForm,
   GiftMemberForm,
   GiveFreeTrialForm,
+  FreeShipping,
+  ShippingPrePaidPlans,
 
 };

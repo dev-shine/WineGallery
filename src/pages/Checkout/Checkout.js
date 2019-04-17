@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Query, withApollo } from 'react-apollo';
+import { withApollo, compose, graphql } from 'react-apollo';
 
 import {
   CheckoutShippingAddressForm,
@@ -23,6 +23,7 @@ import './Checkout.scss';
 class Checkout extends Component {
   static propTypes = {
     history: PropTypes.shape({}).isRequired,
+    meQuery: PropTypes.shape({}).isRequired,
   };
 
   state = {
@@ -116,13 +117,21 @@ class Checkout extends Component {
 
   render() {
     const { shippingAddress, isProcessingCheckout, processingError } = this.state;
-    const { history } = this.props;
+    const { history, meQuery } = this.props;
 
     // Disables and enables button to submit based on required fields
     const isShippingAddressFormCompleted = Boolean(
       shippingAddress && shippingAddress.line1 && shippingAddress.city && shippingAddress.state
       && shippingAddress.postcode && shippingAddress.addressUnavailableInstructionId
     );
+
+    if (meQuery.loading) { return <div>Loading...</div>; }
+
+    if (!meQuery.me.hasUpdatedPassword) {
+      history.push(
+        urlPatterns.SIGN_UP, { quiz: true, email: meQuery.me.email, memberId: meQuery.me.id }
+      );
+    }
 
     return (
       <div className="Checkout">
@@ -134,59 +143,44 @@ class Checkout extends Component {
               Our wine elf is processing your order...
             </div>)
         }
-        <Query query={GET_MEMBER} fetchPolicy="network-only" partialRefetch>
-          {({ loading, error, data }) => {
-            if (loading) return 'Loading...';
-            if (error) return `Error! ${error.message}`;
-            if (data.me) {
-              if (!data.me.hasUpdatedPassword) {
-                history.push(
-                  urlPatterns.SIGN_UP, { quiz: true, email: data.me.email, memberId: data.me.id }
-                );
-              }
-              return (
-                <div className="Checkout--container">
-                  <h1 className="Checkout--forms__title">Checkout</h1>
+        <div className="Checkout--container">
+          <h1 className="Checkout--forms__title">Checkout</h1>
 
-                  {/* Renders error from GraphQL if any */}
-                  <h4>{processingError && processingError}</h4>
-                  <div className="Checkout--forms__shipping">
-                    <CheckoutShippingAddressForm
-                      me={data.me}
-                      handleShippingAddressChange={this.handleShippingAddressUpdate}
-                      isCheckoutPage
-                    />
-                  </div>
-                  <div className="Checkout--forms__summary">
-                    <OrderSummary me={data.me} />
-                  </div>
-                  <div className="Checkout--forms__payment">
-                    <PaymentMethod me={data.me} isCheckoutPage />
-                  </div>
-                  <div className="Checkout--forms__discount-code">
-                    <DiscountCodeForm query={data.me} />
-                  </div>
-                  <div className="Checkout--forms__confirmation">
-                    <button
-                      type="button"
-                      className="payment-confirmation"
-                      onClick={() => this.handleSubmitPayment(data.me.id, data.me.shoppingCart)}
-                      disabled={!isShippingAddressFormCompleted}
-                    >
-                      Confirm Payment
-                    </button>
-                  </div>
-                </div>
-              );
-            }
-            return (
-              <div>Ooops, this is embarrassing... Something went wrong, try to reload yourpage.</div>
-            );
-          }}
-        </Query>
+          {/* Renders error from GraphQL if any */}
+          <h4>{processingError && processingError}</h4>
+          <div className="Checkout--forms__shipping">
+            <CheckoutShippingAddressForm
+              me={meQuery.me}
+              handleShippingAddressChange={this.handleShippingAddressUpdate}
+              isCheckoutPage
+            />
+          </div>
+          <div className="Checkout--forms__summary">
+            <OrderSummary me={meQuery.me} />
+          </div>
+          <div className="Checkout--forms__payment">
+            <PaymentMethod me={meQuery.me} isCheckoutPage />
+          </div>
+          <div className="Checkout--forms__discount-code">
+            <DiscountCodeForm query={meQuery.me} />
+          </div>
+          <div className="Checkout--forms__confirmation">
+            <button
+              type="button"
+              className="payment-confirmation"
+              onClick={() => this.handleSubmitPayment(meQuery.me.id, meQuery.me.shoppingCart)}
+              disabled={!isShippingAddressFormCompleted}
+            >
+              Confirm Payment
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-export default withApollo(Checkout);
+export default compose(
+  withApollo,
+  graphql(GET_MEMBER, { name: 'meQuery' }),
+)(Checkout);
