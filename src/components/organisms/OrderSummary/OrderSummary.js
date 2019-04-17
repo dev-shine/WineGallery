@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { formatNumber } from '../../../helpers/tools';
+import { FreeShipping } from '../..';
 
 import './OrderSummary.scss';
 
@@ -55,7 +56,7 @@ const OrderSummary = props => {
               </li>
             ))}
           </ul>
-          {totalShippingFee && <div>{`Shipping fee: $${formatNumber(totalShippingFee)}`}</div>}
+          {totalShippingFee > 0 && <div>{`Shipping fee: $${formatNumber(totalShippingFee)}`}</div>}
           {total && <div>{`Total: $${formatNumber(total + totalShippingFee)}`}</div>}
           {
             discount && (
@@ -73,6 +74,7 @@ const OrderSummary = props => {
             )
           }
         </div>
+        <FreeShipping />
       </div>
     </div>
   );

@@ -45,6 +45,11 @@ import {
   GET_GIFT_PLAN,
 } from './resolvers/gift';
 
+// Shipping
+import {
+  GET_ALL_SHIPPING_PRE_PAID_PLANS,
+} from './resolvers/shipping';
+
 export {
   GET_ALL_SPECIAL_PACKS,
   GET_ALL_WINE_BLACKLIST_TYPES,
@@ -72,4 +77,5 @@ export {
   GET_ALL_GIFT_PLANS,
   GET_ALL_GIFT_TEMPLATES,
   GET_GIFT_PLAN,
+  GET_ALL_SHIPPING_PRE_PAID_PLANS,
 };

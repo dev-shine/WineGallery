@@ -1,7 +1,7 @@
 import React from 'react';
 import ShallowRenderer from 'react-test-renderer/shallow';
 
-import AddWineToShoppingCartButton from './AddWineToShoppingCartButton';
+import DeleteProductFromShoppingCartButton from './DeleteProductFromShoppingCartButton';
 
 it('renders without crashing', () => {
   const mockedWine = {
@@ -13,5 +13,5 @@ it('renders without crashing', () => {
   };
 
   const renderer = new ShallowRenderer();
-  renderer.render(<AddWineToShoppingCartButton wine={mockedWine} />);
+  renderer.render(<DeleteProductFromShoppingCartButton product={mockedWine.product} />);
 });

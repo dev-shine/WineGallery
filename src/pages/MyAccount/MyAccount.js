@@ -14,6 +14,7 @@ import { GET_MEMBER, GET_SHOPPING_CART } from '../../graphql/queries';
 import {
   AccountDetailsForm,
   ContactPreferencesForm,
+  FreeShipping,
   ShippingAddressForm,
   SubscriptionBillingDay,
   SubscriptionStatus,
@@ -186,6 +187,7 @@ class MyAccount extends Component {
                               </div>
                               <div className="MyAccount--forms__shipping">
                                 <ShippingAddressForm me={data.me} />
+                                <FreeShipping navigateToCheckout />
                               </div>
                               <div className="MyAccount--forms__contact-preferences">
                                 <ContactPreferencesForm

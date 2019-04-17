@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { compose, graphql, Query } from 'react-apollo';
 import { GET_WINE } from '../../graphql/queries';
-import { AddWineToShoppingCartButton } from '../../components';
+import { AddProductToShoppingCartButton } from '../../components';
 import { GET_AUTH } from '../../graphql/resolvers/auth';
 import { DEFAULT_BOTTLE_URL } from '../../helpers/constants';
 import { formatNumber } from '../../helpers/tools';
@@ -58,7 +58,7 @@ class WineDetails extends Component {
 
                 {
                   wine.hasStock
-                    ? <AddWineToShoppingCartButton wine={wine} />
+                    ? <AddProductToShoppingCartButton product={wine.product} />
                     : <div>(no stock available)</div>
                 }
                 <div>
