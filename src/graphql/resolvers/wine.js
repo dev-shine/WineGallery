@@ -136,6 +136,7 @@ export const GET_WINE = gql`
       product {
         id
         name
+        slug
         productType{
           id
         }
@@ -215,6 +216,11 @@ export const GET_WINE = gql`
         id
         name
       }
+      memberWineLists {
+        id
+        name
+        sortOrder
+      }
     }
   }
 `;
@@ -290,3 +296,4 @@ export const GET_WINES = gql`
     }
   }
 `;
+

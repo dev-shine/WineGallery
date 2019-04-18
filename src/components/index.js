@@ -11,6 +11,7 @@ import StarRating from './atoms/StarRating/StarRating';
 import HeaderDiscountMessage from './atoms/HeaderDiscountMessage/HeaderDiscountMessage';
 import InputFieldCopyClipboard from './atoms/InputFieldCopyClipboard/InputFieldCopyClipboard';
 import SocialShare from './atoms/SocialShare/SocialShare';
+import WineListSelectionItem from './atoms/WineListSelectionItem/WineListSelectionItem';
 
 // Molecules
 import SimpleListItem from './molecules/SimpleListItem/SimpleListItem';
@@ -21,6 +22,9 @@ import QuizAnswer from './molecules/QuizAnswer/QuizAnswer';
 import ShoppingCart from './molecules/ShoppingCart/ShoppingCart';
 import WineRatingItem from './molecules/WineRatingItem/WineRatingItem';
 import WineBlacklistRule from './molecules/WineBlacklistRule/WineBlacklistRule';
+import AddWineToList from './molecules/AddWineToList/AddWineToList';
+import WineListSelection from './molecules/WineListSelection/WineListSelection';
+import CreateWineList from './molecules/CreateWineList/CreateWineList';
 
 // Organisms
 import Header from './organisms/Header/Header';
@@ -68,6 +72,8 @@ export {
   HeaderDiscountMessage,
   InputFieldCopyClipboard,
   SocialShare,
+  WineListSelectionItem,
+  CreateWineList,
 
   // Molecules
   SimpleListItem,
@@ -77,6 +83,8 @@ export {
   ShoppingCart,
   WineRatingItem,
   WineBlacklistRule,
+  AddWineToList,
+  WineListSelection,
 
   // Organisms
   Header,

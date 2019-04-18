@@ -7,7 +7,7 @@ import { ADD_WINE_TO_QUIZ_BOX } from '../../../graphql/mutations';
 import { GET_SHOPPING_CART } from '../../../graphql/queries';
 import { GET_AUTH } from '../../../graphql/resolvers/auth';
 import urlPatterns from '../../../urls';
-import { AddProductToShoppingCartButton, ButtonMutation } from '../..';
+import { AddProductToShoppingCartButton, AddWineToList, ButtonMutation } from '../..';
 import { DEFAULT_BOTTLE_URL } from '../../../helpers/constants';
 
 import './WineItems.scss';
@@ -89,6 +89,9 @@ class WineItems extends Component {
             // Adds the wine to the shopping cart as one-off purchase
             : (<AddProductToShoppingCartButton product={wine.product} />)
         }
+
+        <AddWineToList wine={wine} />
+
       </div>
     );
   };
