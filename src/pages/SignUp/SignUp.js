@@ -8,7 +8,17 @@ import {
   graphql,
 } from 'react-apollo';
 
-import { ADD_SHOPPING_CART_ITEM, SIGN_UP, UPDATE_MEMBER_ACCOUNT_DETAILS } from '../../graphql/mutations';
+import {
+  ADD_SHOPPING_CART_ITEM,
+  SIGN_UP,
+  UPDATE_MEMBER_ACCOUNT_DETAILS,
+  SET_REFERRAL_DISCOUNT,
+  SET_GUEST_FREE_BOX_CAMPAIGN_DISCOUNT,
+} from '../../graphql/mutations';
+import {
+  GET_REFERRAL_DISCOUNT,
+  GET_GUEST_FREE_BOX_CAMPAIGN_DISCOUNT,
+} from '../../graphql/queries';
 import { FETCH_POLICY_CACHE_ONLY } from '../../helpers/constants';
 import urlPatterns from '../../urls';
 import { executeLogInRequest } from '../../helpers/auth';
@@ -20,7 +30,6 @@ import {
 } from '../../helpers/validations';
 import { shoppingCartLocalStorage } from '../../helpers/tools';
 import InputField from '../../components/atoms/InputField/InputField';
-import { GET_REFERRAL_DISCOUNT, SET_REFERRAL_DISCOUNT } from '../../graphql/resolvers/member';
 
 import './SignUp.scss';
 
@@ -37,6 +46,17 @@ class SignUp extends Component {
         quiz: PropTypes.bool,
         isShoppingCart: PropTypes.bool,
         isGiftRedeem: PropTypes.bool,
+      }),
+    }).isRequired,
+    referralDiscountQuery: PropTypes.shape({
+      referralDiscount: PropTypes.shape({
+        referralCode: PropTypes.string,
+        giveawayCode: PropTypes.string,
+      }),
+    }).isRequired,
+    guestFreeBoxCampaignDiscountQuery: PropTypes.shape({
+      guestFreeBoxCampaignDiscount: PropTypes.shape({
+        freeBoxCampaignId: PropTypes.number,
       }),
     }).isRequired,
   };
@@ -75,7 +95,7 @@ class SignUp extends Component {
    * */
   handleSubmit = async (signUp, addShoppingCart) => {
     const { state, props } = this;
-    const { setReferralDiscount } = props;
+    const { setReferralDiscount, setGuestFreeBoxCampaignDiscount } = props;
     const id = props.location.state && props.location.state.memberId;
     const shoppingCart = shoppingCartLocalStorage();
 
@@ -97,20 +117,28 @@ class SignUp extends Component {
 
     if (confirmPassword === signUpInput.password) {
 
-      // Adds referral and giveaway codes to the input
+      // Adds referral, giveaway and free-box-campaign info to the input
       const { referralCode, giveawayCode } = props.referralDiscountQuery.referralDiscount;
-      input = { ...input, referralCode, giveawayCode };
+      const { freeBoxCampaignId } = props.guestFreeBoxCampaignDiscountQuery.guestFreeBoxCampaignDiscount;
+      input = {
+        ...input, referralCode, giveawayCode, freeBoxCampaignId,
+      };
 
       // Saves new member (signUp)
       await signUp({ variables: { input } })
         .then(async member => {
 
-          // Removes referral discount from the apollo-link-state as it's been saved in the database
+          // Removes discounts from the apollo-link-state as it's been saved in the database
           // by the signUp mutation
           await setReferralDiscount({
             variables: {
               referralCode: null,
               giveawayCode: null,
+            },
+          });
+          await setGuestFreeBoxCampaignDiscount({
+            variables: {
+              freeBoxCampaignId: null,
             },
           });
 
@@ -321,5 +349,12 @@ export default compose(
       options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY },
     }
   ),
+  graphql(
+    GET_GUEST_FREE_BOX_CAMPAIGN_DISCOUNT, {
+      name: 'guestFreeBoxCampaignDiscountQuery',
+      options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY },
+    }
+  ),
   graphql(SET_REFERRAL_DISCOUNT, { name: 'setReferralDiscount' }),
+  graphql(SET_GUEST_FREE_BOX_CAMPAIGN_DISCOUNT, { name: 'setGuestFreeBoxCampaignDiscount' }),
 )(SignUp);

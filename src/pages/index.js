@@ -22,6 +22,7 @@ import Referral from './Referral/Referral';
 import InviteFriend from './InviteFriend/InviteFriend';
 import GiveFreeTrial from './GiveFreeTrial/GiveFreeTrial';
 import RedeemGift from './RedeemGift/RedeemGift';
+import FreeBoxCampaign from './FreeBoxCampaign/FreeBoxCampaign';
 
 export {
   Home,
@@ -56,4 +57,7 @@ export {
   // Checkout
   Checkout,
   ThankYou,
+
+  // Free-Box
+  FreeBoxCampaign,
 };

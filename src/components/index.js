@@ -12,6 +12,7 @@ import HeaderDiscountMessage from './atoms/HeaderDiscountMessage/HeaderDiscountM
 import InputFieldCopyClipboard from './atoms/InputFieldCopyClipboard/InputFieldCopyClipboard';
 import SocialShare from './atoms/SocialShare/SocialShare';
 import WineListSelectionItem from './atoms/WineListSelectionItem/WineListSelectionItem';
+import FreeBoxCampaignAction from './atoms/FreeBoxCampaignAction/FreeBoxCampaignAction';
 
 // Molecules
 import SimpleListItem from './molecules/SimpleListItem/SimpleListItem';
@@ -74,6 +75,7 @@ export {
   SocialShare,
   WineListSelectionItem,
   CreateWineList,
+  FreeBoxCampaignAction,
 
   // Molecules
   SimpleListItem,

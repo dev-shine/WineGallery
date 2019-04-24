@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import {
   Home, PasswordReset, SetNewPassword, SignUp, Quiz, QuizResults, SpecialPacks, SpecialPackDetails, Gifts,
-  WineRatings, InviteFriend, GiveFreeTrial, RedeemGift,
+  WineRatings, InviteFriend, GiveFreeTrial, RedeemGift, FreeBoxCampaign,
 } from './pages';
 import ThankYou from './pages/ThankYou/ThankYou';
 import urlPatterns from './urls';
@@ -83,6 +83,11 @@ class Routes extends Component {
         <Route
           path={urlPatterns.SPECIAL_PACK_DETAILS()}
           render={props => <SpecialPackDetails {...props} />}
+          exact
+        />
+        <Route
+          path={urlPatterns.FREE_BOX_CAMPAIGN()}
+          render={props => <FreeBoxCampaign {...props} />}
           exact
         />
 

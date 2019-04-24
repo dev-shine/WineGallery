@@ -13,6 +13,7 @@ import { FETCH_POLICY_NETWORK_ONLY } from '../helpers/constants';
 import { resolverAuth } from './resolvers/auth';
 import { resolverGiftFlow } from './resolvers/gift';
 import { resolverReferralDiscount } from './resolvers/member';
+import { resolverGuestFreeBoxCampaignDiscount } from './resolvers/order';
 
 const defaultOptions = {
   watchQuery: {
@@ -64,6 +65,7 @@ const generateApolloClient = () => {
       resolverAuth.resolvers,
       resolverGiftFlow.resolvers,
       resolverReferralDiscount.resolvers,
+      resolverGuestFreeBoxCampaignDiscount.resolvers,
     ),
   };
 
@@ -72,6 +74,7 @@ const generateApolloClient = () => {
       resolverAuth.typeDefs,
       resolverGiftFlow.typeDefs,
       resolverReferralDiscount.typeDefs,
+      resolverGuestFreeBoxCampaignDiscount.typeDefs,
     ),
   };
 
@@ -89,6 +92,7 @@ const generateApolloClient = () => {
       resolverAuth.defaults,
       resolverGiftFlow.defaults,
       resolverReferralDiscount.defaults,
+      resolverGuestFreeBoxCampaignDiscount.defaults,
     ),
   };
 

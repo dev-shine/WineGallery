@@ -3,7 +3,15 @@ import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
 
 import { isLoggedIn } from '../../../helpers/auth';
-import { GET_MEMBER, GET_REFERRAL_DISCOUNT } from '../../../graphql/queries';
+import {
+  APPLY_DISCOUNT_FROM_FREE_BOX_CAMPAIGN,
+  SET_GUEST_FREE_BOX_CAMPAIGN_DISCOUNT,
+} from '../../../graphql/mutations';
+import {
+  GET_MEMBER,
+  GET_REFERRAL_DISCOUNT,
+  GET_GUEST_FREE_BOX_CAMPAIGN_DISCOUNT, GET_SHOPPING_CART,
+} from '../../../graphql/queries';
 import {
   DISCOUNT_TYPE_IDS,
   DISCOUNT_TYPE_VALUES,
@@ -33,10 +41,17 @@ class HeaderDiscountMessage extends Component {
         giveawayCode: PropTypes.string,
       }),
     }).isRequired,
+    guestFreeBoxCampaignDiscountQuery: PropTypes.shape({
+      guestFreeBoxCampaignDiscount: PropTypes.shape({
+        freeBoxCampaignId: PropTypes.number,
+      }),
+    }).isRequired,
+    applyDiscountFromFreeBoxCampaign: PropTypes.func.isRequired,
+    setGuestFreeBoxCampaignDiscount: PropTypes.func.isRequired,
   };
 
   shouldComponentUpdate(nextProps) {
-    const { meQuery, referralDiscountQuery } = this.props;
+    const { meQuery, referralDiscountQuery, guestFreeBoxCampaignDiscountQuery } = this.props;
 
     const currentDiscountTypeId = meQuery.me && meQuery.me.shoppingCart
       && meQuery.me.shoppingCart.discountType && meQuery.me.shoppingCart.discountType.id;
@@ -44,29 +59,67 @@ class HeaderDiscountMessage extends Component {
       && nextProps.meQuery.me.shoppingCart.discountType && nextProps.meQuery.me.shoppingCart.discountType.id;
 
     const currentReferralCode = referralDiscountQuery.referralDiscount.referralCode;
-    const currentGiveawayCode = referralDiscountQuery.referralDiscount.giveawayCode;
     const nextReferralCode = nextProps.referralDiscountQuery.referralDiscount.referralCode;
+
+    const currentGiveawayCode = referralDiscountQuery.referralDiscount.giveawayCode;
     const nextGiveawayCode = nextProps.referralDiscountQuery.referralDiscount.giveawayCode;
 
-    // Updates component if discountTypeId has been changed or if referral/giveaway codes from
+    const currentFreeBoxCampaignId = (
+      guestFreeBoxCampaignDiscountQuery.guestFreeBoxCampaignDiscount.freeBoxCampaignId
+    );
+    const nextFreeBoxCampaignId = (
+      nextProps.guestFreeBoxCampaignDiscountQuery.guestFreeBoxCampaignDiscount.freeBoxCampaignId
+    );
+
+    // Updates component if discountTypeId has been changed or if any of the discount info from
     // apollo-link-state have been changed
     return !(
       currentDiscountTypeId === nextDiscountTypeId
       && currentReferralCode === nextReferralCode
       && currentGiveawayCode === nextGiveawayCode
+      && currentFreeBoxCampaignId === nextFreeBoxCampaignId
     );
   }
 
+  async componentDidUpdate() {
+
+    const {
+      meQuery,
+      applyDiscountFromFreeBoxCampaign,
+      guestFreeBoxCampaignDiscountQuery,
+      setGuestFreeBoxCampaignDiscount,
+    } = this.props;
+
+    // Checks if we need to apply a freeBoxCampaign discount
+    const { freeBoxCampaignId } = guestFreeBoxCampaignDiscountQuery.guestFreeBoxCampaignDiscount;
+    if (meQuery.me && freeBoxCampaignId) {
+      await applyDiscountFromFreeBoxCampaign({
+        variables: {
+          input: {
+            freeBoxCampaignId,
+            memberId: meQuery.me.id,
+          },
+        },
+      });
+      await setGuestFreeBoxCampaignDiscount({ variables: { freeBoxCampaignId: null } });
+    }
+  }
+
   /**
-   * Gets discount message if referral or giveaway codes are applied.
+   * Gets discount message if referral, giveaway or free-box-campaign codes are applied.
    *
    * @return {string|null}
    */
   getDiscountMessage = () => {
-    const { meQuery, referralDiscountQuery } = this.props;
+    const {
+      meQuery,
+      referralDiscountQuery,
+      guestFreeBoxCampaignDiscountQuery,
+    } = this.props;
 
     let hasReferralDiscount = false;
     let hasGiveawayDiscount = false;
+    let hasFreeBoxCampaignDiscount = false;
 
     if (isLoggedIn()) {
 
@@ -78,12 +131,17 @@ class HeaderDiscountMessage extends Component {
       hasGiveawayDiscount = (
         discountType && discountType.id === DISCOUNT_TYPE_IDS.DB_ID_DISCOUNT_TYPE_GIVEAWAY
       );
+      hasFreeBoxCampaignDiscount = (
+        discountType && discountType.id === DISCOUNT_TYPE_IDS.DB_ID_DISCOUNT_TYPE_FREE_BOX
+      );
     } else {
 
-      // For users not logged in gets referral and giveaway codes from apollo-link-state
+      // For users not logged in gets discount info from apollo-link-state
       const { referralCode, giveawayCode } = referralDiscountQuery.referralDiscount;
+      const { freeBoxCampaignId } = guestFreeBoxCampaignDiscountQuery.guestFreeBoxCampaignDiscount;
       hasGiveawayDiscount = Boolean(referralCode) && Boolean(giveawayCode);
       hasReferralDiscount = Boolean(referralCode);
+      hasFreeBoxCampaignDiscount = Boolean(freeBoxCampaignId);
     }
 
     let discountValue = 0;
@@ -91,6 +149,8 @@ class HeaderDiscountMessage extends Component {
       discountValue = DISCOUNT_TYPE_VALUES.DB_ID_DISCOUNT_TYPE_GIVEAWAY;
     } else if (hasReferralDiscount) {
       discountValue = DISCOUNT_TYPE_VALUES.DB_ID_DISCOUNT_TYPE_REFERRAL;
+    } else if (hasFreeBoxCampaignDiscount) {
+      discountValue = DISCOUNT_TYPE_VALUES.DB_ID_DISCOUNT_TYPE_FREE_BOX;
     }
 
     if (discountValue) return `You have $${discountValue} discount`;
@@ -115,5 +175,16 @@ export default compose(
       options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY },
     }
   ),
+  graphql(
+    GET_GUEST_FREE_BOX_CAMPAIGN_DISCOUNT, {
+      name: 'guestFreeBoxCampaignDiscountQuery',
+      options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY },
+    }
+  ),
   graphql(GET_MEMBER, { name: 'meQuery' }),
+  graphql(SET_GUEST_FREE_BOX_CAMPAIGN_DISCOUNT, { name: 'setGuestFreeBoxCampaignDiscount' }),
+  graphql(APPLY_DISCOUNT_FROM_FREE_BOX_CAMPAIGN, {
+    name: 'applyDiscountFromFreeBoxCampaign',
+    options: { refetchQueries: () => [{ query: GET_MEMBER }, { query: GET_SHOPPING_CART }] },
+  }),
 )(HeaderDiscountMessage);

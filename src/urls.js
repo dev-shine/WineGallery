@@ -25,6 +25,7 @@ const URL_PATTERNS = {
   REDEEM_GIFT: '/gifts/redeem',
   INVITE_FRIEND: '/dashboard/invite',
   GIVE_FREE_TRIAL: '/dashboard/give',
+  FREE_BOX_CAMPAIGN: (seoCampaignName = ':seoCampaignName?') => `/free-box/${seoCampaignName}`,
 };
 
 export default URL_PATTERNS;
