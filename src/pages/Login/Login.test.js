@@ -1,18 +1,14 @@
-import ReactDOM from 'react-dom';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import ShallowRenderer from 'react-test-renderer/shallow';
 
 import Login from './Login';
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-
-  // Wraps Login with BrowserRouter as it uses Link component inside
-  ReactDOM.render(
+  const renderer = new ShallowRenderer();
+  renderer.render(
     <BrowserRouter>
-      <Login />
-    </BrowserRouter>,
-    div
+      <Login location={{}} />
+    </BrowserRouter>
   );
-  ReactDOM.unmountComponentAtNode(div);
 });

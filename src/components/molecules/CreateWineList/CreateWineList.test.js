@@ -13,5 +13,5 @@ it('renders without crashing', () => {
   };
 
   const renderer = new ShallowRenderer();
-  renderer.render(<CreateWineList wine={mockedWine} />);
+  renderer.render(<CreateWineList wine={mockedWine} memberId={123} />);
 });

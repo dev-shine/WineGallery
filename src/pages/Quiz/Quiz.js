@@ -13,6 +13,7 @@ import {
   DB_IDS_QUIZ_ANSWER_WITH_VERSION,
   DB_IDS_QUIZ_QUESTION_WITH_VERSION,
   DB_IDS_QUIZ_QUESTION_WITH_WINE_QUANTITY,
+  DB_IDS_QUIZ_QUESTION_WITH_PRICE_POINT,
   WINE_CLASS_IDS,
   DB_IDS_QUIZ_ANSWER_WITH_WINE_QUANTITY,
 } from '../../helpers/constants';
@@ -48,6 +49,7 @@ class Quiz extends Component {
     whiteBottles: 0,
     sparklingBottles: 0,
     roseBottles: 0,
+    blacklistedQuestions: [], // List of IDs of questions to be hidden (eg. for Gift receivers)
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -57,27 +59,38 @@ class Quiz extends Component {
     const answerIdsFromState = Object.values(prevState.selectedAnswers).flat();
 
     const areAnswersUpdated = nextMeQuery.me && answerIdsFromState.length === 0 && answerIdsFromProps.length;
+    const areMemberDetailsUpdated = nextMeQuery.me && nextMeQuery.me.email !== prevState.email;
 
     // Updates state with props only when new answers on initial load of meQuery are received
-    if (isLoggedIn() && areAnswersUpdated) {
+    if (isLoggedIn() && (areAnswersUpdated || areMemberDetailsUpdated)) {
 
       // Gets Member answers from the backend
       const memberAnswers = {};
-      nextProps.meQuery.me.quizAnswers.forEach(quizAnswer => {
+      nextMeQuery.me.quizAnswers.forEach(quizAnswer => {
         const currentAnswers = memberAnswers[quizAnswer.quizQuestion.id] || [];
         memberAnswers[quizAnswer.quizQuestion.id] = [...currentAnswers, quizAnswer.id];
       });
 
       // Gets Member Wine Quantities from the backend
       const memberWineQuantities = {};
-      nextProps.meQuery.me.winequantitySet.forEach(wineQuantity => {
+      nextMeQuery.me.winequantitySet.forEach(wineQuantity => {
         const currentWineQuantities = memberWineQuantities[wineQuantity.wineClass.id] || 0;
         memberWineQuantities[wineQuantity.wineClass.id] = (
           currentWineQuantities + wineQuantity.numberOfBottles
         );
       });
 
+      // Gift receivers shouldn't see questions with Price Points and Wine Quantities
+      const isGiftReceiver = nextMeQuery.me.hasPendingGift || nextMeQuery.me.hasActiveGift;
+      const blacklistedQuestions = isGiftReceiver
+        ? [
+          ...Object.values(DB_IDS_QUIZ_QUESTION_WITH_PRICE_POINT),
+          ...Object.values(DB_IDS_QUIZ_QUESTION_WITH_WINE_QUANTITY),
+        ]
+        : [];
+
       return {
+        email: nextMeQuery.me.email,
         currentQuestionIndex: 1,
         memberName: nextMeQuery.me.firstName,
         selectedAnswers: memberAnswers,
@@ -88,6 +101,7 @@ class Quiz extends Component {
         whiteBottles: memberWineQuantities[WINE_CLASS_IDS.DB_ID_WINE_CLASS_WHITE] || 0,
         sparklingBottles: memberWineQuantities[WINE_CLASS_IDS.DB_ID_WINE_CLASS_SPARKLING] || 0,
         roseBottles: memberWineQuantities[WINE_CLASS_IDS.DB_ID_WINE_CLASS_ROSE] || 0,
+        blacklistedQuestions,
       };
     }
     return null;
@@ -147,7 +161,7 @@ class Quiz extends Component {
       this.setState({
         selectedAnswers: { ...selectedAnswers, [questionID]: selectedAnswersIDs },
       });
-      moveToNextQuestion && this.navigateSmoothlyToTheNextPage();
+      moveToNextQuestion && this.navigateToTheNextPage();
     }
   };
 
@@ -156,7 +170,7 @@ class Quiz extends Component {
    */
   handleSubmitQuiz = () => {
     const {
-      setMemberAuth, submitQuiz, referralDiscountQuery, setReferralDiscount,
+      setMemberAuth, submitQuiz, referralDiscountQuery, setReferralDiscount, meQuery,
     } = this.props;
     const {
       selectedAnswers, email, memberName, redBottles, whiteBottles, sparklingBottles, roseBottles,
@@ -219,6 +233,10 @@ class Quiz extends Component {
           // Navigates to the Quiz Results page for new users
           window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.QUIZ_RESULTS}`;
 
+        } else if (data && data.submitQuiz.isSuccessful && meQuery.me.hasPendingGift) {
+
+          // Navigates to the Quiz Results page for Members redeeming a Gift
+          window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.QUIZ_RESULTS}`;
         } else if (data && data.submitQuiz.isSuccessful && isLoggedIn()) {
 
           // Navigates to the Dashboard for logged users
@@ -259,7 +277,7 @@ class Quiz extends Component {
       whiteBottles: 0,
       roseBottles: 0,
       sparklingBottles: 0,
-    }, this.navigateSmoothlyToTheNextPage);
+    }, this.navigateToTheNextPage);
   };
 
   /**
@@ -337,13 +355,54 @@ class Quiz extends Component {
   };
 
   /**
+   * Returns Quiz Question valid for current Member.
+   *
+   * @returns {Array}
+   */
+  getAllQuizQuestions = () => {
+    const { quizVersion, blacklistedQuestions } = this.state;
+    const { allQuizQuestionsQuery } = this.props;
+    return allQuizQuestionsQuery.allQuizQuestions.filter(
+      question => question.quizVersion.id === quizVersion && !blacklistedQuestions.includes(question.id)
+    ).sort(
+      (a, b) => b.sortOrder > a.sortOrder
+    );
+  };
+
+  /**
    * Navigates to the next page with delay.
    */
-  navigateSmoothlyToTheNextPage() {
+  navigateToTheNextPage() {
     const { state } = this;
+    const { quizVersion } = state;
+    const allQuizQuestions = this.getAllQuizQuestions();
+
+    const nextQuestion = allQuizQuestions.filter(
+      question => question.quizVersion.id === quizVersion && question.sortOrder > state.currentQuestionIndex
+    )[0];
+
+    const nextQuestionIndex = nextQuestion ? nextQuestion.sortOrder : state.currentQuestionIndex + 1;
+
     wait(200).then(() => this.setState({
-      currentQuestionIndex: state.currentQuestionIndex + 1,
+      currentQuestionIndex: nextQuestionIndex,
     }));
+  }
+
+  /**
+   * Navigates to the previous page.
+   */
+  navigateToThePreviousPage() {
+    const { state } = this;
+    const { quizVersion, currentQuestionIndex } = state;
+    const allQuizQuestions = this.getAllQuizQuestions();
+
+    const [previousQuestion] = allQuizQuestions.filter(
+      question => question.quizVersion.id === quizVersion && question.sortOrder < currentQuestionIndex
+    ).slice(-1);
+
+    this.setState({
+      currentQuestionIndex: previousQuestion.sortOrder,
+    });
   }
 
   /**
@@ -356,10 +415,10 @@ class Quiz extends Component {
       selectedAnswers, currentQuestionIndex, memberName, redBottles, whiteBottles, sparklingBottles,
       roseBottles, quizVersion,
     } = this.state;
-    const { allQuizQuestionsQuery } = this.props;
+    const allQuizQuestions = this.getAllQuizQuestions();
 
     // Filters questions with current quizVersion and sortOrder
-    const filteredQuestions = allQuizQuestionsQuery.allQuizQuestions.filter(
+    const filteredQuestions = allQuizQuestions.filter(
       question => question.quizVersion.id === quizVersion && question.sortOrder === currentQuestionIndex
     );
 
@@ -415,20 +474,20 @@ class Quiz extends Component {
    */
   renderQuiz() {
     const { allQuizQuestionsQuery } = this.props;
-    const { quizVersion, currentQuestionIndex, email } = this.state;
+    const { currentQuestionIndex, email } = this.state;
 
     if (allQuizQuestionsQuery.loading) return 'Loading from here...';
     if (allQuizQuestionsQuery.error) return `Error! ${allQuizQuestionsQuery.error.message}`;
 
-    const numberOfQuestions = allQuizQuestionsQuery.allQuizQuestions.filter(
-      question => question.quizVersion.id === quizVersion
-    ).length;
-    const isQuizDone = currentQuestionIndex > numberOfQuestions;
+    const allQuizQuestions = this.getAllQuizQuestions();
+
+    const [lastQuestion] = allQuizQuestions.slice(-1);
+    const isQuizDone = currentQuestionIndex > lastQuestion.sortOrder;
 
     return (
       <div>
-        {this.renderCurrentQuizQuestion()}
-        {!isQuizDone && this.renderNextAndPrevButtons(allQuizQuestionsQuery.allQuizQuestions)}
+        {!isQuizDone && this.renderCurrentQuizQuestion()}
+        {!isQuizDone && this.renderNextAndPrevButtons()}
 
         { // Renders email input for new users only
           !isLoggedIn()
@@ -484,15 +543,13 @@ class Quiz extends Component {
     const isCurrentQuestionAnswered = numberOfAnswers === currentQuestion.maxAnswers;
 
     // For logged in users doesn't go to index 0, which stands for question about first name
-    const previousPageIndex = isLoggedIn() && currentQuestionIndex === 1
-      ? 1
-      : currentQuestionIndex - 1;
+    const previousPageIndex = isLoggedIn() && currentQuestionIndex === 1 ? 1 : currentQuestionIndex - 1;
 
     return (
       <div>
         <button
           type="button"
-          onClick={() => this.setState({ currentQuestionIndex: previousPageIndex })}
+          onClick={() => this.navigateToThePreviousPage()}
           className="link-button"
           disabled={previousPageIndex === currentQuestionIndex}
         >
@@ -501,7 +558,7 @@ class Quiz extends Component {
 
         <button
           type="button"
-          onClick={() => this.setState({ currentQuestionIndex: currentQuestionIndex + 1 })}
+          onClick={() => this.navigateToTheNextPage()}
           className="link-button"
           disabled={!isCurrentQuestionAnswered}
         >

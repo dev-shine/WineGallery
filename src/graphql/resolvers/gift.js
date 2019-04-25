@@ -72,12 +72,12 @@ export const SET_GIFT_FLOW_INFO = gql`
 
 export const SET_GIFT_FLOW_SIGN_UP_FORM_INFO = gql`
   mutation setGiftFlowSignUpFormInfo(
-  $email: String,
-  $firstName: String,
-  $lastName: String,
-  $password: String,
-  $birthDate: String,
-  $confirmPassword: String,
+    $email: String,
+    $firstName: String,
+    $lastName: String,
+    $password: String,
+    $birthDate: String,
+    $confirmPassword: String,
   ) {
     setGiftFlowSignUpFormInfo(
       email: $email,
@@ -95,6 +95,24 @@ export const SET_GIFT_FLOW_SIGN_UP_FORM_INFO = gql`
         birthDate
         confirmPassword
         __typename
+      }
+    }
+  }
+`;
+
+export const REDEEM_GIFT = gql`
+  mutation RedeemGift($input: RedeemGiftInput!) {
+    redeemGift(input: $input) {
+      isValid
+      member {
+        id
+        firstName
+        hasUpdatedPassword
+        hasPendingGift
+      }
+      errors {
+        messages
+        field
       }
     }
   }

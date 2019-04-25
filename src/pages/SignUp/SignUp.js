@@ -35,6 +35,8 @@ class SignUp extends Component {
       state: PropTypes.shape({
         email: PropTypes.string,
         quiz: PropTypes.bool,
+        isShoppingCart: PropTypes.bool,
+        isGiftRedeem: PropTypes.bool,
       }),
     }).isRequired,
   };
@@ -80,13 +82,14 @@ class SignUp extends Component {
     // Properties used to verify if user will be redirected to checkout page
     const isQuiz = props.location.state && props.location.state.quiz;
     const isShoppingCart = props.location.state && props.location.state.isShoppingCart;
+    const isGiftRedeem = props.location.state && props.location.state.isGiftRedeem;
 
     // Creates an array (signUpInput) removing unnecessary info
     const { confirmPassword, ...signUpInput } = state.form;
 
     // Builds input depending on which page the user is accessing
     let input = null;
-    if (!isQuiz && !isShoppingCart) {
+    if (!isQuiz && !isShoppingCart && !isGiftRedeem) {
       input = { ...signUpInput };
     } else {
       input = { ...signUpInput, id, hasUpdatedPassword: true };
@@ -145,6 +148,8 @@ class SignUp extends Component {
                 // In case the user is coming from shopping cart
                 if (isShoppingCart) {
                   window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.CHECKOUT}`;
+                } else if (isGiftRedeem) {
+                  window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.QUIZ}`;
                 } else {
 
                   // Redirects to my account page

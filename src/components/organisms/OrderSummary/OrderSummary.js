@@ -33,6 +33,7 @@ const OrderSummary = props => {
   const {
     shoppingcartitemSet,
     total,
+    totalProductsCost,
     totalShippingFee,
     discountCode,
     discount,
@@ -57,7 +58,7 @@ const OrderSummary = props => {
             ))}
           </ul>
           {totalShippingFee > 0 && <div>{`Shipping fee: $${formatNumber(totalShippingFee)}`}</div>}
-          {total && <div>{`Total: $${formatNumber(total + totalShippingFee)}`}</div>}
+          {total && <div>{`Total: $${formatNumber(totalProductsCost)}`}</div>}
           {
             discount && (
               <div>
@@ -69,7 +70,7 @@ const OrderSummary = props => {
                       {`Discount applied: $${formatNumber(discount)}`}
                     </div>)
                 }
-                {`Final total: $${formatNumber(total + totalShippingFee - discount)}`}
+                {`Final total: $${formatNumber(total)}`}
               </div>
             )
           }

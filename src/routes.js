@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import {
   Home, PasswordReset, SetNewPassword, SignUp, Quiz, QuizResults, SpecialPacks, SpecialPackDetails, Gifts,
-  WineRatings, InviteFriend, GiveFreeTrial,
+  WineRatings, InviteFriend, GiveFreeTrial, RedeemGift,
 } from './pages';
 import ThankYou from './pages/ThankYou/ThankYou';
 import urlPatterns from './urls';
@@ -64,6 +64,7 @@ class Routes extends Component {
         <Route path={urlPatterns.QUIZ} exact component={Quiz} />
         <Route path={urlPatterns.QUIZ_RESULTS} exact component={QuizResults} />
         <Route path={urlPatterns.GIFTS} exact component={Gifts} />
+        <Route path={urlPatterns.REDEEM_GIFT} exact component={RedeemGift} />
 
         {/* Renders lazily loaded components --> https://reactjs.org/docs/code-splitting.html#reactlazy */}
         <Route path={urlPatterns.LOGIN} render={props => <Login {...props} />} />

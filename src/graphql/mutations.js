@@ -2,6 +2,11 @@
  * All mutations should be imported and exported to and from this file.
  * */
 
+// Gift
+import {
+  REDEEM_GIFT,
+} from './resolvers/gift';
+
 // Member
 import {
   CREATE_CONTACT_PREFERENCE,
@@ -59,6 +64,7 @@ export {
   DELETE_PAYMENT_METHOD,
   DELETE_SHOPPING_CART_ITEM,
   DELETE_WINE_FROM_QUIZ_BOX,
+  REDEEM_GIFT,
   RESET_PASSWORD,
   SET_NEW_PASSWORD,
   SIGN_UP,
