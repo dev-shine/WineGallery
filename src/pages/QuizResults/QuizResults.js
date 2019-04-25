@@ -54,7 +54,7 @@ const QuizResults = props => {
                     type="button"
                     onClick={() => history.push(urlPatterns.CHECKOUT)}
                   >
-                    get my first box
+                    {data.me.hasPendingGift ? 'redeem gift' : 'get my first box'}
                   </button>
                   <button
                     type="button"

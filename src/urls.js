@@ -22,6 +22,7 @@ const URL_PATTERNS = {
   WINE_DETAILS: (slug = ':slug') => `/wines/details/${slug}`,
   WINE_DETAILS_BY_ID: (id = ':id') => `/wines/details_by_id/${id}`,
   GIFTS: '/gifts',
+  REDEEM_GIFT: '/gifts/redeem',
   INVITE_FRIEND: '/dashboard/invite',
   GIVE_FREE_TRIAL: '/dashboard/give',
 };

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { executeLogInRequest, getLocalStorageToken } from '../../helpers/auth';
@@ -12,6 +13,15 @@ import './Login.scss';
  * React.Component: https://reactjs.org/docs/react-component.html
  * */
 class Login extends Component {
+
+  static propTypes = {
+    location: PropTypes.shape({
+      state: PropTypes.shape({
+        redirectUrl: PropTypes.string,
+      }),
+    }).isRequired,
+  };
+
   state = {
     form: {
       email: '',
@@ -59,7 +69,7 @@ class Login extends Component {
    * Executes login and redirects to my account page if login successful
    * */
   handleSubmit = async () => {
-    const { state } = this;
+    const { state, props } = this;
     const { email, password } = state.form;
 
     // Removes local storage if is already set
@@ -71,8 +81,12 @@ class Login extends Component {
     executeLogInRequest(email, password)
       .then(() => {
 
-        // Redirects to my account page
-        window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.MY_ACCOUNT}`;
+        if (props.location.state && props.location.state.redirectUrl) {
+          window.location = props.location.state.redirectUrl;
+        } else {
+          // Redirects to my account page by default
+          window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.MY_ACCOUNT}`;
+        }
       })
 
       // Catches error from server (if login unsuccessful) and show message in the form

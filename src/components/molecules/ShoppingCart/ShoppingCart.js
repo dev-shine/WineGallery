@@ -256,13 +256,7 @@ class ShoppingCart extends Component {
                       productsCartArray && (
                         <p>
                           Totals:
-                          {
-                            productsCartArray.length
-                            && ` $${formatNumber(
-                              productsCartArray.map(item => item.product.sellingPrice * item.quantity)
-                                .reduce((a, b) => a + b)
-                            )}`
-                          }
+                          {` $${formatNumber(data.me.shoppingCart.totalProductsCost)}`}
                           {hasShippingFee && `(+ ${formatNumber(shippingFee)} SHIPPING)`}
                         </p>
                       )

@@ -159,7 +159,9 @@ class Checkout extends Component {
             <OrderSummary me={meQuery.me} />
           </div>
           <div className="Checkout--forms__payment">
-            <PaymentMethod me={meQuery.me} isCheckoutPage />
+            { // Shows Payment form only when necessary
+              meQuery.me.shoppingCart.total > 0 && <PaymentMethod me={meQuery.me} isCheckoutPage />
+            }
           </div>
           <div className="Checkout--forms__discount-code">
             <DiscountCodeForm query={meQuery.me} />

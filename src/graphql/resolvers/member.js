@@ -17,6 +17,8 @@ export const GET_MEMBER = gql`
       hasUpdatedPassword
       points
       referralCode
+      hasPendingGift
+      hasActiveGift
       orderedWineCountries {
         id
         name
@@ -156,6 +158,7 @@ export const GET_MEMBER = gql`
           id
         }
         total
+        totalProductsCost
         totalShippingFee
         shoppingcartitemSet {
           quantity

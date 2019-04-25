@@ -21,6 +21,7 @@ import WineRatings from './WineRatings/WineRatings';
 import Referral from './Referral/Referral';
 import InviteFriend from './InviteFriend/InviteFriend';
 import GiveFreeTrial from './GiveFreeTrial/GiveFreeTrial';
+import RedeemGift from './RedeemGift/RedeemGift';
 
 export {
   Home,
@@ -50,6 +51,7 @@ export {
   SpecialPacks,
   SpecialPackDetails,
   Gifts,
+  RedeemGift,
 
   // Checkout
   Checkout,
