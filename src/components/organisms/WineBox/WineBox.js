@@ -40,7 +40,8 @@ class WineBox extends Component {
     }).then(response => {
 
       // Redirects user to quiz in case no subscription
-      if (response.data.me.subscription === null) {
+      const { subscription } = response.data.me;
+      if (subscription === null || subscription.subscriptionwineSet === null) {
         history.push(urlPatterns.QUIZ);
       }
     });

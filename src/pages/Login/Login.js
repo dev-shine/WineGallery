@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { executeLogInRequest, getLocalStorageToken } from '../../helpers/auth';
-import urlPatterns from '../../urls';
+import { compose, graphql, withApollo } from 'react-apollo';
+
 import { InputField } from '../../components';
+import { GET_GUEST_FREE_BOX_CAMPAIGN_DISCOUNT } from '../../graphql/queries';
+import { executeLogInRequest, getLocalStorageToken } from '../../helpers/auth';
+import { FETCH_POLICY_CACHE_ONLY } from '../../helpers/constants';
+import urlPatterns from '../../urls';
 
 import './Login.scss';
 
@@ -18,6 +22,11 @@ class Login extends Component {
     location: PropTypes.shape({
       state: PropTypes.shape({
         redirectUrl: PropTypes.string,
+      }),
+    }).isRequired,
+    guestFreeBoxCampaignDiscountQuery: PropTypes.shape({
+      guestFreeBoxCampaignDiscount: PropTypes.shape({
+        freeBoxCampaignId: PropTypes.number,
       }),
     }).isRequired,
   };
@@ -71,6 +80,7 @@ class Login extends Component {
   handleSubmit = async () => {
     const { state, props } = this;
     const { email, password } = state.form;
+    const { freeBoxCampaignId } = props.guestFreeBoxCampaignDiscountQuery.guestFreeBoxCampaignDiscount;
 
     // Removes local storage if is already set
     if (localStorage.getItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE)) {
@@ -83,10 +93,19 @@ class Login extends Component {
 
         if (props.location.state && props.location.state.redirectUrl) {
           window.location = props.location.state.redirectUrl;
+
+          // If there is a free box campaign discount to be added
+        } else if (freeBoxCampaignId) {
+
+          window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.QUIZ_RESULTS}`;
+
         } else {
-          // Redirects to my account page by default
+
+          // Redirects to my account page
           window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.MY_ACCOUNT}`;
+
         }
+
       })
 
       // Catches error from server (if login unsuccessful) and show message in the form
@@ -144,4 +163,12 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default compose(
+  withApollo,
+  graphql(
+    GET_GUEST_FREE_BOX_CAMPAIGN_DISCOUNT, {
+      name: 'guestFreeBoxCampaignDiscountQuery',
+      options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY },
+    }
+  ),
+)(Login);

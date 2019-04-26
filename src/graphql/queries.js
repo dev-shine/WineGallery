@@ -50,6 +50,17 @@ import {
   GET_ALL_SHIPPING_PRE_PAID_PLANS,
 } from './resolvers/shipping';
 
+// Orders
+import {
+  GET_FREE_BOX_CAMPAIGN,
+  GET_GUEST_FREE_BOX_CAMPAIGN_DISCOUNT,
+} from './resolvers/order';
+
+// Auth
+import {
+  GET_AUTH,
+} from './resolvers/auth';
+
 export {
   GET_ALL_SPECIAL_PACKS,
   GET_ALL_WINE_BLACKLIST_TYPES,
@@ -78,4 +89,7 @@ export {
   GET_ALL_GIFT_TEMPLATES,
   GET_GIFT_PLAN,
   GET_ALL_SHIPPING_PRE_PAID_PLANS,
+  GET_FREE_BOX_CAMPAIGN,
+  GET_GUEST_FREE_BOX_CAMPAIGN_DISCOUNT,
+  GET_AUTH,
 };

@@ -26,6 +26,7 @@ import {
   ADD_WINE_TO_WINE_LIST,
   REMOVE_WINE_FROM_WINE_LIST,
   UPDATE_OR_CREATE_WINE_LIST,
+  SET_REFERRAL_DISCOUNT,
 } from './resolvers/member';
 
 // Shopping Cart
@@ -47,7 +48,12 @@ import {
 import { ADD_SPECIAL_PACK_INTEREST } from './resolvers/specialPack';
 
 // Order
-import { APPLY_DISCOUNT_CODE } from './resolvers/order';
+import {
+  APPLY_DISCOUNT_CODE,
+  ADD_FREE_BOX_CAMPAIGN_INTEREST,
+  APPLY_DISCOUNT_FROM_FREE_BOX_CAMPAIGN,
+  SET_GUEST_FREE_BOX_CAMPAIGN_DISCOUNT,
+} from './resolvers/order';
 
 // Quiz
 import { SUBMIT_QUIZ } from './resolvers/quiz';
@@ -55,6 +61,9 @@ import { SUBMIT_QUIZ } from './resolvers/quiz';
 export {
   ADD_SHOPPING_CART_ITEM,
   APPLY_DISCOUNT_CODE,
+  ADD_FREE_BOX_CAMPAIGN_INTEREST,
+  APPLY_DISCOUNT_FROM_FREE_BOX_CAMPAIGN,
+  SET_GUEST_FREE_BOX_CAMPAIGN_DISCOUNT,
   ADD_WINE_TO_QUIZ_BOX,
   ADD_SPECIAL_PACK_INTEREST,
   CHECKOUT,
@@ -81,4 +90,5 @@ export {
   ADD_WINE_TO_WINE_LIST,
   REMOVE_WINE_FROM_WINE_LIST,
   UPDATE_OR_CREATE_WINE_LIST,
+  SET_REFERRAL_DISCOUNT,
 };
