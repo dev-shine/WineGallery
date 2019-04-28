@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Layout from '../../styles/layout';
+
 import './Home.scss';
 
 /**
@@ -15,17 +17,19 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="Home">
-        <section className="Home--main-banner">
-          <div className="Home--main-banner_inner">
-            <div className="Home--main-banner--content">
-              <h1 className="Home--main-banner--content--title">
-                Welcome to The Wine Gallery First Prototype
-              </h1>
+      <Layout>
+        <div className="Home">
+          <section className="Home--main-banner">
+            <div className="Home--main-banner_inner">
+              <div className="Home--main-banner--content">
+                <h1 className="Home--main-banner--content--title">
+                  Welcome to The Wine Gallery First Prototype
+                </h1>
+              </div>
             </div>
-          </div>
-        </section>
-      </div>
+          </section>
+        </div>
+      </Layout>
     );
   }
 }

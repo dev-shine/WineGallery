@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { ApolloProvider } from 'react-apollo';
 
 import Routes from './routes';
-import { Header } from './components';
 import { client, persistent } from './graphql/client';
 
 import './styles/App.scss';
@@ -52,28 +51,14 @@ class App extends Component {
       // Provides apollo client across the application
       <ApolloProvider client={client}>
 
-        <div className="App">
+        {/* Provides a fallback when rendering lazily loaded components */}
+        <React.Suspense fallback={<div>Loading...</div>}>
 
-          {/* Renders header in application */}
-          <header className="App-header">
-            <Header persistentCache={persistent} />
-          </header>
+          {/* Renders the pages components using router */}
+          <Routes persistentCache={persistent} />
 
-          {/* Renders main area of the application */}
-          <main className="App-body">
+        </React.Suspense>
 
-            {/* Provides a fallback when rendering lazily loaded components */}
-            <React.Suspense fallback={<div>Loading...</div>}>
-
-              {/* Renders the pages components using router */}
-              <Routes />
-            </React.Suspense>
-          </main>
-
-          <footer className="App-footer">
-            This is a footer with no content yet.
-          </footer>
-        </div>
       </ApolloProvider>
     );
   }
