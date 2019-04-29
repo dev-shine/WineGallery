@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withApollo } from 'react-apollo';
+import { withRouter } from 'react-router-dom';
 
+import { compose, withApollo } from 'react-apollo';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { CachePersistor } from 'apollo-cache-persist';
 import styled from 'styled-components';
 
 import { HeaderUser } from '../..';
@@ -52,26 +55,33 @@ class HeaderLoggedIn extends Component {
 
   static propTypes = {
     client: PropTypes.shape({}), // Apollo client coming form withApollo
-    persistentCache: PropTypes.shape({}),
+    persistCache: PropTypes.shape({}),
   };
 
   static defaultProps = {
     client: null,
-    persistentCache: null,
+    persistCache: null,
   };
 
   handleLogout = event => {
     event.preventDefault();
 
-    const { client, persistentCache } = this.props;
-
-    // Logs user out from application once they land back in to Login page
     if (localStorage.getItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE)) {
       window.location = `${process.env.REACT_APP_BASE_URL}${urlPatterns.HOME}`;
 
+      const { client } = this.props;
+
+      // TODO (DEV-401) Instead of recreating the below, try to extract it from Apollo
+      const cache = new InMemoryCache();
+      const cachePersistor = new CachePersistor({
+        cache,
+        storage: window.sessionStorage,
+        key: process.env.REACT_APP_STORE_LOCAL_STORAGE,
+      });
+
       // Removes all the state from session and local storage
       client.resetStore();
-      persistentCache.purge();
+      cachePersistor.purge();
       localStorage.removeItem(process.env.REACT_APP_AUTH_LOCAL_STORAGE);
       localStorage.removeItem(process.env.REACT_APP_STORE_LOCAL_STORAGE);
     }
@@ -93,4 +103,7 @@ class HeaderLoggedIn extends Component {
   }
 }
 
-export default withApollo(HeaderLoggedIn);
+export default compose(
+  withApollo,
+  withRouter,
+)(HeaderLoggedIn);

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Button } from '../..';
+import urlPatterns from '../../../urls';
 
 import { colors, fonts } from '../../../styles/variables';
 import breakpoints from '../../../styles/breakpoints';
@@ -53,11 +54,11 @@ const HeaderSignInBox = () => (
   <StyledHeaderSignInBox>
     <HeaderSignInHolder>
       <HeaderSignInText>Already have an account?</HeaderSignInText>
-      <HeaderSignInLink href="/">Sign in</HeaderSignInLink>
+      <HeaderSignInLink href={urlPatterns.LOGIN}>Sign in</HeaderSignInLink>
     </HeaderSignInHolder>
 
-    <StyledHeaderSignInBoxBtn as="a" href="/">
-      Build my box
+    <StyledHeaderSignInBoxBtn as="a" href={urlPatterns.QUIZ}>
+      Get started
     </StyledHeaderSignInBoxBtn>
   </StyledHeaderSignInBox>
 );
