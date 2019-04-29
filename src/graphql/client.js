@@ -55,9 +55,9 @@ const generateApolloClient = () => {
     cache,
     storage: window.localStorage,
     maxSize: false, // set to unlimited (default is 1MB https://github.com/apollographql/apollo-cache-persist)
-    debug: true, // enables console logging
+    debug: process.env.REACT_APP_DEBUG === 'true', // enables console logging
     key: process.env.REACT_APP_STORE_LOCAL_STORAGE,
-    debounce: 0, // writes changes to the local storage immediately
+    debounce: 5, // ms of delay before changes are written to the local storage
   });
 
   const resolvers = {

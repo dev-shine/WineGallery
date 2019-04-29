@@ -60,6 +60,7 @@ export const CHECKOUT = gql`
       isSuccessful
       errors {
         field
+        messages
       }
     }
   }

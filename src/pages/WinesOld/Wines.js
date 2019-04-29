@@ -10,7 +10,8 @@ import {
   WineSorters,
   WineBox,
 } from '../../components';
-import { GET_MEMBER, GET_SHOPPING_CART } from '../../graphql/queries';
+import { GET_AUTH, GET_SHOPPING_CART } from '../../graphql/queries';
+import { FETCH_POLICY_CACHE_ONLY } from '../../helpers/constants';
 
 import './Wines.scss';
 
@@ -21,6 +22,7 @@ import './Wines.scss';
 class Wines extends Component {
   static propTypes = {
     isWineSubscriptionBox: PropTypes.bool,
+    authQuery: PropTypes.shape({}).isRequired,
   };
 
   static defaultProps = {
@@ -57,11 +59,11 @@ class Wines extends Component {
 
   render() {
     const { props, state } = this;
-    const { isWineSubscriptionBox, meQuery } = props;
+    const { isWineSubscriptionBox, authQuery } = props;
     let { filters } = state;
 
     // Specifies memberId to retrieve Member's predictions
-    const memberId = meQuery.me && meQuery.me.id;
+    const memberId = authQuery.auth && authQuery.auth.memberId;
     if (memberId) {
       filters = { ...filters, memberId };
     }
@@ -110,5 +112,5 @@ class Wines extends Component {
 }
 
 export default compose(
-  graphql(GET_MEMBER, { name: 'meQuery' }),
+  graphql(GET_AUTH, { name: 'authQuery', options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY } }),
 )(Wines);

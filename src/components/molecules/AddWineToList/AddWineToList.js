@@ -5,6 +5,7 @@ import { compose, graphql } from 'react-apollo';
 
 import { WineListSelection } from '../..';
 import { isLoggedIn } from '../../../helpers/auth';
+import { FETCH_POLICY_CACHE_ONLY } from '../../../helpers/constants';
 import { GET_AUTH } from '../../../graphql/resolvers/auth';
 
 import './AddWineToList.scss';
@@ -60,5 +61,5 @@ class AddWineToList extends Component {
 }
 
 export default compose(
-  graphql(GET_AUTH, { name: 'authQuery' }),
+  graphql(GET_AUTH, { name: 'authQuery', options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY } }),
 )(AddWineToList);

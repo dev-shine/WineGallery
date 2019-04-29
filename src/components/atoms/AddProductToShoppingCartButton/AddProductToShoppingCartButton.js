@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 import { GET_AUTH } from '../../../graphql/resolvers/auth';
 import { isLoggedIn } from '../../../helpers/auth';
+import { FETCH_POLICY_CACHE_ONLY } from '../../../helpers/constants';
 import { saveCartItemToLocalStorage } from '../../../helpers/tools';
 import { GET_MEMBER, GET_SHOPPING_CART } from '../../../graphql/queries';
 import { ADD_SHOPPING_CART_ITEM } from '../../../graphql/mutations';
@@ -114,7 +115,7 @@ class AddProductToShoppingCartButton extends Component {
 
 export default compose(
   withRouter,
-  graphql(GET_AUTH, { name: 'authQuery' }),
+  graphql(GET_AUTH, { name: 'authQuery', options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY } }),
   graphql(ADD_SHOPPING_CART_ITEM, {
     name: 'addShoppingCartItem',
     options: { refetchQueries: () => [{ query: GET_MEMBER }, { query: GET_SHOPPING_CART }] },

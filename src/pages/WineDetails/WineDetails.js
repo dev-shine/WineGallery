@@ -5,7 +5,7 @@ import { compose, graphql, Query } from 'react-apollo';
 import { GET_WINE } from '../../graphql/queries';
 import { AddProductToShoppingCartButton, AddWineToList } from '../../components';
 import { GET_AUTH } from '../../graphql/resolvers/auth';
-import { DEFAULT_BOTTLE_URL } from '../../helpers/constants';
+import { DEFAULT_BOTTLE_URL, FETCH_POLICY_CACHE_ONLY } from '../../helpers/constants';
 import { formatNumber } from '../../helpers/tools';
 
 import './WineDetails.scss';
@@ -168,5 +168,5 @@ class WineDetails extends Component {
 }
 
 export default compose(
-  graphql(GET_AUTH, { name: 'authQuery' }),
+  graphql(GET_AUTH, { name: 'authQuery', options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY } }),
 )(WineDetails);
