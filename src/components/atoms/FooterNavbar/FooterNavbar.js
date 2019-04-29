@@ -55,11 +55,7 @@ const FooterNavbar = props => (footerMenuItems.length > 0 ? (
 ) : null);
 
 FooterMenuListItem.propTypes = {
-  data: PropTypes.bool,
-};
-
-FooterMenuListItem.defaultProps = {
-  data: false,
+  data: PropTypes.shape({}).isRequired,
 };
 
 export default FooterNavbar;
