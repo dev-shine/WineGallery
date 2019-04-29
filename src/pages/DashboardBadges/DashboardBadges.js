@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
 
-import { BADGE_CATEGORY_ID } from '../../helpers/constants';
+import { BADGE_CATEGORY_ID, FETCH_POLICY_CACHE_ONLY } from '../../helpers/constants';
 import { MemberBadgesOfCategory } from '../../components';
-import { GET_MEMBER } from '../../graphql/queries';
+import { GET_AUTH } from '../../graphql/queries';
 
 import './DashboardBadges.scss';
 
@@ -13,11 +13,8 @@ import './DashboardBadges.scss';
  * */
 const DashboardBadges = props => {
 
-  const { meQuery } = props;
-  const { loading } = meQuery;
-  const memberId = meQuery.me && meQuery.me.id;
-
-  if (loading) return 'Loading...';
+  const { authQuery } = props;
+  const memberId = authQuery.auth && authQuery.auth.memberId;
 
   return (
     <div className="DashboardBadges">
@@ -36,9 +33,9 @@ const DashboardBadges = props => {
 };
 
 DashboardBadges.propTypes = {
-  meQuery: PropTypes.shape({}).isRequired,
+  authQuery: PropTypes.shape({}).isRequired,
 };
 
 export default compose(
-  graphql(GET_MEMBER, { name: 'meQuery' })
+  graphql(GET_AUTH, { name: 'authQuery', options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY } }),
 )(DashboardBadges);

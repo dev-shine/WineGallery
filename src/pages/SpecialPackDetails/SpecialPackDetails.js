@@ -15,7 +15,7 @@ import {
 } from '../../graphql/queries';
 import { ADD_SPECIAL_PACK_INTEREST, ADD_SHOPPING_CART_ITEM } from '../../graphql/mutations';
 import { GET_AUTH } from '../../graphql/resolvers/auth';
-import { PRODUCT_TYPE_IDS } from '../../helpers/constants';
+import { PRODUCT_TYPE_IDS, FETCH_POLICY_CACHE_ONLY } from '../../helpers/constants';
 import { saveCartItemToLocalStorage } from '../../helpers/tools';
 import urlPatterns from '../../urls';
 import { isLoggedIn } from '../../helpers/auth';
@@ -327,5 +327,5 @@ class SpecialPackDetails extends Component {
 }
 
 export default compose(
-  graphql(GET_AUTH, { name: 'authQuery' }),
+  graphql(GET_AUTH, { name: 'authQuery', options: { fetchPolicy: FETCH_POLICY_CACHE_ONLY } }),
 )(SpecialPackDetails);
