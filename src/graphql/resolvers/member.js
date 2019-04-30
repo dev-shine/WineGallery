@@ -292,6 +292,13 @@ export const GET_MEMBER = gql`
           id
         }
       }
+      recentNotifications {
+        id
+        jsonData
+        activityType {
+          id
+        }
+      }
     }
   }
 `;

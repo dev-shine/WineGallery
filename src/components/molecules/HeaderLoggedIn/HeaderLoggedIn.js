@@ -7,10 +7,9 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { CachePersistor } from 'apollo-cache-persist';
 import styled from 'styled-components';
 
-import { HeaderUser } from '../..';
+import { HeaderUser, NotificationButton } from '../..';
 import urlPatterns from '../../../urls';
 
-import alarmBell from '../../../assets/images/icons/alarm-bell.svg';
 import { fonts } from '../../../styles/variables';
 import breakpoints from '../../../styles/breakpoints';
 
@@ -37,18 +36,6 @@ const StyledHeaderLogOutBtn = styled.a`
   ${breakpoints.mdDown} {
     display: none;
   }
-`;
-
-const StyledHeaderNotificationBtn = styled.a`
-  display: inline-block;
-  width: 15px;
-  margin-right: 20px;
-  flex-shrink: 0;
-`;
-
-const StyledHeaderNotificationBtnImage = styled.img`
-  display: block;
-  width: 100%;
 `;
 
 class HeaderLoggedIn extends Component {
@@ -90,12 +77,7 @@ class HeaderLoggedIn extends Component {
   render() {
     return (
       <StyledHeaderLoggedIn>
-        <StyledHeaderNotificationBtn>
-          <StyledHeaderNotificationBtnImage
-            src={alarmBell}
-            alt="alarm bell"
-          />
-        </StyledHeaderNotificationBtn>
+        <NotificationButton />
         <HeaderUser />
         <StyledHeaderLogOutBtn onClick={e => this.handleLogout(e)}>Log out</StyledHeaderLogOutBtn>
       </StyledHeaderLoggedIn>

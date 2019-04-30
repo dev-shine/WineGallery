@@ -21,6 +21,7 @@ import HeaderLogo from './atoms/HeaderLogo/HeaderLogo';
 import HeaderUser from './atoms/HeaderUser/HeaderUser';
 import InputField from './atoms/InputField/InputField';
 import InputFieldCopyClipboard from './atoms/InputFieldCopyClipboard/InputFieldCopyClipboard';
+import Notification from './atoms/Notification/Notification';
 import QuizBody from './atoms/QuizBody/QuizBody';
 import QuizCards from './atoms/QuizCards/QuizCards';
 import QuizCard from './atoms/QuizCard/QuizCard';
@@ -54,6 +55,8 @@ import HeaderMenu from './molecules/HeaderMenu/HeaderMenu';
 import HeaderLoggedIn from './molecules/HeaderLoggedIn/HeaderLoggedIn';
 import HeaderSignInBox from './molecules/HeaderSignInBox/HeaderSignInBox';
 import NewPaymentMethod from './molecules/NewPaymentMethod/NewPaymentMethod';
+import NotificationButton from './molecules/NotificationButton/NotificationButton';
+import NotificationsModal from './molecules/NotificationsModal/NotificationsModal';
 import QuizAnswer from './molecules/QuizAnswer/QuizAnswer';
 import SimpleListItem from './molecules/SimpleListItem/SimpleListItem';
 import ShoppingCart from './molecules/ShoppingCart/ShoppingCart';
@@ -135,6 +138,7 @@ export {
   HeaderUser,
   InputField,
   InputFieldCopyClipboard,
+  Notification,
   QuizBody,
   QuizCards,
   QuizCard,
@@ -169,6 +173,8 @@ export {
   HeroPicture,
   HeroTitle,
   NewPaymentMethod,
+  NotificationButton,
+  NotificationsModal,
   SimpleListItem,
   ShoppingCart,
   QuizStep1,
